@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4820248375553922}
   - component: {fileID: 212046973416037428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4437913759476618}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,9 +51,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4008443928735690}
   - component: {fileID: 50830800427329522}
-  - component: {fileID: 114606398517760064}
   - component: {fileID: 61104322920662424}
-  m_Layer: 0
+  - component: {fileID: 114606398517760064}
+  - component: {fileID: 114226649446506120}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -120,7 +121,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61104322920662424
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -129,7 +130,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1551442047624660}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 6a07765c6118ad641ace0763aa44be48, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -146,6 +147,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &114226649446506120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551442047624660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41588475d7906a47b26369ea86efe93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpVelocity: 8
+  FallMultiplier: 2.5
+  LowJumpMultiplier: 2
+  GroundedSkin: 0.05
+  Mask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &114606398517760064
 MonoBehaviour:
   m_ObjectHideFlags: 1
