@@ -26,7 +26,7 @@ public class Jump : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<BoxCollider2D>().size;
-        boxSize = new Vector2(playerSize.x - GroundedSkin, GroundedSkin);
+        boxSize = new Vector2(playerSize.x - (GroundedSkin * 2), GroundedSkin);
         doubleJump = true;
     }
     
