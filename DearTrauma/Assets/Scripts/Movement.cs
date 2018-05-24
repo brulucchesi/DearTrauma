@@ -21,23 +21,17 @@ public class Movement : MonoBehaviour {
     void Update()
     {
         float hor = Input.GetAxis("Horizontal");
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if(hor>0)
         {
             Right = true;
-            rb.velocity = new Vector2(Speed, rb.velocity.y);
         }
-        else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (hor < 0)
         {
             Right = false;
-            rb.velocity = new Vector2(-Speed, rb.velocity.y);
-        }
-        else
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
         }
 
-        //Vector2 vel = new Vector2((hor == 1 || hor == -1)? hor * Speed * 1.5f: hor * Speed, rb.velocity.y);
+        Vector2 vel = new Vector2((hor == 1 || hor == -1)? hor * Speed * 1.5f: hor * Speed, rb.velocity.y);
 
-        //rb.velocity = vel;
+        rb.velocity = vel;
 	}
 }
