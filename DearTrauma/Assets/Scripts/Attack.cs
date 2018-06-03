@@ -45,7 +45,7 @@ public class Attack : MonoBehaviour {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(AttackPoint.transform.position, attackSize, 0f, Mask);
         foreach (Collider2D col in colliders)
         {
-            col.gameObject.SendMessage("ReceiveAttack");
+            col.gameObject.SendMessage("ReceiveAttack",SendMessageOptions.DontRequireReceiver);
         }
     }
 }
