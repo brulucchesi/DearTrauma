@@ -12,10 +12,12 @@ public class Movement : MonoBehaviour {
     public bool Right;
 
     private Rigidbody2D rb;
+    private Vector2 lastCheckPoint;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        lastCheckPoint = transform.position;
     }
 
     void Update()
@@ -36,4 +38,23 @@ public class Movement : MonoBehaviour {
 
         rb.velocity = vel;
 	}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("EnemyFront"))
+        {
+            ReturnToCheckpoint();
+        }
+    }
+
+    public void SetCheckpoint(Vector2 pos)
+    {
+        lastCheckPoint = pos;
+    }
+
+    public void ReturnToCheckpoint()
+    {
+        rb.velocity = Vector2.zero;
+        transform.position = lastCheckPoint;
+    }
 }

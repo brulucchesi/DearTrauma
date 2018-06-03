@@ -35,9 +35,21 @@ public class EnemyMove : MonoBehaviour {
 
         Flip(waypoints[currentWaypoint]);
         waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
-	}
-	
-	private IEnumerator MoveToWaypoint(Vector3 point)
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (Application.isPlaying)
+        {
+            foreach (Vector3 v in waypoints)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawSphere(v, 0.2f);
+            }
+        }
+    }
+
+    private IEnumerator MoveToWaypoint(Vector3 point)
     {
         Vector3 init = transform.localPosition;
 
