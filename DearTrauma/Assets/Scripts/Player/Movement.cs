@@ -24,10 +24,12 @@ public class Movement : MonoBehaviour {
         if(hor>0)
         {
             Right = true;
+            //hor = Mathf.Clamp(hor, 1f, 1f);
         }
         if (hor < 0)
         {
             Right = false;
+            //hor = Mathf.Clamp(hor, -1f, -1f);
         }
 
         Vector2 vel = new Vector2((hor == 1 || hor == -1)? hor * Speed * 1.5f: hor * Speed, rb.velocity.y);

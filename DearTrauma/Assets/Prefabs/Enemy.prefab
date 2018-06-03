@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 4497018545080020}
   - component: {fileID: 50619882834952910}
   - component: {fileID: 114250371751267342}
+  - component: {fileID: 114323809046390730}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -424,6 +425,22 @@ MonoBehaviour:
   RightPos: {fileID: 1646217297647680}
   FollowSpeed: 4
   WaypointSpeed: 2
+  Right: 0
+--- !u!114 &114323809046390730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1485362101610292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2790f81b649f0df40b5fff1b773b2356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mask:
+    serializedVersion: 2
+    m_Bits: 256
+  BoxSize: {x: 5.5, y: 3}
 --- !u!114 &114610892715943726
 MonoBehaviour:
   m_ObjectHideFlags: 1
