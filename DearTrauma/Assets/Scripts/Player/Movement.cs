@@ -56,6 +56,11 @@ public class Movement : MonoBehaviour {
             SetCanMove(false);
             collision.GetComponent<Trap>().AttackPlayer();
         }
+        else if (collision.CompareTag("Hole"))
+        {
+            SetCanMove(false);
+            collision.GetComponent<Hole>().AttackPlayer();
+        }
     }
 
     public void SetCanMove(bool move)
