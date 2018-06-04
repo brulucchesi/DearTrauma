@@ -127,4 +127,14 @@ public class EnemyMove : MonoBehaviour {
             waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
         }
     }
+
+    public void AttackPlayer()
+    {
+        GetComponent<Animator>().SetTrigger(Right ? "AttackRight" : "AttackLeft");
+    }
+
+    public void PlayerDied()
+    {
+        Manager.GetInstance().Player.GetComponent<Movement>().PlayerDied();
+    }
 }
