@@ -48,7 +48,13 @@ public class Movement : MonoBehaviour {
     {
         if(collision.CompareTag("EnemyFront"))
         {
+            SetCanMove(false);
             collision.transform.parent.GetComponent<EnemyMove>().AttackPlayer();
+        }
+        else if (collision.CompareTag("Trap"))
+        {
+            SetCanMove(false);
+            collision.GetComponent<Trap>().AttackPlayer();
         }
     }
 
@@ -58,9 +64,13 @@ public class Movement : MonoBehaviour {
         canMove = move;
     }
 
+    public bool GetCanMove()
+    {
+        return canMove;
+    }
+
     public void PlayerDied()
     {
-        SetCanMove(false);
         GetComponent<Animator>().SetTrigger("Died");
     }
 

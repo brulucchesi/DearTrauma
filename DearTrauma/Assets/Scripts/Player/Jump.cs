@@ -32,7 +32,7 @@ public class Jump : MonoBehaviour {
     
     void Update ()
     {
-        if(Input.GetButtonDown("Jump") && (grounded || doubleJump))
+        if(Input.GetButtonDown("Jump") && (grounded || doubleJump) && GetComponent<Movement>().GetCanMove())
         {
             jumpPress = true;
             if(!grounded)
