@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fragment : MonoBehaviour {
 
     [Header("References")]
     public Door LinkedDoor;
     public GameObject FragmentMemoryVisual;
+
+    [Header("Modifiers")]
+    public string SceneName = "";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,9 +24,9 @@ public class Fragment : MonoBehaviour {
             {
                 FragmentMemoryVisual.SetActive(true);
             }
-            if (LinkedDoor)
+            if (!SceneName.Equals(""))
             {
-                LinkedDoor.Unlock();
+                SceneManager.LoadScene(SceneName);
             }
             gameObject.SetActive(false);
         }
