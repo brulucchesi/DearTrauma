@@ -61,6 +61,14 @@ public class Movement : MonoBehaviour {
             SetCanMove(false);
             collision.GetComponent<Hole>().AttackPlayer();
         }
+        else if (collision.CompareTag("Checkpoint"))
+        {
+            Vector3? pos = collision.GetComponent<Checkpoint>().GetCheckpoint();
+            if(pos != null)
+            {
+                SetCheckpoint(pos.Value);
+            }
+        }
     }
 
     public void SetCanMove(bool move)
