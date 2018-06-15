@@ -16,6 +16,7 @@ public class Checkpoint : MonoBehaviour {
         if(active)
         {
             GetComponent<Animator>().SetTrigger("Checkpoint");
+            active = false;
 
             return transform.position;
         }
