@@ -75,6 +75,10 @@ public class EnemyMove : MonoBehaviour {
     {
         while(true)
         {
+            if(Manager.GetInstance().Player.GetComponent<Movement>().Safe)
+            {
+                StartFollowPlayer(false);
+            }
             Vector3 point = Manager.GetInstance().Player.transform.position;
             Flip(point);
             point.y = transform.position.y;

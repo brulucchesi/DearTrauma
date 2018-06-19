@@ -23,10 +23,18 @@ public class Range : MonoBehaviour {
         boxCenter = (enemyMove.Right)?
                     (Vector2)enemyMove.RightPos.transform.position + Vector2.right * (BoxSize.x/2):
                     (Vector2)enemyMove.LeftPos.transform.position + Vector2.left * (BoxSize.x / 2);
-        bool playerInRange = (Physics2D.OverlapBox(boxCenter, BoxSize, 0f, Mask) != null);
+        Collider2D player = Physics2D.OverlapBox(boxCenter, BoxSize, 0f, Mask);
+        bool playerInRange = (player != null);
         if (lastScan != playerInRange)
         {
-            enemyMove.StartFollowPlayer(playerInRange);
+            if(player && !player.GetComponent<Movement>().Safe)
+            {
+                enemyMove.StartFollowPlayer(playerInRange);
+            }
+            else
+            {
+                enemyMove.StartFollowPlayer(playerInRange);
+            }
             lastScan = playerInRange;
         }
     }

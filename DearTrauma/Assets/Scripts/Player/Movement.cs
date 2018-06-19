@@ -7,9 +7,13 @@ public class Movement : MonoBehaviour {
 
     [Header("Modifiers")]
     public float Speed;
+    public float SpeedHideMod = 2f;
 
     [HideInInspector]
     public bool Right;
+
+    [HideInInspector]
+    public bool Safe;
 
     private Rigidbody2D rb;
     private Vector2 lastCheckPoint;
@@ -18,6 +22,7 @@ public class Movement : MonoBehaviour {
     void Start()
     {
         canMove = true;
+        Safe = false;
         rb = GetComponent<Rigidbody2D>();
         lastCheckPoint = transform.position;
     }
@@ -46,7 +51,7 @@ public class Movement : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("EnemyFront"))
+        if(collision.CompareTag("EnemyFront") && !Safe)
         {
             SetCanMove(false);
             collision.transform.parent.GetComponent<EnemyMove>().AttackPlayer();
@@ -96,5 +101,11 @@ public class Movement : MonoBehaviour {
     {
         transform.position = lastCheckPoint;
         SetCanMove(true);
+    }
+
+    public void Hide(bool hide)
+    {
+        Safe = hide;
+        Speed = (hide) ? Speed / SpeedHideMod : Speed * SpeedHideMod;
     }
 }
