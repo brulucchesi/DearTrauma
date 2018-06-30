@@ -35,11 +35,13 @@ public class Movement : MonoBehaviour {
             if (hor > 0)
             {
                 Right = true;
+                GetComponent<Animator>().SetTrigger("Right");
                 //hor = Mathf.Clamp(hor, 1f, 1f);
             }
             if (hor < 0)
             {
                 Right = false;
+                GetComponent<Animator>().SetTrigger("Left");
                 //hor = Mathf.Clamp(hor, -1f, -1f);
             }
 
