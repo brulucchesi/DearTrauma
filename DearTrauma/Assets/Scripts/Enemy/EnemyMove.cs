@@ -141,12 +141,18 @@ public class EnemyMove : MonoBehaviour {
     {
         if(follow)
         {
-            StopCoroutine(waypointCoroutine);
+            if(waypointCoroutine != null)
+            {
+                StopCoroutine(waypointCoroutine);
+            }
             followCoroutine = StartCoroutine(FollowPlayer());
         }
         else
         {
-            StopCoroutine(followCoroutine);
+            if (followCoroutine != null)
+            {
+                StopCoroutine(followCoroutine);
+            }
             float minDist = float.MaxValue;
             int minIndex = -1;
             for (int i = 0; i < waypoints.Count; i++)

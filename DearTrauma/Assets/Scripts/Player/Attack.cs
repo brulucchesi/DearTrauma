@@ -16,7 +16,7 @@ public class Attack : MonoBehaviour {
     private void Start()
     {
         anim = GetComponent<Animator>();
-        Vector2 playerSize = GetComponent<BoxCollider2D>().size;
+        Vector2 playerSize = GetComponent<CapsuleCollider2D>().size;
         attackSize = new Vector2(playerSize.x/2, playerSize.y);
     }
     
