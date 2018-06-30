@@ -26,28 +26,31 @@ public class Push : MonoBehaviour {
         {
             pushable = hit.collider.gameObject;
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 //pushable.GetComponent<FixedJoint2D>().connectedBody = GetComponent<Rigidbody2D>();
                 //pushable.GetComponent<FixedJoint2D>().enabled = true;
                 //pushable.GetComponent<Pushable>().beingPushed = true;
             }
-            //else if (Input.GetKeyUp(KeyCode.LeftShift))
-            //{
-            //    pushable.GetComponent<Rigidbody2D>().constraints = (RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation);
-            //    //pushable.GetComponent<FixedJoint2D>().enabled = false;
-            //    //pushable.GetComponent<Pushable>().beingPushed = false;
-            //}
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            if(pushable)
+            else
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = (RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation);
                 //pushable.GetComponent<FixedJoint2D>().enabled = false;
                 //pushable.GetComponent<Pushable>().beingPushed = false;
             }
+        }
+        else
+        {
+            //if (Input.GetKeyUp(KeyCode.LeftShift))
+            //{
+            if (pushable)
+            {
+                pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;//(RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation);
+                                                                                               //pushable.GetComponent<FixedJoint2D>().enabled = false;
+                                                                                               //pushable.GetComponent<Pushable>().beingPushed = false;
+            }
+            //}
         }
     }
 
