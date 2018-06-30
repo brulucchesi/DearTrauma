@@ -128,12 +128,14 @@ public class EnemyMove : MonoBehaviour {
             Right = true;
             Back.transform.position = LeftPos.transform.position;
             Front.transform.position = RightPos.transform.position;
+            GetComponent<Animator>().SetTrigger("Right");
         }
         else //Going left
         {
             Right = false;
             Back.transform.position = RightPos.transform.position;
             Front.transform.position = LeftPos.transform.position;
+            GetComponent<Animator>().SetTrigger("Left");
         }
     }
 
