@@ -101,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1415587383125766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.23, z: 0}
+  m_LocalPosition: {x: 541.03, y: 24.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4631855701090746}
@@ -116,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991172256314922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.18, y: -0.289, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4363358017680498}
@@ -158,7 +158,7 @@ Transform:
   m_GameObject: {fileID: 1676756496856016}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.15080492, y: 0.15080494, z: 0.86739063}
   m_Children: []
   m_Father: {fileID: 4631855701090746}
   m_RootOrder: 0
@@ -191,11 +191,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 1415587383125766}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 6a07765c6118ad641ace0763aa44be48, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.12, y: -0.36}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -206,7 +206,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.96939087, y: 2.7375689}
   m_EdgeRadius: 0
 --- !u!95 &95253434866583140
 Animator:
@@ -240,7 +240,7 @@ MonoBehaviour:
   JumpVelocity: 8
   FallMultiplier: 2.5
   LowJumpMultiplier: 2
-  GroundedSkin: 0.05
+  GroundedSkin: 1
   Mask:
     serializedVersion: 2
     m_Bits: 512
@@ -272,7 +272,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 3.5
+  SpeedHideMod: 2
   Right: 0
+  Safe: 0
 --- !u!212 &212135610946407036
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -306,7 +308,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 39685847
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cb523b2bc8b28db469336898fdc4ed8c, type: 3}
   m_Color: {r: 0.009198864, g: 0.5660378, b: 0, a: 1}
@@ -351,9 +353,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 39685847
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cb523b2bc8b28db469336898fdc4ed8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84b2b07aa2056ff4fae270661d2d1ab9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
