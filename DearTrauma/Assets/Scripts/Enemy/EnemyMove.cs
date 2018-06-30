@@ -66,16 +66,23 @@ public class EnemyMove : MonoBehaviour {
         //    yield return new WaitForSeconds(1 / 30);
         //}
 
-        if (point.x > transform.position.x)
+        while(Vector2.Distance(point, transform.position) > 1f)
         {
-            GetComponent<Rigidbody2D>().velocity = Vector2.right * WaypointSpeed;
-        }
-        else
-        {
-            GetComponent<Rigidbody2D>().velocity = Vector2.left * WaypointSpeed;
-        }
+            if (point.x > transform.position.x)
+            {
+                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                vel.x = WaypointSpeed;
+                GetComponent<Rigidbody2D>().velocity = vel;
+            }
+            else
+            {
+                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                vel.x = -WaypointSpeed;
+                GetComponent<Rigidbody2D>().velocity = vel;
+            }
 
-        yield return new WaitWhile(() => Vector2.Distance(point, transform.position) > 0.01f);
+            yield return new WaitForSeconds(1 / 30);
+        }
 
         currentWaypoint = (currentWaypoint + 1)%waypoints.Count;
         Flip(waypoints[currentWaypoint]);
@@ -98,11 +105,15 @@ public class EnemyMove : MonoBehaviour {
 
             if (point.x > transform.position.x)
             {
-                GetComponent<Rigidbody2D>().velocity = Vector2.right * FollowSpeed;
+                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                vel.x = FollowSpeed;
+                GetComponent<Rigidbody2D>().velocity = vel;
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = Vector2.left * FollowSpeed;
+                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                vel.x = -FollowSpeed;
+                GetComponent<Rigidbody2D>().velocity = vel;
             }
 
             yield return new WaitForSeconds(1 / 30);
