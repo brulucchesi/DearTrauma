@@ -51,20 +51,31 @@ public class EnemyMove : MonoBehaviour {
 
     private IEnumerator MoveToWaypoint(Vector3 point)
     {
-        Vector3 init = transform.localPosition;
+        //Vector3 init = transform.localPosition;
 
-        float startTime = Time.time;
-        float journeyLength = Vector3.Distance(init, point);
-        float distCovered;
-        float fracJourney = 0;
+        //float startTime = Time.time;
+        //float journeyLength = Vector3.Distance(init, point);
+        //float distCovered;
+        //float fracJourney = 0;
 
-        while (fracJourney < 1)
+        //while (fracJourney < 1)
+        //{
+        //    distCovered = (Time.time - startTime) * WaypointSpeed;
+        //    fracJourney = distCovered / journeyLength;
+        //    transform.localPosition = Vector3.Lerp(init, point, fracJourney);
+        //    yield return new WaitForSeconds(1 / 30);
+        //}
+
+        if (point.x > transform.position.x)
         {
-            distCovered = (Time.time - startTime) * WaypointSpeed;
-            fracJourney = distCovered / journeyLength;
-            transform.localPosition = Vector3.Lerp(init, point, fracJourney);
-            yield return new WaitForSeconds(1 / 30);
+            GetComponent<Rigidbody2D>().velocity = Vector2.right * WaypointSpeed;
         }
+        else
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.left * WaypointSpeed;
+        }
+
+        yield return new WaitWhile(() => Vector2.Distance(point, transform.position) > 0.01f);
 
         currentWaypoint = (currentWaypoint + 1)%waypoints.Count;
         Flip(waypoints[currentWaypoint]);
@@ -73,7 +84,8 @@ public class EnemyMove : MonoBehaviour {
 
     private IEnumerator FollowPlayer()
     {
-        while(true)
+        //Vector3 point = Manager.GetInstance().Player.transform.position;
+        while (true/*Vector2.Distance(point, transform.position) > 0.01f*/)
         {
             if(Manager.GetInstance().Player.GetComponent<Movement>().Safe)
             {
@@ -81,8 +93,18 @@ public class EnemyMove : MonoBehaviour {
             }
             Vector3 point = Manager.GetInstance().Player.transform.position;
             Flip(point);
-            point.y = transform.position.y;
-            transform.position = Vector2.MoveTowards(transform.position, point, FollowSpeed * Time.deltaTime);
+            //point.y = transform.position.y;
+            //transform.position = Vector2.MoveTowards(transform.position, point, FollowSpeed * Time.deltaTime);
+
+            if (point.x > transform.position.x)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.right * FollowSpeed;
+            }
+            else
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.left * FollowSpeed;
+            }
+
             yield return new WaitForSeconds(1 / 30);
         }
     }
