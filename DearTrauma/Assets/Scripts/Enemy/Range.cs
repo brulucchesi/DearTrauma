@@ -51,9 +51,12 @@ public class Range : MonoBehaviour {
         {
             if(currentTarget != RangeTarget.None)
             {
-                if (currentTarget == RangeTarget.Player && !currentCollider.GetComponent<Movement>().Safe)
+                if (currentTarget == RangeTarget.Player)
                 {
-                    enemyMove.StartFollow(true, currentCollider.transform, true);
+                    if(!currentCollider.GetComponent<Movement>().Safe)
+                    {
+                        enemyMove.StartFollow(true, currentCollider.transform, true);
+                    }
                 }
                 else
                 {
