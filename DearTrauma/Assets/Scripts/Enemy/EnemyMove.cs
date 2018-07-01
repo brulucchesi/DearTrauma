@@ -89,31 +89,38 @@ public class EnemyMove : MonoBehaviour {
         waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
     }
 
-    private IEnumerator FollowPlayer()
+    private IEnumerator Follow(Transform t, bool isPlayer)
     {
         //Vector3 point = Manager.GetInstance().Player.transform.position;
         while (true/*Vector2.Distance(point, transform.position) > 0.01f*/)
         {
-            if(Manager.GetInstance().Player.GetComponent<Movement>().Safe)
+            if(isPlayer && Manager.GetInstance().Player.GetComponent<Movement>().Safe)
             {
-                StartFollowPlayer(false);
+                StartFollow(false, null, false);
             }
-            Vector3 point = Manager.GetInstance().Player.transform.position;
-            Flip(point);
-            //point.y = transform.position.y;
-            //transform.position = Vector2.MoveTowards(transform.position, point, FollowSpeed * Time.deltaTime);
-
-            if (point.x > transform.position.x)
+            if(t == null)
             {
-                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-                vel.x = FollowSpeed;
-                GetComponent<Rigidbody2D>().velocity = vel;
+                StartFollow(false, null, false);
             }
             else
             {
-                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-                vel.x = -FollowSpeed;
-                GetComponent<Rigidbody2D>().velocity = vel;
+                Vector3 point = t.position;
+                Flip(point);
+                //point.y = transform.position.y;
+                //transform.position = Vector2.MoveTowards(transform.position, point, FollowSpeed * Time.deltaTime);
+
+                if (point.x > transform.position.x)
+                {
+                    Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                    vel.x = FollowSpeed;
+                    GetComponent<Rigidbody2D>().velocity = vel;
+                }
+                else
+                {
+                    Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                    vel.x = -FollowSpeed;
+                    GetComponent<Rigidbody2D>().velocity = vel;
+                }
             }
 
             yield return new WaitForSeconds(1 / 30);
@@ -125,21 +132,27 @@ public class EnemyMove : MonoBehaviour {
         //Going right
         if(point.x > transform.position.x)
         {
-            Right = true;
-            Back.transform.position = LeftPos.transform.position;
-            Front.transform.position = RightPos.transform.position;
-            GetComponent<Animator>().SetTrigger("Right");
+            //if(!Right)
+            //{
+                Right = true;
+                Back.transform.position = LeftPos.transform.position;
+                Front.transform.position = RightPos.transform.position;
+                GetComponent<Animator>().SetTrigger("Right");
+            //}
         }
         else //Going left
         {
-            Right = false;
-            Back.transform.position = RightPos.transform.position;
-            Front.transform.position = LeftPos.transform.position;
-            GetComponent<Animator>().SetTrigger("Left");
+            //if (Right)
+            //{
+                Right = false;
+                Back.transform.position = RightPos.transform.position;
+                Front.transform.position = LeftPos.transform.position;
+                GetComponent<Animator>().SetTrigger("Left");
+            //}
         }
     }
 
-    public void StartFollowPlayer(bool follow)
+    public void StartFollow(bool follow, Transform point, bool isPlayer)
     {
         if(follow)
         {
@@ -147,7 +160,7 @@ public class EnemyMove : MonoBehaviour {
             {
                 StopCoroutine(waypointCoroutine);
             }
-            followCoroutine = StartCoroutine(FollowPlayer());
+            followCoroutine = StartCoroutine(Follow(point, isPlayer));
         }
         else
         {
@@ -181,5 +194,16 @@ public class EnemyMove : MonoBehaviour {
     public void PlayerDied()
     {
         Manager.GetInstance().Player.GetComponent<Movement>().PlayerDied();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 10)
+        {
+            if (followCoroutine != null)
+            {
+                Destroy(collision.gameObject);
+            }
+        }
     }
 }

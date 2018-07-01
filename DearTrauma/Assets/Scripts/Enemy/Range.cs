@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class Range : MonoBehaviour {
 
+    enum RangeTarget
+    {
+        Player,
+        Enemy,
+        None
+    }
+
     [Header("Modifiers")]
     public LayerMask Mask;
     public Vector2 BoxSize;
 
     private EnemyMove enemyMove;
     private Vector2 boxCenter;
-    private bool lastScan;
+    private RangeTarget lastTarget;
 
     private void Start()
     {
-        lastScan = false;
+        lastTarget = RangeTarget.None;
         enemyMove = GetComponent<EnemyMove>();
     }
 
@@ -23,19 +30,34 @@ public class Range : MonoBehaviour {
         boxCenter = (enemyMove.Right)?
                     (Vector2)enemyMove.RightPos.transform.position + Vector2.right * (BoxSize.x/2):
                     (Vector2)enemyMove.LeftPos.transform.position + Vector2.left * (BoxSize.x / 2);
-        Collider2D player = Physics2D.OverlapBox(boxCenter, BoxSize, 0f, Mask);
-        bool playerInRange = (player != null);
-        if (lastScan != playerInRange)
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(boxCenter, BoxSize, 0f, Mask);
+        RangeTarget currentTarget = RangeTarget.None;
+        Collider2D currentCollider = null;
+        foreach(Collider2D col in colliders)
         {
-            if(player && !player.GetComponent<Movement>().Safe)
+            if(col.gameObject.layer == 8)
             {
-                enemyMove.StartFollowPlayer(playerInRange);
+                currentTarget = RangeTarget.Player;
+                currentCollider = col;
+                break;
+            }
+            else if (col.gameObject.layer == 10 && !col.isTrigger && col.gameObject != gameObject)
+            {
+                currentTarget = RangeTarget.Enemy;
+                currentCollider = col;
+            }
+        }
+        if (currentTarget != lastTarget && currentTarget != RangeTarget.None)
+        {
+            if(currentTarget == RangeTarget.Player && !currentCollider.GetComponent<Movement>().Safe)
+            {
+                enemyMove.StartFollow(true, currentCollider.transform, true);
             }
             else
             {
-                enemyMove.StartFollowPlayer(playerInRange);
+                enemyMove.StartFollow(true, currentCollider.transform, false);
             }
-            lastScan = playerInRange;
+            lastTarget = currentTarget;
         }
     }
 
