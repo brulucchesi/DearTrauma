@@ -47,15 +47,22 @@ public class Range : MonoBehaviour {
                 currentCollider = col;
             }
         }
-        if (currentTarget != lastTarget && currentTarget != RangeTarget.None)
+        if (currentTarget != lastTarget)
         {
-            if(currentTarget == RangeTarget.Player && !currentCollider.GetComponent<Movement>().Safe)
+            if(currentTarget != RangeTarget.None)
             {
-                enemyMove.StartFollow(true, currentCollider.transform, true);
+                if (currentTarget == RangeTarget.Player && !currentCollider.GetComponent<Movement>().Safe)
+                {
+                    enemyMove.StartFollow(true, currentCollider.transform, true);
+                }
+                else
+                {
+                    enemyMove.StartFollow(true, currentCollider.transform, false);
+                }
             }
             else
             {
-                enemyMove.StartFollow(true, currentCollider.transform, false);
+                enemyMove.StartFollow(false, null, false);
             }
             lastTarget = currentTarget;
         }
