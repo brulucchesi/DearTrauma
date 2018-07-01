@@ -26,6 +26,7 @@ public class EnemyMove : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        Right = true;
         currentWaypoint = 0;
         waypoints = new List<Vector3>();
         foreach (Transform t in WaypointsParent.transform)
@@ -86,6 +87,7 @@ public class EnemyMove : MonoBehaviour {
             yield return new WaitForSeconds(1 / 30);
         }
 
+        Debug.Log("waypoint");
         currentWaypoint = (currentWaypoint + 1)%waypoints.Count;
         Flip(waypoints[currentWaypoint]);
         waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
@@ -131,27 +133,32 @@ public class EnemyMove : MonoBehaviour {
 
     private void Flip(Vector3 point)
     {
+        Debug.Log("flip");
         //Going right
-        if(point.x > transform.position.x)
+        Debug.Log("antes: " + Right);
+        if (point.x > transform.position.x)
         {
-            //if(!Right)
-            //{
-                Right = true;
+            if (!Right)
+            {
+                Debug.Log("flipright");
                 Back.transform.position = LeftPos.transform.position;
                 Front.transform.position = RightPos.transform.position;
                 GetComponent<Animator>().SetTrigger("Right");
-            //}
+            }
+            Right = true;
         }
         else //Going left
         {
-            //if (Right)
-            //{
-                Right = false;
+            if (Right)
+            {
+                Debug.Log("flipleft");
                 Back.transform.position = RightPos.transform.position;
                 Front.transform.position = LeftPos.transform.position;
                 GetComponent<Animator>().SetTrigger("Left");
-            //}
+            }
+            Right = false;
         }
+        Debug.Log("dps: " + Right);
     }
 
     public void StartFollow(bool follow, Transform point, bool isPlayer)
