@@ -69,6 +69,7 @@ public class EnemyMove : MonoBehaviour {
 
         while(Vector2.Distance(point, transform.position) > 1f)
         {
+            point = new Vector3(pointOrig.x, transform.position.y);
             if (point.x > transform.position.x)
             {
                 Vector2 vel = GetComponent<Rigidbody2D>().velocity;
