@@ -49,7 +49,7 @@ public class EnemyMove : MonoBehaviour {
         }
     }
 
-    private IEnumerator MoveToWaypoint(Vector3 point)
+    private IEnumerator MoveToWaypoint(Vector3 pointOrig)
     {
         //Vector3 init = transform.localPosition;
 
@@ -65,6 +65,7 @@ public class EnemyMove : MonoBehaviour {
         //    transform.localPosition = Vector3.Lerp(init, point, fracJourney);
         //    yield return new WaitForSeconds(1 / 30);
         //}
+        Vector3 point = new Vector3(pointOrig.x, transform.position.y);
 
         while(Vector2.Distance(point, transform.position) > 1f)
         {
