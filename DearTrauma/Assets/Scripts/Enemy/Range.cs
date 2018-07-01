@@ -56,18 +56,20 @@ public class Range : MonoBehaviour {
                     if(!currentCollider.GetComponent<Movement>().Safe)
                     {
                         enemyMove.StartFollow(true, currentCollider.transform, true);
+                        lastTarget = currentTarget;
                     }
                 }
                 else
                 {
                     enemyMove.StartFollow(true, currentCollider.transform, false);
+                    lastTarget = currentTarget;
                 }
             }
             else
             {
                 enemyMove.StartFollow(false, null, false);
+                lastTarget = currentTarget;
             }
-            lastTarget = currentTarget;
         }
     }
 
