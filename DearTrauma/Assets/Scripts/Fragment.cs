@@ -20,25 +20,43 @@ public class Fragment : MonoBehaviour
         FragmentVisual.SetActive(true);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Player"))
+    //    {
+    //        if (LinkedDoor)
+    //        {
+    //            LinkedDoor.Unlock();
+    //        }
+    //        if (FragmentMemory)
+    //        {
+    //            Time.timeScale = 0f;
+    //            FragmentMemory.SetActive(true);
+    //        }
+    //        if (!SceneName.Equals(""))
+    //        {
+    //            SceneManager.LoadScene(SceneName);
+    //        }
+    //        FragmentVisual.SetActive(false);
+    //    }
+    //}
+
+    public void Collect()
     {
-        if (collision.CompareTag("Player"))
+        if (LinkedDoor)
         {
-            if (LinkedDoor)
-            {
-                LinkedDoor.Unlock();
-            }
-            if (FragmentMemory)
-            {
-                Time.timeScale = 0f;
-                FragmentMemory.SetActive(true);
-            }
-            if (!SceneName.Equals(""))
-            {
-                SceneManager.LoadScene(SceneName);
-            }
-            FragmentVisual.SetActive(false);
+            LinkedDoor.Unlock();
         }
+        if (FragmentMemory)
+        {
+            Time.timeScale = 0f;
+            FragmentMemory.SetActive(true);
+        }
+        if (!SceneName.Equals(""))
+        {
+            SceneManager.LoadScene(SceneName);
+        }
+        FragmentVisual.SetActive(false);
     }
 
     public void CloseMemory()

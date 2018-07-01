@@ -22,8 +22,10 @@ public class Evolution : MonoBehaviour {
                 GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
                 transform.localScale *= ScaleMultiplier;
                 Camera.main.GetComponent<CamFollow>().Big();
-                //transform.Translate(transform.position + (Vector3.up * 2));
+                //GetComponent<Rigidbody2D>().AddForce(Vector2.up * 7, ForceMode2D.Impulse);
+                transform.position = transform.position + Vector3.up * 3;
             }
+            collision.GetComponent<Fragment>().Collect();
         }
     }
 }
