@@ -22,20 +22,28 @@ public class EnemyMove : MonoBehaviour {
     private int currentWaypoint;
     private Coroutine waypointCoroutine;
     private Coroutine followCoroutine;
+    private Vector3 lastPos;
 
     // Use this for initialization
     void Start ()
     {
+        lastPos = transform.position;
+
         Right = true;
+        CalculateWaypoints();
+
+        Flip(waypoints[currentWaypoint]);
+        waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+    }
+
+    private void CalculateWaypoints()
+    {
         currentWaypoint = 0;
         waypoints = new List<Vector3>();
         foreach (Transform t in WaypointsParent.transform)
         {
             waypoints.Add(t.position);
         }
-
-        Flip(waypoints[currentWaypoint]);
-        waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
     }
 
     private void OnDrawGizmosSelected()
@@ -84,6 +92,20 @@ public class EnemyMove : MonoBehaviour {
                 GetComponent<Rigidbody2D>().velocity = vel;
             }
 
+            //if (Vector2.Distance(lastPos, transform.position) < 0.1f)
+            //{
+            //    if (waypointCoroutine != null)
+            //    {
+            //        lastPos = transform.position;
+            //        yield return new WaitForSeconds(1 / 30);
+            //        StopCoroutine(waypointCoroutine);
+            //        currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
+            //        Flip(waypoints[currentWaypoint]);
+            //        waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+            //    }
+            //}
+
+            lastPos = transform.position;
             yield return new WaitForSeconds(1 / 30);
         }
 
