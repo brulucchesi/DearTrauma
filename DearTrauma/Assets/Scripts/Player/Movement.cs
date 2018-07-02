@@ -21,6 +21,7 @@ public class Movement : MonoBehaviour {
 
     void Start()
     {
+        Right = true;
         canMove = true;
         Safe = false;
         rb = GetComponent<Rigidbody2D>();
@@ -35,13 +36,15 @@ public class Movement : MonoBehaviour {
             if (hor > 0)
             {
                 Right = true;
-                GetComponent<Animator>().SetTrigger("Right");
+                GetComponent<Animator>().SetBool("Right", true);
+                GetComponent<Animator>().SetBool("Left", false);
                 //hor = Mathf.Clamp(hor, 1f, 1f);
             }
             if (hor < 0)
             {
                 Right = false;
-                GetComponent<Animator>().SetTrigger("Left");
+                GetComponent<Animator>().SetBool("Left", true);
+                GetComponent<Animator>().SetBool("Right", false);
                 //hor = Mathf.Clamp(hor, -1f, -1f);
             }
 
