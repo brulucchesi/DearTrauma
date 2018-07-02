@@ -7,22 +7,31 @@ public class Evolution : MonoBehaviour
 
     [Header("References")]
     public RuntimeAnimatorController BigAnimator;
-
     public GameObject Fragment;
+    public SpriteRenderer SpriteDefault;
+    public Sprite SpriteBig;
+    public GameObject Background;
 
     [Header("Modifiers")]
     public float ScaleMultiplier = 2f;
+    public float ScaleMultiplierBackground = 2.5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name == Fragment.name)
+        if (collision.CompareTag("Fragment"))
         {
-            GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
-            transform.localScale *= ScaleMultiplier;
-            Camera.main.GetComponent<CamFollow>().Big();
-            //GetComponent<Rigidbody2D>().AddForce(Vector2.up * 7, ForceMode2D.Impulse);
-            transform.position = transform.position + Vector3.up * 3;
+            if (collision.name == Fragment.name)
+            {
+                SpriteDefault.sprite = SpriteBig;
+                GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
+                transform.localScale *= ScaleMultiplier;
+                Background.transform.localScale *= ScaleMultiplierBackground;
+                Camera.main.GetComponent<CamFollow>().Big();
+                transform.position = transform.position + Vector3.up * 3;
+            }
+
             collision.GetComponent<Fragment>().Collect();
         }
+
     }
 }
