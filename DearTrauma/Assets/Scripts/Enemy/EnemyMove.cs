@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour {
-    
+public class EnemyMove : MonoBehaviour
+{
+
     [Header("References")]
     public GameObject WaypointsParent;
     public GameObject Back;
@@ -23,9 +24,10 @@ public class EnemyMove : MonoBehaviour {
     private Coroutine waypointCoroutine;
     private Coroutine followCoroutine;
     private Vector3 lastPos;
+    private bool haveAttacked = false;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         lastPos = transform.position;
 
@@ -76,7 +78,7 @@ public class EnemyMove : MonoBehaviour {
         //}
         Vector3 point = new Vector3(pointOrig.x, transform.position.y);
 
-        while(Vector2.Distance(point, transform.position) > 1f)
+        while (Vector2.Distance(point, transform.position) > 1f)
         {
             point = new Vector3(pointOrig.x, transform.position.y);
             if (point.x > transform.position.x)
@@ -109,23 +111,27 @@ public class EnemyMove : MonoBehaviour {
             yield return new WaitForSeconds(1 / 30);
         }
 
-      //  Debug.Log("waypoint");
-        currentWaypoint = (currentWaypoint + 1)%waypoints.Count;
+        //  Debug.Log("waypoint");
+        currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
         Flip(waypoints[currentWaypoint]);
         waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
     }
 
     private IEnumerator Follow(Transform t, bool isPlayer)
     {
+
         //Vector3 point = Manager.GetInstance().Player.transform.position;
         while (true/*Vector2.Distance(point, transform.position) > 0.01f*/)
         {
-            if(isPlayer && Manager.GetInstance().Player.GetComponent<Movement>().Safe)
+            if (isPlayer && Manager.GetInstance().Player.GetComponent<Movement>().Safe)
             {
+                Debug.Log("Stop Follow player");
+
                 StartFollow(false, null, false);
             }
-            if(t == null)
+            if (t == null)
             {
+                Debug.Log("Stop Follow at all");
                 StartFollow(false, null, false);
             }
             else
@@ -155,14 +161,14 @@ public class EnemyMove : MonoBehaviour {
 
     private void Flip(Vector3 point)
     {
-     //   Debug.Log("flip");
+        //   Debug.Log("flip");
         //Going right
-      //  Debug.Log("antes: " + Right);
+        //  Debug.Log("antes: " + Right);
         if (point.x > transform.position.x)
         {
             if (!Right)
             {
-              //  Debug.Log("flipright");
+                //  Debug.Log("flipright");
                 Back.transform.position = LeftPos.transform.position;
                 Front.transform.position = RightPos.transform.position;
                 GetComponent<Animator>().SetTrigger("Right");
@@ -173,30 +179,51 @@ public class EnemyMove : MonoBehaviour {
         {
             if (Right)
             {
-             //   Debug.Log("flipleft");
+                //   Debug.Log("flipleft");
                 Back.transform.position = RightPos.transform.position;
                 Front.transform.position = LeftPos.transform.position;
                 GetComponent<Animator>().SetTrigger("Left");
             }
             Right = false;
         }
-       // Debug.Log("dps: " + Right);
+        // Debug.Log("dps: " + Right);
     }
 
     public void StartFollow(bool follow, Transform point, bool isPlayer)
     {
-        if(follow)
+        if (follow)
         {
-            if(waypointCoroutine != null)
+            Debug.Log("follooooow");
+
+            if (waypointCoroutine != null)
             {
                 StopCoroutine(waypointCoroutine);
             }
             followCoroutine = StartCoroutine(Follow(point, isPlayer));
         }
+        else if (GetComponent<Range>().CurrentTargetEnemy() && !haveAttacked)
+        {
+            if (followCoroutine != null)
+            {
+                StopCoroutine(followCoroutine);
+            }
+
+            if (waypointCoroutine != null)
+            {
+                StopCoroutine(waypointCoroutine);
+            }
+
+            if (GetComponent<Range>().CurrentColliderTransform() != null)
+            {
+                followCoroutine = StartCoroutine(Follow(GetComponent<Range>().CurrentColliderTransform().transform, isPlayer));
+            }
+        }
         else
         {
             if (followCoroutine != null)
             {
+                Debug.Log("Stop Coroutine");
+
                 StopCoroutine(followCoroutine);
             }
             float minDist = float.MaxValue;
@@ -231,6 +258,7 @@ public class EnemyMove : MonoBehaviour {
     {
         if (collision.gameObject.layer == 10)
         {
+            haveAttacked = true;
             if (followCoroutine != null)
             {
                 Destroy(collision.gameObject);

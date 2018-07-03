@@ -11,10 +11,24 @@ public class Evolution : MonoBehaviour
     public SpriteRenderer SpriteDefault;
     public Sprite SpriteBig;
     public GameObject Background;
+    public bool EvolutionOn = false;
 
     [Header("Modifiers")]
     public float ScaleMultiplier = 2f;
     public float ScaleMultiplierBackground = 2.5f;
+
+    private void Start()
+    {
+        if (EvolutionOn)
+        {
+            SpriteDefault.sprite = SpriteBig;
+            GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
+            transform.localScale *= ScaleMultiplier;
+            Background.transform.localScale *= ScaleMultiplierBackground;
+            Camera.main.GetComponent<CamFollow>().Big();
+            transform.position = transform.position + Vector3.up * 3;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
