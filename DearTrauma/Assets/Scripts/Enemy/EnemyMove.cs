@@ -256,13 +256,13 @@ public class EnemyMove : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 10)
-        {
-            haveAttacked = true;
-            if (followCoroutine != null)
-            {
-                Destroy(collision.gameObject);
-            }
-        }
+        //if (collision.gameObject.layer == 10)
+        //{
+        //    haveAttacked = true;
+        //    if (followCoroutine != null)
+        //    {
+        //        Destroy(collision.gameObject);
+        //    }
+        //}
     }
 }
