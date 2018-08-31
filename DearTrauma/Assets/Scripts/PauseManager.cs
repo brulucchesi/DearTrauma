@@ -29,7 +29,7 @@ public class PauseManager : MonoBehaviour {
             {
                 PauseGame();
             }
-            else if (ScreenManager.GetInstance().PreviousScreen.Value == ScreenManager.ScreenType.Pause && screen == ScreenManager.ScreenType.Game)
+            else if (screen == ScreenManager.ScreenType.Game)
             {
                 UnpauseGame();
             }
