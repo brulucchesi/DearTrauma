@@ -13,9 +13,12 @@ public class Push : MonoBehaviour {
     private Vector2 playerSize;
     private Vector2 boxSize;
 
+    private Animator anim;
+
     // Use this for initialization
     void Start()
     {
+        anim = GetComponent<Animator>();
         pushable = null;
         playerSize = GetComponent<CapsuleCollider2D>().size;
         boxSize = new Vector2(playerSize.x + (Skin * 2), playerSize.y + (Skin * 2));
@@ -32,18 +35,28 @@ public class Push : MonoBehaviour {
         {
             pushable = col.gameObject;
 
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 //pushable.GetComponent<FixedJoint2D>().connectedBody = GetComponent<Rigidbody2D>();
                 //pushable.GetComponent<FixedJoint2D>().enabled = true;
                 //pushable.GetComponent<Pushable>().beingPushed = true;
+
+                if (anim)
+                {
+                    anim.SetBool("Pushing", true);
+                }
             }
             else
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                 //pushable.GetComponent<FixedJoint2D>().enabled = false;
                 //pushable.GetComponent<Pushable>().beingPushed = false;
+
+                if (anim)
+                {
+                    anim.SetBool("Pushing", false);
+                }
             }
         }
         else
@@ -53,8 +66,13 @@ public class Push : MonoBehaviour {
             if (pushable)
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;//(RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation);
-                                                                                               //pushable.GetComponent<FixedJoint2D>().enabled = false;
-                                                                                               //pushable.GetComponent<Pushable>().beingPushed = false;
+                                                                                                         //pushable.GetComponent<FixedJoint2D>().enabled = false;
+                                                                                                         //pushable.GetComponent<Pushable>().beingPushed = false;
+            }
+
+            if (anim)
+            {
+                anim.SetBool("Pushing", false);
             }
             //}
         }
