@@ -32,7 +32,7 @@ public class Attack : MonoBehaviour {
     {
         if (anim)
         {
-            anim.SetTrigger(GetComponent<Movement>().Right?"AttackRight": "AttackLeft");
+            anim.SetTrigger("Attack");
         }
         else
         {

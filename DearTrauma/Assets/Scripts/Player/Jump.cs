@@ -22,8 +22,11 @@ public class Jump : MonoBehaviour {
     private Vector2 playerSize;
     private Vector2 boxSize;
 
+    private Animator anim;
+
     void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<CapsuleCollider2D>().size;
         boxSize = new Vector2(playerSize.x - (GroundedSkin * 2), GroundedSkin);
@@ -62,6 +65,11 @@ public class Jump : MonoBehaviour {
             rb.AddForce(Vector2.up * JumpVelocity, ForceMode2D.Impulse);
             jumpPress = false;
             grounded = false;
+            if(anim)
+            {
+                anim.SetTrigger("Jump");
+                anim.SetTrigger("offGround");
+            }
         }
         else
         {
