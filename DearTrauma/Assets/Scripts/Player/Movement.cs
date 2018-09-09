@@ -132,6 +132,7 @@ public class Movement : MonoBehaviour {
     {
         Safe = hide;
         Speed = (hide) ? Speed / SpeedHideMod : Speed * SpeedHideMod;
+        GetComponent<Animator>().SetBool("Hidden", hide);
     }
 
     void Flip()
