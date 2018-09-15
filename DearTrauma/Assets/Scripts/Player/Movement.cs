@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour {
         lastCheckPoint = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(canMove)
         {
@@ -59,9 +59,10 @@ public class Movement : MonoBehaviour {
                 //hor = Mathf.Clamp(hor, -1f, -1f);
             }
 
-            Vector2 vel = new Vector2((hor == 1 || hor == -1) ? hor * Speed * 1.5f : hor * Speed, rb.velocity.y);
+            Vector2 vel = new Vector2(((Mathf.Abs(hor) - 1) < 0.1f) ? hor * Speed * 1.5f : hor * Speed, rb.velocity.y);
 
             rb.velocity = vel;
+            print("vel: " + vel);
 
             if(Mathf.Abs(vel.x) > 0.01f)
             {
