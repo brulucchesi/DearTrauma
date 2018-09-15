@@ -6,7 +6,6 @@ public class EnemyBack : MonoBehaviour {
 
 	public void ReceiveAttack()
     {
-        Debug.Log("me atacaram :(");
         Destroy(transform.parent.parent.gameObject);
     }
 }

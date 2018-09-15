@@ -17,6 +17,7 @@ public class Jump : MonoBehaviour {
     private Rigidbody2D rb;
     private bool jumpPress;
     private bool grounded;
+    private bool touchingGround;
     private bool doubleJump;
 
     private Vector2 playerSize;
@@ -74,11 +75,27 @@ public class Jump : MonoBehaviour {
         else
         {
             Vector2 boxCenter = (Vector2)transform.position + Vector2.down * (playerSize.y + boxSize.y) * 0.5f;
-            grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null);
+            grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touchingGround;
             if(grounded)
             {
                 doubleJump = true;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == 9)
+        {
+            touchingGround = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            touchingGround = false;
         }
     }
 }

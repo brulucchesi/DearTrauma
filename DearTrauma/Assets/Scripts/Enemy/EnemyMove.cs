@@ -199,8 +199,6 @@ public class EnemyMove : MonoBehaviour
     {
         if (follow)
         {
-            Debug.Log("follooooow");
-
             if (waypointCoroutine != null)
             {
                 StopCoroutine(waypointCoroutine);
