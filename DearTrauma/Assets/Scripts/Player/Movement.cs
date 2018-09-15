@@ -79,7 +79,7 @@ public class Movement : MonoBehaviour {
         if(collision.CompareTag("EnemyFront") && !Safe)
         {
             SetCanMove(false);
-            collision.transform.parent.GetComponent<EnemyMove>().AttackPlayer();
+            collision.GetComponentInParent<EnemyMove>().AttackPlayer();
         }
         else if (collision.CompareTag("Trap"))
         {
@@ -115,6 +115,7 @@ public class Movement : MonoBehaviour {
     public void PlayerDied()
     {
         GetComponent<Animator>().SetBool("Dead", true);
+        Physics2D.IgnoreLayerCollision(8, 10, true);
     }
 
     public void SetCheckpoint(Vector2 pos)
@@ -125,6 +126,7 @@ public class Movement : MonoBehaviour {
     public void ReturnToCheckpoint()
     {
         GetComponent<Animator>().SetBool("Dead", false);
+        Physics2D.IgnoreLayerCollision(8, 10, false);
         transform.position = lastCheckPoint;
         SetCanMove(true);
     }

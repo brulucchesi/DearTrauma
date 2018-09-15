@@ -31,8 +31,8 @@ public class Range : MonoBehaviour
     private void Update()
     {
         boxCenter = (enemyMove.Right) ?
-                    (Vector2)enemyMove.RightPos.transform.position + Vector2.right * (BoxSize.x / 2) :
-                    (Vector2)enemyMove.LeftPos.transform.position + Vector2.left * (BoxSize.x / 2);
+                    (Vector2)enemyMove.Front.transform.position + Vector2.right * (BoxSize.x / 2) :
+                    (Vector2)enemyMove.Front.transform.position + Vector2.left * (BoxSize.x / 2);
         Collider2D[] colliders = Physics2D.OverlapBoxAll(boxCenter, BoxSize, 0f, Mask);
         RangeTarget currentTarget = RangeTarget.None;
         Collider2D currentCollider = null;

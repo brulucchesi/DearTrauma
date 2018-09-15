@@ -7,10 +7,8 @@ public class EnemyMove : MonoBehaviour
 
     [Header("References")]
     public GameObject WaypointsParent;
-    public GameObject Back;
-    public GameObject Front;
-    public GameObject LeftPos;
-    public GameObject RightPos;
+    public Transform Front;
+    public Transform[] PartsToFlip;
 
     [Header("Modifiers")]
     public float FollowSpeed = 20f;
@@ -166,25 +164,33 @@ public class EnemyMove : MonoBehaviour
         //  Debug.Log("antes: " + Right);
         if (point.x > transform.position.x)
         {
+            //if (!Right)
+            //{
+            //    //  Debug.Log("flipright");
+            //    Back.transform.position = LeftPos.transform.position;
+            //    Front.transform.position = RightPos.transform.position;
+            //    GetComponent<Animator>().SetTrigger("Right");
+            //}
+            //Right = true;
             if (!Right)
             {
-                //  Debug.Log("flipright");
-                Back.transform.position = LeftPos.transform.position;
-                Front.transform.position = RightPos.transform.position;
-                GetComponent<Animator>().SetTrigger("Right");
+                Flip();
             }
-            Right = true;
         }
         else //Going left
         {
+            //if (Right)
+            //{
+            //       Debug.Log("flipleft");
+            //    Back.transform.position = RightPos.transform.position;
+            //    Front.transform.position = LeftPos.transform.position;
+            //    GetComponent<Animator>().SetTrigger("Left");
+            //}
+            //Right = false;
             if (Right)
             {
-                //   Debug.Log("flipleft");
-                Back.transform.position = RightPos.transform.position;
-                Front.transform.position = LeftPos.transform.position;
-                GetComponent<Animator>().SetTrigger("Left");
+                Flip();
             }
-            Right = false;
         }
         // Debug.Log("dps: " + Right);
     }
@@ -264,5 +270,16 @@ public class EnemyMove : MonoBehaviour
         //        Destroy(collision.gameObject);
         //    }
         //}
+    }
+
+    void Flip()
+    {
+        Right = !Right;
+        foreach (Transform t in PartsToFlip)
+        {
+            Vector3 currentScale = t.localScale;
+            currentScale.x *= -1;
+            t.localScale = currentScale;
+        }
     }
 }
