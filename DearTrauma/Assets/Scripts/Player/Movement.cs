@@ -114,7 +114,7 @@ public class Movement : MonoBehaviour {
 
     public void PlayerDied()
     {
-        GetComponent<Animator>().SetTrigger("Died");
+        GetComponent<Animator>().SetBool("Dead", true);
     }
 
     public void SetCheckpoint(Vector2 pos)
@@ -124,6 +124,7 @@ public class Movement : MonoBehaviour {
 
     public void ReturnToCheckpoint()
     {
+        GetComponent<Animator>().SetBool("Dead", false);
         transform.position = lastCheckPoint;
         SetCanMove(true);
     }

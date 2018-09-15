@@ -97,12 +97,10 @@ namespace UnityChan
             if (GetComponentInParent<Movement>().Right/*managerRef.transform.localScale.x > 0*/)
             {
                 force = trs.rotation * (Vector3.right * stiffnessForce) / sqrDt;
-                print("direita");
             }
             else
             {
                 force = trs.rotation * (Vector3.left * stiffnessForce) / sqrDt;
-                print("esquerda");
             }
 
             //drag
