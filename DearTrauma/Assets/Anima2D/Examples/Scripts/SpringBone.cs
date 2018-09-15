@@ -94,7 +94,8 @@ namespace UnityChan
 
             //stiffness
             Vector3 force;// = trs.rotation * (Vector3.right * stiffnessForce) / sqrDt;
-            if (GetComponentInParent<Movement>().Right/*managerRef.transform.localScale.x > 0*/)
+            if (GetComponentInParent<Movement>() && GetComponentInParent<Movement>().Right
+                || GetComponentInParent<EnemyMove>() && GetComponentInParent<EnemyMove>().Right/*managerRef.transform.localScale.x > 0*/)
             {
                 force = trs.rotation * (Vector3.right * stiffnessForce) / sqrDt;
             }

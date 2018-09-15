@@ -246,7 +246,7 @@ public class EnemyMove : MonoBehaviour
 
     public void AttackPlayer()
     {
-        GetComponent<Animator>().SetTrigger(Right ? "AttackRight" : "AttackLeft");
+        GetComponent<Animator>().SetTrigger("Attack");
     }
 
     public void PlayerDied()
