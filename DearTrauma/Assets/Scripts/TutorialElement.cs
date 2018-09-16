@@ -14,7 +14,6 @@ public class TutorialElement : MonoBehaviour {
     [Header("Distance")]
     public float MinDist = 0f;
     public float MaxDist = 30f;
-    [Header("Not Distance")]
     [Space]
     [Range(0,1)]
     public float MaxAlpha = 0.9f;
@@ -25,6 +24,8 @@ public class TutorialElement : MonoBehaviour {
 
     private Vector2 boxSize;
     private Vector2 boxCenter;
+
+    private Coroutine alphaChange;
 
     private void Start()
     {
@@ -63,7 +64,11 @@ public class TutorialElement : MonoBehaviour {
 
         if (Active.Value && collision.CompareTag("Player"))
         {
-
+            if(alphaChange != null)
+            {
+                StopCoroutine(alphaChange);
+            }
+            alphaChange = StartCoroutine(AlphaChange(0, MaxAlpha));
         }
     }
 
@@ -76,8 +81,30 @@ public class TutorialElement : MonoBehaviour {
 
         if (Active.Value && collision.CompareTag("Player"))
         {
-
+            if (alphaChange != null)
+            {
+                StopCoroutine(alphaChange);
+            }
+            alphaChange = StartCoroutine(AlphaChange(MaxAlpha, 0));
         }
+    }
+
+    private IEnumerator AlphaChange(float min, float max)
+    {
+        float frac = 0.0f;
+
+        while(frac < 1.0f)
+        {
+            frac += 1.0f / 30.0f;
+            print(frac);
+            Color color = TutorialImage.color;
+            color.a = Mathf.Lerp(min, max, frac);
+            TutorialImage.color = color;
+            yield return new WaitForSeconds(1 / 30);
+        }
+
+
+        yield return null;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
