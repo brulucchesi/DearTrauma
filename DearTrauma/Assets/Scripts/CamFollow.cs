@@ -19,8 +19,11 @@ public class CamFollow : MonoBehaviour {
     private float camY;
     private float camX;
 
+    private float minX, maxX, minY, maxY;
+
     private void Start()
     {
+        SetClamp(float.MinValue, float.MaxValue, float.MinValue, float.MaxValue);
         camY = CamY;
         camX = CamX;
     }
@@ -29,6 +32,11 @@ public class CamFollow : MonoBehaviour {
     {
         Vector3 targetPosition = Target.TransformPoint(new Vector3(CamX, CamY, -10));
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SmoothTime);
+
+        Vector3 clampedPos = transform.position;
+        clampedPos.y = Mathf.Clamp(transform.position.y, minY, maxY);
+        clampedPos.x = Mathf.Clamp(transform.position.x, minX, maxX);
+        transform.position = clampedPos;
     }
 
     public void Big()
@@ -36,5 +44,13 @@ public class CamFollow : MonoBehaviour {
         camY = CamYBig;
         camX = CamXBig;
         Camera.main.orthographicSize = SizeBig;
+    }
+
+    public void SetClamp(float miny, float maxy, float minx, float maxx)
+    {
+        minX = minx;
+        maxX = maxx;
+        minY = miny;
+        maxY = maxy;
     }
 }
