@@ -6,8 +6,8 @@ using UnityEngine;
 public class Jump : MonoBehaviour {
 
     [Header("Modifiers")]
-    [Range(1,10)]
     public float JumpVelocity;
+    public float DoubleJumpVelocity;
     //public float FallMultiplier = 2.5f;
     //public float LowJumpMultiplier = 2f;
 
@@ -76,7 +76,15 @@ public class Jump : MonoBehaviour {
     {
         if(jumpPress)
         {
-            rb.AddForce(Vector2.up * JumpVelocity, ForceMode2D.Impulse);
+            if(grounded)
+            {
+                rb.AddForce(Vector2.up * JumpVelocity, ForceMode2D.Impulse);
+            }
+            else
+            {
+                rb.AddForce(Vector2.up * DoubleJumpVelocity, ForceMode2D.Impulse);
+            }
+
             jumpPress = false;
             grounded = false;
             if(anim)
