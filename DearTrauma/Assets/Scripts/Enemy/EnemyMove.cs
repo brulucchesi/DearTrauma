@@ -13,6 +13,7 @@ public class EnemyMove : MonoBehaviour
     [Header("Modifiers")]
     public float FollowSpeed = 20f;
     public float WaypointSpeed = 2f;
+    public float TimeToWait = 2f;
 
     [HideInInspector]
     public bool Right;
@@ -110,6 +111,9 @@ public class EnemyMove : MonoBehaviour
         }
 
         //  Debug.Log("waypoint");
+        GetComponent<Animator>().SetBool("Idle", true);
+        yield return new WaitForSeconds(TimeToWait);
+        GetComponent<Animator>().SetBool("Idle", false);
         currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
         Flip(waypoints[currentWaypoint]);
         waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));

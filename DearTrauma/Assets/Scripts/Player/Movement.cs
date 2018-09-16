@@ -62,7 +62,6 @@ public class Movement : MonoBehaviour {
             Vector2 vel = new Vector2(((Mathf.Abs(hor) - 1) < 0.1f) ? hor * Speed * 1.5f : hor * Speed, rb.velocity.y);
 
             rb.velocity = vel;
-            print("vel: " + vel);
 
             if(Mathf.Abs(vel.x) > 0.01f)
             {
