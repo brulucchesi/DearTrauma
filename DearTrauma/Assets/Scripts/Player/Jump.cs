@@ -23,6 +23,7 @@ public class Jump : MonoBehaviour {
 
     private Vector2 playerSize;
     private Vector2 boxSize;
+    private Vector2 boxCenter;
 
     private Animator anim;
 
@@ -34,7 +35,15 @@ public class Jump : MonoBehaviour {
         boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
         doubleJump = true;
     }
-    
+
+    private void OnDrawGizmosSelected()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.DrawCube(boxCenter, boxSize);
+        }
+    }
+
     void Update ()
     {
         if(Input.GetButtonDown("Jump") && (grounded || doubleJump) && GetComponent<Movement>().GetCanMove())
@@ -78,7 +87,7 @@ public class Jump : MonoBehaviour {
         }
         else
         {
-            Vector2 boxCenter = (Vector2)transform.position + Vector2.down * (playerSize.y + boxSize.y) * 0.5f;
+            boxCenter = (Vector2)transform.position + Vector2.down * (playerSize.y + boxSize.y) * 0.5f;
             grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touchingGround;
             if(grounded)
             {
