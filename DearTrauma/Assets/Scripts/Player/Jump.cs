@@ -8,8 +8,8 @@ public class Jump : MonoBehaviour {
     [Header("Modifiers")]
     [Range(1,10)]
     public float JumpVelocity;
-    public float FallMultiplier = 2.5f;
-    public float LowJumpMultiplier = 2f;
+    //public float FallMultiplier = 2.5f;
+    //public float LowJumpMultiplier = 2f;
 
     public float GroundedSkin = 0.05f;
     public LayerMask Mask;
