@@ -34,7 +34,7 @@ public class Evolution : MonoBehaviour
     {
         if (collision.CompareTag("Fragment"))
         {
-            if (collision.name == Fragment.name)
+            if (Fragment && collision.name == Fragment.name)
             {
                 SpriteDefault.sprite = SpriteBig;
                 GetComponent<Animator>().runtimeAnimatorController = BigAnimator;

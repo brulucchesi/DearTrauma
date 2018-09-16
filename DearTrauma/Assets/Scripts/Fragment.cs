@@ -13,6 +13,7 @@ public class Fragment : MonoBehaviour
 
     [Header("Modifiers")]
     public string SceneName = "";
+    public bool Boss = false;
 
     private void Start()
     {
@@ -61,7 +62,14 @@ public class Fragment : MonoBehaviour
 
     public void CloseMemory()
     {
+        if(Boss)
+        {
+            Manager.GetInstance().GetComponent<Animator>().SetTrigger("end");
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
         Time.timeScale = 1f;
-        gameObject.SetActive(false);
     }
 }
