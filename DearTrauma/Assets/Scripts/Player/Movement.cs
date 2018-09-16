@@ -70,7 +70,10 @@ public class Movement : MonoBehaviour {
             }
             else
             {
-                GetComponent<Animator>().SetBool("Walking", false);
+                if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+                {
+                    GetComponent<Animator>().SetBool("Walking", false);
+                }
             }
         }
 	}
