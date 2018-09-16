@@ -14,7 +14,14 @@ public class ButtonSceneLoader : MonoBehaviour {
     {
         GetComponent<Button>().OnClickAsObservable().Subscribe(_ =>
         {
-            SceneManager.LoadScene(Scene);
+            if (Scene.Equals("restart"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                SceneManager.LoadScene(Scene);
+            }
         });
     }
 }
