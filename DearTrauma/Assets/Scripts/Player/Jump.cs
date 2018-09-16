@@ -11,7 +11,8 @@ public class Jump : MonoBehaviour {
     //public float FallMultiplier = 2.5f;
     //public float LowJumpMultiplier = 2f;
 
-    public float GroundedSkin = 0.05f;
+    public float GroundedSkinX = 0.05f;
+    public float GroundedSkinY = 0.05f;
     public LayerMask Mask;
 
     private Rigidbody2D rb;
@@ -30,7 +31,7 @@ public class Jump : MonoBehaviour {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<CapsuleCollider2D>().size;
-        boxSize = new Vector2(playerSize.x - (GroundedSkin * 2), GroundedSkin);
+        boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
         doubleJump = true;
     }
     
