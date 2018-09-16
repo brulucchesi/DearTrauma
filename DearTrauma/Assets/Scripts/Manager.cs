@@ -8,6 +8,7 @@ public class Manager : MonoBehaviour {
     [Header("References")]
     public GameObject Player;
     public GameObject FinalFragment;
+    public GameObject Boss;
 
     static private Manager _instance;
 
@@ -37,6 +38,7 @@ public class Manager : MonoBehaviour {
     public void AnimationMiddle()
     {
         FinalFragment.SetActive(false);
+        Boss.SetActive(true);
     }
 
     public void EndAnimation()
