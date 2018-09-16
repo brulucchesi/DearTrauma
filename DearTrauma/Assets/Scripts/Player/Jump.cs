@@ -42,21 +42,24 @@ public class Jump : MonoBehaviour {
             if(!grounded)
             {
                 doubleJump = false;
+                Vector3 vel = rb.velocity;
+                vel.y = 0;
+                rb.velocity = vel;
             }
         }
 
-        if (rb.velocity.y < 0)
-        {
-            rb.gravityScale = FallMultiplier;
-        }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-        {
-            rb.gravityScale = LowJumpMultiplier;
-        }
-        else
-        {
-            rb.gravityScale = 1f;
-        }
+        //if (rb.velocity.y < 0)
+        //{
+        //    rb.gravityScale = FallMultiplier;
+        //}
+        //else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        //{
+        //    rb.gravityScale = LowJumpMultiplier;
+        //}
+        //else
+        //{
+        //    rb.gravityScale = 1f;
+        //}
 	}
 
     private void FixedUpdate()
