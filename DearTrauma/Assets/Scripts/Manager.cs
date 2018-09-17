@@ -5,6 +5,8 @@ using UniRx;
 
 public class Manager : MonoBehaviour {
 
+    private GameObject analytics;
+
     [Header("References")]
     public GameObject Player;
     public GameObject FinalFragment;
@@ -24,9 +26,18 @@ public class Manager : MonoBehaviour {
 
     private void Start()
     {
+
+        analytics = GameObject.Find("Analytics");
+
         Observable.EveryUpdate().Where(_ => Input.anyKey &&
-                                            (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Start))
-                                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game));
+                                            (ScreenManager.GetInstance().CurrentScreen.Value ==
+                                             ScreenManager.ScreenType.Start))
+            .Subscribe(_ =>
+            {
+              ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
+            ; analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
+            }
+            );
         var escInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
         var anyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
         escInput.Where(_=> (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game))
