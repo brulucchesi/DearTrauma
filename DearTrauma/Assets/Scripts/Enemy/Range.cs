@@ -12,6 +12,13 @@ public class Range : MonoBehaviour
         None
     }
 
+    public int enemyNumber = -1;
+
+    public int SentEnemyNumber()
+    {
+        return enemyNumber;
+    }
+
     [Header("Modifiers")]
     public LayerMask Mask;
     public Vector2 BoxSize;

@@ -7,6 +7,9 @@ using UniRx.Triggers;
 public class ScreenManager : MonoBehaviour
 {
 
+    private GameObject analytics;
+    private int helpCount = 0;
+
     public enum ScreenType
     {
         Start,
@@ -39,10 +42,17 @@ public class ScreenManager : MonoBehaviour
 
     private void Start()
     {
+        analytics = GameObject.Find("Analytics"); 
     }
 
     public void SetCurrentScreen(ScreenType screen)
     {
+        if (screen == ScreenType.Controls)
+        {
+            helpCount++;
+            analytics.GetComponent<UnityAnalyticsEvents>().HelpNeeded(helpCount);
+        }
+
         PreviousScreen.Value = CurrentScreen.Value;
         CurrentScreen.Value = screen;
     }

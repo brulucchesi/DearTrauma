@@ -2,7 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hole : MonoBehaviour {
+public class Hole : MonoBehaviour
+{
+
+    private GameObject analytics;
+    [SerializeField] private int holeNumber = -1;
+
+    private void Start()
+    {
+        analytics = GameObject.Find("Analytics");
+    }
 
     public void AttackPlayer()
     {
@@ -11,6 +20,8 @@ public class Hole : MonoBehaviour {
 
     public void PlayerDied()
     {
+        analytics.GetComponent<UnityAnalyticsEvents>().FellIntoHole(holeNumber);
+
         Manager.GetInstance().Player.GetComponent<Movement>().PlayerDied();
     }
 }

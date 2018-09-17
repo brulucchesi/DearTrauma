@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Movement : MonoBehaviour {
+public class Movement : MonoBehaviour
+{
+    private GameObject analytics;
 
     [Header("References")]
     public Transform[] PartsToFlip;
@@ -24,6 +26,8 @@ public class Movement : MonoBehaviour {
 
     void Start()
     {
+        analytics = GameObject.Find("Analytics");
+
         Right = true;
         canMove = true;
         Safe = false;
@@ -81,6 +85,11 @@ public class Movement : MonoBehaviour {
     {
         if(collision.CompareTag("EnemyFront") && !Safe)
         {
+
+            int enemyNumber = collision.gameObject.transform.parent.parent.GetComponent<Range>().SentEnemyNumber();
+
+            analytics.GetComponent<UnityAnalyticsEvents>().EnemyKilledPlayer(enemyNumber);
+
             SetCanMove(false);
             collision.GetComponentInParent<EnemyMove>().AttackPlayer();
         }
