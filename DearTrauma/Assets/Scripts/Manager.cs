@@ -35,7 +35,11 @@ public class Manager : MonoBehaviour {
             .Subscribe(_ =>
             {
               ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
-            ; analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
+                if (analytics != null)
+                {
+                    analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
+
+                }
             }
             );
         var escInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));

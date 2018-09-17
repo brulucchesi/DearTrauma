@@ -1213,6 +1213,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &496102119 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4497018545080020, guid: 692a1c889cc85b044a2fa53a10a21d8c,
+    type: 2}
+  m_PrefabInternal: {fileID: 56576830}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,7 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c118ddb60b2d54cb9031c288569dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
+  Target: {fileID: 496102119}
   SmoothTime: 0.3
   CamY: 0.76
   CamX: 4.44
@@ -1422,6 +1427,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &757614521 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1764559591061550, guid: 692a1c889cc85b044a2fa53a10a21d8c,
+    type: 2}
+  m_PrefabInternal: {fileID: 56576830}
+--- !u!1 &783286518 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1820096226100942, guid: 9cc292fa51b270841bd11f03881c6883,
+    type: 2}
+  m_PrefabInternal: {fileID: 1136843321}
 --- !u!1 &796478087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,6 +1480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284a1c76800f87442b46b595cdb0b734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  track: {fileID: 757614521}
 --- !u!1001 &805744137
 Prefab:
   m_ObjectHideFlags: 0
@@ -2002,7 +2018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d3db3b85ae9aa458a7fe23fe93aa51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 783286518}
   FinalFragment: {fileID: 0}
   Boss: {fileID: 0}
 --- !u!114 &1158077037
@@ -4432,7 +4448,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2042581194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.54, y: 12.85, z: 0}
+  m_LocalPosition: {x: -4.32, y: 34.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 248250162}
