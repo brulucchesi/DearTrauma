@@ -21,6 +21,8 @@ public class CamFollow : MonoBehaviour {
 
     private float minX, maxX, minY, maxY;
 
+    private bool isBig = false;
+
     private void Start()
     {
         SetClamp(float.MinValue, float.MaxValue, float.MinValue, float.MaxValue);
@@ -30,7 +32,17 @@ public class CamFollow : MonoBehaviour {
 
     void Update()
     {
-        Vector3 targetPosition = Target.TransformPoint(new Vector3(CamX, CamY, -10));
+        if (!isBig)
+        {
+            camY = CamY;
+            camX = CamX;
+        }
+        else
+        {
+            camY = CamYBig;
+            camX = CamXBig;
+        }
+        Vector3 targetPosition = Target.TransformPoint(new Vector3(camX, camY, -10));
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SmoothTime);
 
         Vector3 clampedPos = transform.position;
@@ -41,6 +53,7 @@ public class CamFollow : MonoBehaviour {
 
     public void Big()
     {
+        isBig = true;
         camY = CamYBig;
         camX = CamXBig;
         Camera.main.orthographicSize = SizeBig;
