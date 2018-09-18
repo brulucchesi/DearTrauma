@@ -28,6 +28,9 @@ public class EnemyMove : MonoBehaviour
     private Vector3 lastPos;
     private bool haveAttacked = false;
 
+    private bool canFollow;
+    private bool canWaypoint;
+
     // Use this for initialization
     void Start()
     {
@@ -64,6 +67,11 @@ public class EnemyMove : MonoBehaviour
 
     private IEnumerator MoveToWaypoint(Vector3 pointOrig)
     {
+        canWaypoint = true;
+        if (waypointCoroutine != null)
+        {
+            StopCoroutine(waypointCoroutine);
+        }
         //Vector3 init = transform.localPosition;
 
         //float startTime = Time.time;
@@ -82,85 +90,107 @@ public class EnemyMove : MonoBehaviour
 
         while (Vector2.Distance(point, transform.position) > 1f)
         {
-            point = new Vector3(pointOrig.x, transform.position.y);
-            if (point.x > transform.position.x)
+            if (canWaypoint)
             {
-                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-                vel.x = WaypointSpeed;
-                GetComponent<Rigidbody2D>().velocity = vel;
-            }
-            else
-            {
-                Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-                vel.x = -WaypointSpeed;
-                GetComponent<Rigidbody2D>().velocity = vel;
-            }
-
-            //if (Vector2.Distance(lastPos, transform.position) < 0.1f)
-            //{
-            //    if (waypointCoroutine != null)
-            //    {
-            //        lastPos = transform.position;
-            //        yield return new WaitForSeconds(1 / 30);
-            //        StopCoroutine(waypointCoroutine);
-            //        currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
-            //        Flip(waypoints[currentWaypoint]);
-            //        waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
-            //    }
-            //}
-
-            lastPos = transform.position;
-            yield return new WaitForSeconds(1 / 30);
-        }
-
-        //  Debug.Log("waypoint");
-        GetComponent<Animator>().SetBool("Idle", true);
-        yield return new WaitForSeconds(TimeToWait);
-        GetComponent<Animator>().SetBool("Idle", false);
-        currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
-        Flip(waypoints[currentWaypoint]);
-        waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
-    }
-
-    private IEnumerator Follow(Transform t, bool isPlayer)
-    {
-
-        //Vector3 point = Manager.GetInstance().Player.transform.position;
-        while (true/*Vector2.Distance(point, transform.position) > 0.01f*/)
-        {
-            if (isPlayer && Manager.GetInstance().Player.GetComponent<Movement>().Safe)
-            {
-                Debug.Log("Stop Follow player");
-
-                StartFollow(false, null, false);
-            }
-            if (t == null)
-            {
-                Debug.Log("Stop Follow at all");
-                StartFollow(false, null, false);
-            }
-            else
-            {
-                Vector3 point = t.position;
-                Flip(point);
-                //point.y = transform.position.y;
-                //transform.position = Vector2.MoveTowards(transform.position, point, FollowSpeed * Time.deltaTime);
-
+                point = new Vector3(pointOrig.x, transform.position.y);
                 if (point.x > transform.position.x)
                 {
                     Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-                    vel.x = FollowSpeed;
+                    vel.x = WaypointSpeed;
                     GetComponent<Rigidbody2D>().velocity = vel;
                 }
                 else
                 {
                     Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-                    vel.x = -FollowSpeed;
+                    vel.x = -WaypointSpeed;
                     GetComponent<Rigidbody2D>().velocity = vel;
                 }
-            }
 
-            yield return new WaitForSeconds(1 / 30);
+                //if (Vector2.Distance(lastPos, transform.position) < 0.1f)
+                //{
+                //    if (waypointCoroutine != null)
+                //    {
+                //        lastPos = transform.position;
+                //        yield return new WaitForSeconds(1 / 30);
+                //        StopCoroutine(waypointCoroutine);
+                //        currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
+                //        Flip(waypoints[currentWaypoint]);
+                //        waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+                //    }
+                //}
+
+                lastPos = transform.position;
+                yield return new WaitForSeconds(1 / 30);
+            }
+            else
+            {
+                yield return new WaitForSeconds(1 / 30);
+            }
+        }
+
+        if (canWaypoint)
+        {
+            //  Debug.Log("waypoint");
+            GetComponent<Animator>().SetBool("Idle", true);
+            yield return new WaitForSeconds(TimeToWait);
+            GetComponent<Animator>().SetBool("Idle", false);
+            currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
+            Flip(waypoints[currentWaypoint]);
+            waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+        }
+    }
+
+    private IEnumerator Follow(Transform t, bool isPlayer)
+    {
+        canFollow = true;
+        if (followCoroutine != null)
+        {
+            StopCoroutine(followCoroutine);
+        }
+
+        //Vector3 point = Manager.GetInstance().Player.transform.position;
+        while (true/*Vector2.Distance(point, transform.position) > 0.01f*/)
+        {
+            if (canFollow)
+            {
+                if (isPlayer && Manager.GetInstance().Player.GetComponent<Movement>().Safe)
+                {
+                    Debug.Log("Stop Follow player");
+
+                    StartFollow(false, null, false);
+                }
+                if (t == null)
+                {
+                    Debug.Log("Stop Follow at all");
+                    StartFollow(false, null, false);
+                }
+                else
+                {
+                    Vector3 point = t.position;
+                    Flip(point);
+                    //point.y = transform.position.y;
+                    //transform.position = Vector2.MoveTowards(transform.position, point, FollowSpeed * Time.deltaTime);
+
+                    if (point.x > transform.position.x)
+                    {
+                        Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                        vel.x = FollowSpeed;
+                        GetComponent<Rigidbody2D>().velocity = vel;
+                    }
+                    else
+                    {
+                        Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+                        vel.x = -FollowSpeed;
+                        GetComponent<Rigidbody2D>().velocity = vel;
+                    }
+                }
+
+                yield return new WaitForSeconds(1 / 30);
+            }
+            else
+            {
+                yield return new WaitForSeconds(1 / 30);
+            }
         }
     }
 
@@ -209,6 +239,7 @@ public class EnemyMove : MonoBehaviour
             if (waypointCoroutine != null)
             {
                 StopCoroutine(waypointCoroutine);
+                canWaypoint = false;
             }
             followCoroutine = StartCoroutine(Follow(point, isPlayer));
         }
@@ -236,6 +267,7 @@ public class EnemyMove : MonoBehaviour
                 Debug.Log("Stop Coroutine");
 
                 StopCoroutine(followCoroutine);
+                canFollow = false;
             }
             float minDist = float.MaxValue;
             int minIndex = -1;
