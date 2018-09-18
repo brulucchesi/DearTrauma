@@ -10,7 +10,7 @@ public class Fragment : MonoBehaviour
 
     [Header("References")]
     [Range(1, 4)]
-    public int memoryNumber = 0;
+    public int levelNumber = 0;
     public Door LinkedDoor;
     public GameObject FragmentMemory;
     public GameObject FragmentVisual;
@@ -50,7 +50,12 @@ public class Fragment : MonoBehaviour
 
     public void Collect()
     {
-        analytics.GetComponent<UnityAnalyticsEvents>().EndLevel(memoryNumber);
+        analytics.GetComponent<UnityAnalyticsEvents>().EndLevel(levelNumber);
+
+        if (levelNumber == 3)
+        {
+            gameObject.SetActive(false);
+        }
 
         if (LinkedDoor)
         {
@@ -70,9 +75,9 @@ public class Fragment : MonoBehaviour
 
     public void CloseMemory()
     {
-        if (memoryNumber < 4)
+        if (levelNumber < 4)
         {
-            analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(memoryNumber + 1);
+            analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(levelNumber + 1);
         }
 
         if (Boss)

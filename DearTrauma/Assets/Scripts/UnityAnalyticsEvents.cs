@@ -31,20 +31,20 @@ public class UnityAnalyticsEvents : MonoBehaviour {
         });
     }
 
-    public void StartLevel(int memoryNumber)
+    public void StartLevel(int levelNumber)
     {
         AnalyticsEvent.Custom("level_start", new Dictionary<string, object>
         {
-            { "level_index", memoryNumber },
+            { "level_index", levelNumber },
             { "time_elapsed", Time.timeSinceLevelLoad }
         });
     }
 
-    public void EndLevel(int memoryNumber)
+    public void EndLevel(int levelNumber)
     {
         AnalyticsEvent.Custom("level_complete", new Dictionary<string, object>
         {
-            { "level_index", memoryNumber },
+            { "level_index", levelNumber },
             { "time_elapsed", Time.timeSinceLevelLoad }
         });
     }
