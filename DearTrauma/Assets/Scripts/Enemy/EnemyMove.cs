@@ -18,6 +18,9 @@ public class EnemyMove : MonoBehaviour
     [HideInInspector]
     public bool Right;
 
+    [HideInInspector]
+    public bool Dead;
+
     private List<Vector3> waypoints;
     private int currentWaypoint;
     private Coroutine waypointCoroutine;
