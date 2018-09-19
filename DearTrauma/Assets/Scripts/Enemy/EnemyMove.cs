@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using System;
 
 public class EnemyMove : MonoBehaviour
 {
@@ -30,6 +32,8 @@ public class EnemyMove : MonoBehaviour
 
     private bool canFollow;
     private bool canWaypoint;
+    private IDisposable waypointDisposable;
+    private IDisposable followDisposable;
 
     // Use this for initialization
     void Start()
@@ -68,24 +72,11 @@ public class EnemyMove : MonoBehaviour
     private IEnumerator MoveToWaypoint(Vector3 pointOrig)
     {
         canWaypoint = true;
-        if (waypointCoroutine != null)
-        {
-            StopCoroutine(waypointCoroutine);
-        }
-        //Vector3 init = transform.localPosition;
-
-        //float startTime = Time.time;
-        //float journeyLength = Vector3.Distance(init, point);
-        //float distCovered;
-        //float fracJourney = 0;
-
-        //while (fracJourney < 1)
+        //if (waypointCoroutine != null)
         //{
-        //    distCovered = (Time.time - startTime) * WaypointSpeed;
-        //    fracJourney = distCovered / journeyLength;
-        //    transform.localPosition = Vector3.Lerp(init, point, fracJourney);
-        //    yield return new WaitForSeconds(1 / 30);
+        //    StopCoroutine(waypointCoroutine);
         //}
+
         Vector3 point = new Vector3(pointOrig.x, transform.position.y);
 
         while (Vector2.Distance(point, transform.position) > 1f)
@@ -106,19 +97,6 @@ public class EnemyMove : MonoBehaviour
                     GetComponent<Rigidbody2D>().velocity = vel;
                 }
 
-                //if (Vector2.Distance(lastPos, transform.position) < 0.1f)
-                //{
-                //    if (waypointCoroutine != null)
-                //    {
-                //        lastPos = transform.position;
-                //        yield return new WaitForSeconds(1 / 30);
-                //        StopCoroutine(waypointCoroutine);
-                //        currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
-                //        Flip(waypoints[currentWaypoint]);
-                //        waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
-                //    }
-                //}
-
                 lastPos = transform.position;
                 yield return new WaitForSeconds(1 / 30);
             }
@@ -130,26 +108,25 @@ public class EnemyMove : MonoBehaviour
 
         if (canWaypoint)
         {
-            //  Debug.Log("waypoint");
             GetComponent<Animator>().SetBool("Idle", true);
             yield return new WaitForSeconds(TimeToWait);
             GetComponent<Animator>().SetBool("Idle", false);
             currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
             Flip(waypoints[currentWaypoint]);
-            waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+            //waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+            waypointDisposable = Observable.FromCoroutine(() => MoveToWaypoint(waypoints[currentWaypoint])).Subscribe();
         }
     }
 
     private IEnumerator Follow(Transform t, bool isPlayer)
     {
         canFollow = true;
-        if (followCoroutine != null)
-        {
-            StopCoroutine(followCoroutine);
-        }
+        //if (followCoroutine != null)
+        //{
+        //    StopCoroutine(followCoroutine);
+        //}
 
-        //Vector3 point = Manager.GetInstance().Player.transform.position;
-        while (true/*Vector2.Distance(point, transform.position) > 0.01f*/)
+        while (true)
         {
             if (canFollow)
             {
@@ -168,8 +145,6 @@ public class EnemyMove : MonoBehaviour
                 {
                     Vector3 point = t.position;
                     Flip(point);
-                    //point.y = transform.position.y;
-                    //transform.position = Vector2.MoveTowards(transform.position, point, FollowSpeed * Time.deltaTime);
 
                     if (point.x > transform.position.x)
                     {
@@ -196,19 +171,8 @@ public class EnemyMove : MonoBehaviour
 
     private void Flip(Vector3 point)
     {
-        //   Debug.Log("flip");
-        //Going right
-        //  Debug.Log("antes: " + Right);
         if (point.x > transform.position.x)
         {
-            //if (!Right)
-            //{
-            //    //  Debug.Log("flipright");
-            //    Back.transform.position = LeftPos.transform.position;
-            //    Front.transform.position = RightPos.transform.position;
-            //    GetComponent<Animator>().SetTrigger("Right");
-            //}
-            //Right = true;
             if (!Right)
             {
                 Flip();
@@ -216,59 +180,69 @@ public class EnemyMove : MonoBehaviour
         }
         else //Going left
         {
-            //if (Right)
-            //{
-            //       Debug.Log("flipleft");
-            //    Back.transform.position = RightPos.transform.position;
-            //    Front.transform.position = LeftPos.transform.position;
-            //    GetComponent<Animator>().SetTrigger("Left");
-            //}
-            //Right = false;
             if (Right)
             {
                 Flip();
             }
         }
-        // Debug.Log("dps: " + Right);
     }
 
     public void StartFollow(bool follow, Transform point, bool isPlayer)
     {
         if (follow)
         {
-            if (waypointCoroutine != null)
+            if (waypointDisposable != null)
             {
-                StopCoroutine(waypointCoroutine);
+                //StopCoroutine(waypointCoroutine);
+                waypointDisposable.Dispose();
+                waypointDisposable = null;
                 canWaypoint = false;
             }
-            followCoroutine = StartCoroutine(Follow(point, isPlayer));
-        }
-        else if (GetComponent<Range>().CurrentTargetEnemy() && !haveAttacked)
-        {
-            if (followCoroutine != null)
+            if (followDisposable != null)
             {
-                StopCoroutine(followCoroutine);
-            }
-
-            if (waypointCoroutine != null)
-            {
-                StopCoroutine(waypointCoroutine);
-            }
-
-            if (GetComponent<Range>().CurrentColliderTransform() != null)
-            {
-                followCoroutine = StartCoroutine(Follow(GetComponent<Range>().CurrentColliderTransform().transform, isPlayer));
-            }
-        }
-        else
-        {
-            if (followCoroutine != null)
-            {
-                Debug.Log("Stop Coroutine");
-
-                StopCoroutine(followCoroutine);
+                //StopCoroutine(followCoroutine);
+                followDisposable.Dispose();
+                followDisposable = null;
                 canFollow = false;
             }
+
+            //followCoroutine = StartCoroutine(Follow(point, isPlayer));
+            followDisposable = Observable.FromCoroutine(() => Follow(point, isPlayer)).Subscribe();
+        }
+        //else if (GetComponent<Range>().CurrentTargetEnemy() && !haveAttacked)
+        //{
+        //    if (followCoroutine != null)
+        //    {
+        //        StopCoroutine(followCoroutine);
+        //    }
+
+        //    if (waypointCoroutine != null)
+        //    {
+        //        StopCoroutine(waypointCoroutine);
+        //    }
+
+        //    if (GetComponent<Range>().CurrentColliderTransform() != null)
+        //    {
+        //        followCoroutine = StartCoroutine(Follow(GetComponent<Range>().CurrentColliderTransform().transform, isPlayer));
+        //    }
+        //}
+        else
+        {
+            if (followDisposable != null)
+            {
+                //StopCoroutine(followCoroutine);
+                followDisposable.Dispose();
+                followDisposable = null;
+                canFollow = false;
+            }
+            if (waypointDisposable != null)
+            {
+                //StopCoroutine(waypointCoroutine);
+                waypointDisposable.Dispose();
+                waypointDisposable = null;
+                canWaypoint = false;
+            }
+
             float minDist = float.MaxValue;
             int minIndex = -1;
             for (int i = 0; i < waypoints.Count; i++)
@@ -281,9 +255,16 @@ public class EnemyMove : MonoBehaviour
                 }
             }
 
-            currentWaypoint = minIndex;
-            Flip(waypoints[currentWaypoint]);
-            waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+            GetComponent<Animator>().SetBool("Idle", true);
+            Observable.Timer(System.TimeSpan.FromSeconds(3f)).Subscribe(_ =>
+            {
+                GetComponent<Animator>().SetBool("Idle", false);
+                currentWaypoint = minIndex;
+                Flip(waypoints[currentWaypoint]);
+                //waypointCoroutine = StartCoroutine(MoveToWaypoint(waypoints[currentWaypoint]));
+                waypointDisposable = Observable.FromCoroutine(() => MoveToWaypoint(waypoints[currentWaypoint])).Subscribe();
+            }
+            );
         }
     }
 
