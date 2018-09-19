@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-public class Manager : MonoBehaviour {
+public class Manager : MonoBehaviour
+{
 
     private GameObject analytics;
 
@@ -11,6 +12,7 @@ public class Manager : MonoBehaviour {
     public GameObject Player;
     public GameObject FinalFragment;
     public GameObject Boss;
+    public float BossSeconds = 0f;
 
     static private Manager _instance;
 
@@ -34,7 +36,7 @@ public class Manager : MonoBehaviour {
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
             {
-              ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
+                ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
                 if (analytics != null)
                 {
                     analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
@@ -44,7 +46,7 @@ public class Manager : MonoBehaviour {
             );
         var escInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
         var anyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
-        escInput.Where(_=> (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game))
+        escInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause));
         anyInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Credits))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.DemoEnd));
@@ -57,6 +59,15 @@ public class Manager : MonoBehaviour {
     }
 
     public void EndAnimation()
+    {
+        Observable.Timer(System.TimeSpan.FromSeconds(BossSeconds)).Subscribe(_ =>
+            {
+                GetComponent<Animator>().SetTrigger("credits");
+            }
+        );
+    }
+
+    public void EndBoss()
     {
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Credits);
     }
