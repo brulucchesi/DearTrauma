@@ -1107,11 +1107,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &496102119 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4497018545080020, guid: 692a1c889cc85b044a2fa53a10a21d8c,
-    type: 2}
-  m_PrefabInternal: {fileID: 56576830}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1148,7 +1143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c118ddb60b2d54cb9031c288569dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 496102119}
+  Target: {fileID: 1136843322}
   SmoothTime: 0.3
   CamY: 0.76
   CamX: 4.44
@@ -1912,6 +1907,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9cc292fa51b270841bd11f03881c6883, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1136843322 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4976570082452360, guid: 9cc292fa51b270841bd11f03881c6883,
+    type: 2}
+  m_PrefabInternal: {fileID: 1136843321}
 --- !u!1 &1158077034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,6 +1957,7 @@ MonoBehaviour:
   Player: {fileID: 783286518}
   FinalFragment: {fileID: 0}
   Boss: {fileID: 0}
+  BossSeconds: 0
 --- !u!114 &1158077037
 MonoBehaviour:
   m_ObjectHideFlags: 0
