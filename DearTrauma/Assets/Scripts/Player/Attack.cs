@@ -17,7 +17,7 @@ public class Attack : MonoBehaviour {
     {
         anim = GetComponent<Animator>();
         Vector2 playerSize = GetComponent<CapsuleCollider2D>().size;
-        attackSize = new Vector2(playerSize.x/2, playerSize.y);
+        //attackSize = new Vector2(playerSize.x/2, playerSize.y);
     }
     
     void Update ()
@@ -42,10 +42,22 @@ public class Attack : MonoBehaviour {
 
     public void PerformAttack()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(AttackPoint.transform.position, attackSize, 0f, Mask);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(AttackPoint.transform.position + 
+                                (GetComponent<Movement>().Right ? Vector3.right * attackSize.x/2: Vector3.left * attackSize.x / 2),
+                                attackSize, 0f, Mask);
         foreach (Collider2D col in colliders)
         {
             col.gameObject.SendMessage("ReceiveAttack",SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.DrawCube(AttackPoint.transform.position +
+                           (GetComponent<Movement>().Right ? Vector3.right * attackSize.x / 2 : Vector3.left * attackSize.x / 2),
+                           attackSize);
         }
     }
 }

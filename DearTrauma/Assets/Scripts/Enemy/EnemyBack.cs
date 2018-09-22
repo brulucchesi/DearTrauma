@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyBack : MonoBehaviour
 {
+    [Header("References")]
+    public Range enemyRange;
 
     private GameObject analytics;
 
@@ -14,8 +16,7 @@ public class EnemyBack : MonoBehaviour
 
 	public void ReceiveAttack()
     {
-
-        int enemyNumber = gameObject.transform.parent.parent.GetComponent<Range>().SentEnemyNumber();
+        int enemyNumber = enemyRange.SentEnemyNumber();
 
         analytics.GetComponent<UnityAnalyticsEvents>().PlayerKilledEnemy(enemyNumber);
 

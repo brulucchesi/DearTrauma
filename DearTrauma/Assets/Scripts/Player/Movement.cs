@@ -42,25 +42,19 @@ public class Movement : MonoBehaviour
             float hor = Input.GetAxis("Horizontal");
             if (hor > 0)
             {
-                //GetComponent<Animator>().SetBool("Right", true);
-                //GetComponent<Animator>().SetBool("Left", false);
                 GetComponent<Animator>().SetBool("Mirror", false);
                 if(!Right)
                 {
                     Flip();
                 }
-                //hor = Mathf.Clamp(hor, 1f, 1f);
             }
             if (hor < 0)
             {
-                //GetComponent<Animator>().SetBool("Left", true);
-                //GetComponent<Animator>().SetBool("Right", false);
                 GetComponent<Animator>().SetBool("Mirror", true);
                 if (Right)
                 {
                     Flip();
                 }
-                //hor = Mathf.Clamp(hor, -1f, -1f);
             }
 
             Vector2 vel = new Vector2(((Mathf.Abs(hor) - 1) < 0.1f) ? hor * Speed * 1.5f : hor * Speed, rb.velocity.y);
@@ -86,7 +80,7 @@ public class Movement : MonoBehaviour
         if(collision.CompareTag("EnemyFront") && !Safe)
         {
 
-            int enemyNumber = collision.gameObject.transform.parent.parent.GetComponent<Range>().SentEnemyNumber();
+            int enemyNumber = collision.gameObject.GetComponentInChildren<Range>().SentEnemyNumber();
 
             analytics.GetComponent<UnityAnalyticsEvents>().EnemyKilledPlayer(enemyNumber);
 
