@@ -53,6 +53,8 @@ public class Evolution : MonoBehaviour
         Camera.main.GetComponent<CamFollow>().Big();
         transform.position = transform.position + Vector3.up * 3;
         GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
+        GetComponent<Jump>().JumpVelocity *= ScaleMultiplier;
+        GetComponent<Jump>().DoubleJumpVelocity *= ScaleMultiplier;
         foreach (var mesh in Meshes)
         {
             mesh.color = EvolutionColor;
