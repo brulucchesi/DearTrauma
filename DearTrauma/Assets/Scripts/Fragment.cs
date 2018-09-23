@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UniRx;
 
@@ -13,6 +14,7 @@ public class Fragment : MonoBehaviour
     public GameObject FragmentMemory;
     public GameObject FragmentVisual;
     public GameObject CanCloseVisual;
+    public Text TextCanClose;
 
     [Header("Modifiers")]
     public string SceneName = "";
@@ -22,8 +24,11 @@ public class Fragment : MonoBehaviour
     private GameObject analytics;
     private bool canClose;
 
+    private GameObject musicManager;
+
     private void Start()
     {
+        musicManager = GameObject.Find("MusicManager");
         canClose = false;
         analytics = GameObject.Find("Analytics");
 
@@ -94,6 +99,14 @@ public class Fragment : MonoBehaviour
         FragmentVisual.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (canClose)
+        {
+            TextCanClose.color = new Color(TextCanClose.color.r, TextCanClose.color.g, TextCanClose.color.b, Mathf.PingPong(Time.time, 2));
+        }
+    }
+
     public void CloseMemory()
     {
         Observable.Timer(System.TimeSpan.FromSeconds(0.2f)).Subscribe(_ =>
@@ -109,6 +122,7 @@ public class Fragment : MonoBehaviour
 
         if (Boss)
         {
+            musicManager.GetComponent<MusicManager>().ChangeBoss();
             Manager.GetInstance().GetComponent<Animator>().SetTrigger("end");
         }
         else
