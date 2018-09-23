@@ -7,6 +7,7 @@ using System;
 public class EnemyMove : MonoBehaviour
 {
     [Header("References")]
+    public int EnemyNumber = -1;
     public GameObject WaypointsParent;
     public Transform Front;
     public Transform[] PartsToFlip;
@@ -38,6 +39,11 @@ public class EnemyMove : MonoBehaviour
     private bool canWaypoint;
     private IDisposable waypointDisposable;
     private IDisposable followDisposable;
+
+    public int SentEnemyNumber()
+    {
+        return EnemyNumber;
+    }
 
     // Use this for initialization
     void Start()
