@@ -9,18 +9,18 @@ public class CamFollow : MonoBehaviour {
 
     [Header("Modifiers")]
     public float SmoothTime = 0.3f;
-    public float CamY = 1.64f;
-    public float CamX = 2.05f;
-    public float CamYBig = 0.4f;
-    public float CamXBig = 2.05f;
+    public float CamYDefault = 1.64f;
+    public float CamXDefault = 2.05f;
+    public float CamYBigDefault = 0.4f;
+    public float CamXBigDefault = 2.05f;
     public float SizeBig = 7.5f;
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 camOffset;
-    private float camY;
-    private float camX;
-    private float camYBig;
-    private float camXBig;
+    public float camY;
+    public float camX;
+    public float camYBig;
+    public float camXBig;
 
     private float minX, maxX, minY, maxY;
 
@@ -29,8 +29,8 @@ public class CamFollow : MonoBehaviour {
     private void Start()
     {
         SetClamp(float.MinValue, float.MaxValue, float.MinValue, float.MaxValue);
-        camY = CamY;
-        camX = CamX;
+        camY = CamYDefault;
+        camX = CamXDefault;
     }
 
     void Update()
@@ -58,8 +58,8 @@ public class CamFollow : MonoBehaviour {
     public void Big()
     {
         isBig = true;
-        camY = CamYBig;
-        camX = CamXBig;
+        camY = CamYBigDefault;
+        camX = CamXBigDefault;
         Camera.main.orthographicSize = SizeBig;
     }
 
@@ -71,7 +71,7 @@ public class CamFollow : MonoBehaviour {
         maxY = maxy;
     }
 
-    public void SetOffset(float x, float y, float yBig, float xBig)
+    public void SetOffset(float y, float x, float yBig, float xBig)
     {
         camY = y;
         camX = x;
@@ -81,9 +81,9 @@ public class CamFollow : MonoBehaviour {
 
     public void ResetOffset()
     {
-        camY = CamY;
-        camX = CamX;
-        camYBig = CamYBig;
-        camXBig = CamXBig;
+        camY = CamYDefault;
+        camX = CamXDefault;
+        camYBig = CamYBigDefault;
+        camXBig = CamXBigDefault;
     }
 }
