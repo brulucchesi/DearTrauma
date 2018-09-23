@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class Evolution : MonoBehaviour
 {
@@ -11,23 +12,21 @@ public class Evolution : MonoBehaviour
     public SpriteRenderer SpriteDefault;
     public Sprite SpriteBig;
     public GameObject Background;
-    public bool EvolutionOn = false;
 
     [Header("Modifiers")]
     public float ScaleMultiplier = 2f;
     public float ScaleMultiplierBackground = 2.5f;
+    public BoolReactiveProperty EvolutionOn = new BoolReactiveProperty();
 
     private void Start()
     {
-        if (EvolutionOn)
+        EvolutionOn.Subscribe(_ =>
         {
-            SpriteDefault.sprite = SpriteBig;
-            GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
-            transform.localScale *= ScaleMultiplier;
-            Background.transform.localScale *= ScaleMultiplierBackground;
-            Camera.main.GetComponent<CamFollow>().Big();
-            transform.position = transform.position + Vector3.up * 3;
-        }
+            if (_)
+            {
+                EvolutionTransition();
+            }
+        });
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,16 +35,21 @@ public class Evolution : MonoBehaviour
         {
             if (Fragment && collision.name == Fragment.name)
             {
-                SpriteDefault.sprite = SpriteBig;
-                GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
-                transform.localScale *= ScaleMultiplier;
-                Background.transform.localScale *= ScaleMultiplierBackground;
-                Camera.main.GetComponent<CamFollow>().Big();
-                transform.position = transform.position + Vector3.up * 3;
+                EvolutionTransition();
             }
 
             collision.GetComponent<Fragment>().Collect();
         }
+    }
 
+    private void EvolutionTransition()
+    {
+        SpriteDefault.sprite = SpriteBig;
+        GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
+        transform.localScale *= ScaleMultiplier;
+        Background.transform.localScale *= ScaleMultiplierBackground;
+        Camera.main.GetComponent<CamFollow>().Big();
+        transform.position = transform.position + Vector3.up * 3;
+        GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
     }
 }
