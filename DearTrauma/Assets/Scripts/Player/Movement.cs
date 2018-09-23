@@ -94,7 +94,7 @@ public class Movement : MonoBehaviour
         }
         else if (collision.CompareTag("Hole"))
         {
-            SetCanMove(false);
+            canMove = false;
             collision.GetComponent<Hole>().AttackPlayer();
         }
         else if (collision.CompareTag("Checkpoint"))

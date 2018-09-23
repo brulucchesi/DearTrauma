@@ -22,6 +22,6 @@ public class Hole : MonoBehaviour
     {
         analytics.GetComponent<UnityAnalyticsEvents>().FellIntoHole(holeNumber);
 
-        Manager.GetInstance().Player.GetComponent<Movement>().PlayerDied();
+        Manager.GetInstance().Player.GetComponent<Movement>().ReturnToCheckpoint();
     }
 }
