@@ -51,6 +51,7 @@ public class CamFollow : MonoBehaviour {
 
         Vector3 targetPosition = Target.TransformPoint(camOffset);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity3, SmoothTime);
+        transform.position = new Vector3(transform.position.x, transform.position.y, -10);
 
         //Vector3 clampedPos = transform.position;
         //clampedPos.y = Mathf.Clamp(transform.position.y, minY, maxY);
