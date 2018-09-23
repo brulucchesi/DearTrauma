@@ -21,7 +21,7 @@ public class Push : MonoBehaviour {
         anim = GetComponent<Animator>();
         pushable = null;
         playerSize = GetComponent<CapsuleCollider2D>().size;
-        boxSize = new Vector2(playerSize.x + (Skin * 2), playerSize.y + (Skin * 2));
+        boxSize = new Vector2(playerSize.x/2 + (Skin * 2), playerSize.y + (Skin * 2));
     }
 
     // Update is called once per frame
