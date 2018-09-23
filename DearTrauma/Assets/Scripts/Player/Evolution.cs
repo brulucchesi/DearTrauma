@@ -55,7 +55,7 @@ public class Evolution : MonoBehaviour
         GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
         foreach (var mesh in Meshes)
         {
-            mesh.color = new Color(0.9150943f, 0.6861935f, 0.2460395f);
+            mesh.color = EvolutionColor;
         }
     }
 }
