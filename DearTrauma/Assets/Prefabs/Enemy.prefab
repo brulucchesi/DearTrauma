@@ -91,6 +91,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1086832801212340
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4395495327405554}
+  - component: {fileID: 61119021447260544}
+  - component: {fileID: 114457137554226026}
+  m_Layer: 10
+  m_Name: StopCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1098680107946064
 GameObject:
   m_ObjectHideFlags: 1
@@ -730,6 +747,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1657157602243670
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4038313469786598}
+  m_Layer: 10
+  m_Name: BottomRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1712105129860488
 GameObject:
   m_ObjectHideFlags: 1
@@ -741,7 +773,7 @@ GameObject:
   m_Layer: 10
   m_Name: Waypoint (1)
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -756,7 +788,7 @@ GameObject:
   m_Layer: 10
   m_Name: Waypoint (2)
   m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -965,6 +997,19 @@ Transform:
   m_Father: {fileID: 4059196507391226}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 34.773003}
+--- !u!4 &4038313469786598
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1657157602243670}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.42, y: -1.18, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4798656552786026}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4054874756141516
 Transform:
   m_ObjectHideFlags: 1
@@ -1209,6 +1254,19 @@ Transform:
   m_Father: {fileID: 4853229787177058}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 5.3700004}
+--- !u!4 &4395495327405554
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1086832801212340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4798656552786026}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4415418802446328
 Transform:
   m_ObjectHideFlags: 1
@@ -1567,6 +1625,8 @@ Transform:
   m_Children:
   - {fileID: 4080850221184570}
   - {fileID: 4774021418978580}
+  - {fileID: 4395495327405554}
+  - {fileID: 4038313469786598}
   m_Father: {fileID: 4798337683226686}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1807,6 +1867,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.9001045, y: 2.1587877}
+  m_EdgeRadius: 0
+--- !u!61 &61119021447260544
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1086832801212340}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.84, y: 0.85}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.94, y: 1}
   m_EdgeRadius: 0
 --- !u!61 &61182148806380672
 BoxCollider2D:
@@ -2077,7 +2162,7 @@ MonoBehaviour:
   Front: {fileID: 4798656552786026}
   PartsToFlip:
   - {fileID: 4798337683226686}
-  FollowSpeed: 5
+  FollowSpeed: 1
   WaypointSpeed: 2
   TimeToWait: 4
   Right: 0
@@ -2160,16 +2245,16 @@ MonoBehaviour:
     - m_Bone: {fileID: 0}
       m_BoneTransform: {fileID: 4672146580989600}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.9652474, w: 0.26133785}
+      solverRotation: {x: 0, y: 0, z: -0.96524656, w: 0.26134083}
       defaultLocalRotation: {x: 0, y: 0, z: 0.9313669, w: -0.3640821}
     - m_Bone: {fileID: 0}
       m_BoneTransform: {fileID: 4606213433045678}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.44966957, w: 0.893195}
+      solverRotation: {x: 0, y: 0, z: 0.44966623, w: 0.89319664}
       defaultLocalRotation: {x: 0, y: 0, z: 0.41853142, w: 0.90820235}
     m_Weight: 1
     m_RestoreDefaultPose: 1
-    targetPosition: {x: -3.4110003, y: 2.356, z: 0.10886172}
+    targetPosition: {x: 223.29498, y: -23.6091, z: -0.10886172}
     flip: 0
 --- !u!114 &114330161249575928
 MonoBehaviour:
@@ -2342,6 +2427,22 @@ MonoBehaviour:
   colliders: []
   threshold: 0.01
   isAnimated: 0
+--- !u!114 &114457137554226026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1086832801212340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9512532f39eb7284db408b70328c3261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyBottomRightLimit: {fileID: 4038313469786598}
+  BoxSize: {x: 2, y: 2}
+  Mask:
+    serializedVersion: 2
+    m_Bits: 6656
 --- !u!114 &114463444117788374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2711,16 +2812,16 @@ MonoBehaviour:
     - m_Bone: {fileID: 0}
       m_BoneTransform: {fileID: 4256443903663404}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.9013794, w: 0.43303025}
+      solverRotation: {x: 0, y: 0, z: -0.9013716, w: 0.43304646}
       defaultLocalRotation: {x: 0, y: 0, z: 0.9142805, w: -0.40508196}
     - m_Bone: {fileID: 0}
       m_BoneTransform: {fileID: 4430624136227898}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.3913396, w: 0.9202463}
+      solverRotation: {x: 0, y: 0, z: -0.39135948, w: 0.9202379}
       defaultLocalRotation: {x: 0, y: 0, z: -0.29819787, w: 0.95450413}
     m_Weight: 1
     m_RestoreDefaultPose: 1
-    targetPosition: {x: -5.5490003, y: 2.126, z: 0.10886172}
+    targetPosition: {x: 221.15698, y: -23.8391, z: -0.10886172}
     flip: 1
 --- !u!114 &114882803621021478
 MonoBehaviour:
@@ -2788,11 +2889,11 @@ MonoBehaviour:
     - m_Bone: {fileID: 0}
       m_BoneTransform: {fileID: 4134129885048160}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0.4294397, w: 0.90309554}
+      solverRotation: {x: 0, y: 0, z: 0.42943996, w: 0.9030954}
       defaultLocalRotation: {x: 0, y: 0, z: 0.49437413, w: 0.8692492}
     m_Weight: 1
     m_RestoreDefaultPose: 1
-    targetPosition: {x: -3.8700001, y: 2.165, z: 0.10886172}
+    targetPosition: {x: 222.83597, y: -23.800102, z: -0.10886172}
     flip: 0
 --- !u!114 &114946399500782432
 MonoBehaviour:
@@ -2820,16 +2921,16 @@ MonoBehaviour:
     - m_Bone: {fileID: 0}
       m_BoneTransform: {fileID: 4458308805465120}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.90852064, w: 0.41783994}
+      solverRotation: {x: 0, y: 0, z: -0.9085154, w: 0.41785133}
       defaultLocalRotation: {x: 0, y: 0, z: 0.9184155, w: -0.3956173}
     - m_Bone: {fileID: 0}
       m_BoneTransform: {fileID: 4701584712733028}
       solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: -0.23616767, w: 0.9717123}
+      solverRotation: {x: 0, y: 0, z: -0.23619139, w: 0.97170657}
       defaultLocalRotation: {x: 0, y: 0, z: -0.18774118, w: 0.98221856}
     m_Weight: 1
     m_RestoreDefaultPose: 1
-    targetPosition: {x: -4.721, y: 2.247, z: 0.10886172}
+    targetPosition: {x: 221.98497, y: -23.718102, z: -0.10886172}
     flip: 1
 --- !u!114 &114949338055029676
 MonoBehaviour:
