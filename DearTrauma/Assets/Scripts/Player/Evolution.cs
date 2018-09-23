@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Anima2D;
 
 public class Evolution : MonoBehaviour
 {
-
     [Header("References")]
     public RuntimeAnimatorController BigAnimator;
     public GameObject Fragment;
     public SpriteRenderer SpriteDefault;
     public Sprite SpriteBig;
     public GameObject Background;
+    public List<SpriteMeshInstance> Meshes;
 
     [Header("Modifiers")]
     public float ScaleMultiplier = 2f;
     public float ScaleMultiplierBackground = 2.5f;
+    public Color EvolutionColor;
     public BoolReactiveProperty EvolutionOn = new BoolReactiveProperty();
 
     private void Start()
@@ -51,5 +53,9 @@ public class Evolution : MonoBehaviour
         Camera.main.GetComponent<CamFollow>().Big();
         transform.position = transform.position + Vector3.up * 3;
         GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
+        foreach (var mesh in Meshes)
+        {
+            mesh.color = new Color(0.9150943f, 0.6861935f, 0.2460395f);
+        }
     }
 }
