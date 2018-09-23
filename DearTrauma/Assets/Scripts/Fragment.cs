@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UniRx;
 
@@ -13,6 +14,7 @@ public class Fragment : MonoBehaviour
     public GameObject FragmentMemory;
     public GameObject FragmentVisual;
     public GameObject CanCloseVisual;
+    public Text TextCanClose;
 
     [Header("Modifiers")]
     public string SceneName = "";
@@ -92,6 +94,14 @@ public class Fragment : MonoBehaviour
             SceneManager.LoadScene(SceneName);
         }
         FragmentVisual.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (canClose)
+        {
+            TextCanClose.color = new Color(TextCanClose.color.r, TextCanClose.color.g, TextCanClose.color.b, Mathf.PingPong(Time.time, 2));
+        }
     }
 
     public void CloseMemory()
