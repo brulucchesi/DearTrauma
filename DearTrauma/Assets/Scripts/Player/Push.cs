@@ -29,7 +29,9 @@ public class Push : MonoBehaviour {
     {
         Physics2D.queriesStartInColliders = false;
         //RaycastHit2D hit = Physics2D.Raycast(transform.position, (GetComponent<Movement>().Right)?Vector2.right: Vector2.left, distance, boxMask);
-        Collider2D col = Physics2D.OverlapBox(transform.position, boxSize, 0f, boxMask);
+        Collider2D col = Physics2D.OverlapBox(transform.position +
+                                (GetComponent<Movement>().Right ? Vector3.right * boxSize.x / 2 : Vector3.left * boxSize.x / 2),
+                                boxSize, 0f, boxMask);
 
         if (col != null && col.gameObject.tag == "Pushable")
         {
@@ -82,6 +84,7 @@ public class Push : MonoBehaviour {
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, (Vector2)transform.position + Vector2.right * transform.localScale.x * distance);
+        Gizmos.DrawLine(transform.position, transform.position +
+                                (GetComponent<Movement>().Right ? Vector3.right * boxSize.x / 2 : Vector3.left * boxSize.x / 2));
     }
 }
