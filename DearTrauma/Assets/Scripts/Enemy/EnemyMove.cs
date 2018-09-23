@@ -44,26 +44,55 @@ public class EnemyMove : MonoBehaviour
     {
         Right = true;
         canWaypoint = true;
+        canFollow = false;
+        Following.Value = false;
         CalculateWaypoints();
 
         currentWaypoint = 0;
         Flip(waypoints[currentWaypoint]);
 
+        Following.Subscribe(follow =>
+        {
+            if(follow)
+            {
+                canWaypoint = false;
+                canFollow = true;
+                GetComponent<Animator>().SetBool("Idle", false);
+                GetComponent<Animator>().speed *= FollowSpeed / WaypointSpeed;
+            }
+            else
+            {
+                canFollow = false;
+                Vector2 stopvel = GetComponent<Rigidbody2D>().velocity;
+                stopvel.x = 0.0f;
+                GetComponent<Rigidbody2D>().velocity = stopvel;
+                GetComponent<Animator>().SetBool("Idle", true);
+                GetComponent<Animator>().speed = 1;
+                Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
+                {
+                    if (Following.Value == false && !Dead)
+                    {
+                        Flip(waypoints[currentWaypoint]);
+                        canWaypoint = true;
+                        GetComponent<Animator>().SetBool("Idle", false);
+                    }
+                });
+            }
+        });
+
         Vector3 point = new Vector3(waypoints[currentWaypoint].x, transform.position.y);
         DistToWaypoint.Value = Vector2.Distance(point, transform.position);
-        
-        Following.Value = false;
 
-        var fixUpdate = Observable.EveryUpdate().Where(_=>!Dead);
-        var toWaypoint = fixUpdate.Where(_ => Following.Value == false && canWaypoint);
+        var fixUpdate = Observable.EveryUpdate().Where(_ => !Dead);
+        var toWaypoint = fixUpdate.Where(_ => canFollow == false && canWaypoint);
         toWaypoint.Subscribe(_ =>
         {
             CalculateWaypointVel();
         });
 
-        DistToWaypoint.Where(_ => Following.Value == false && canWaypoint).Subscribe(dist =>
+        DistToWaypoint.Where(_ => canFollow == false && canWaypoint).Subscribe(dist =>
         {
-            if(dist < 1f)
+            if (dist < 1f)
             {
                 canWaypoint = false;
 
@@ -81,7 +110,7 @@ public class EnemyMove : MonoBehaviour
             }
         });
 
-        var toFollow = fixUpdate.Where(_ => Following.Value == true/* && canFollow*/);
+        var toFollow = fixUpdate.Where(_ => Following.Value == true && canFollow);
         toFollow.Subscribe(_ =>
         {
             CalculateFollowVel();
@@ -92,7 +121,7 @@ public class EnemyMove : MonoBehaviour
     {
         Vector3 point = new Vector3(waypoints[currentWaypoint].x, transform.position.y);
         DistToWaypoint.Value = Vector2.Distance(point, transform.position);
-        
+
         if (point.x > transform.position.x)
         {
             Vector2 vel = GetComponent<Rigidbody2D>().velocity;
@@ -109,14 +138,18 @@ public class EnemyMove : MonoBehaviour
 
     private void CalculateFollowVel()
     {
+        canWaypoint = false;
         if (Manager.GetInstance().Player.GetComponent<Movement>().Safe)
         {
-            Following.Value = false;
+            canFollow = false;
+            GetComponent<Animator>().SetBool("Idle", true);
             Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
             {
                 if (Following.Value == false && !Dead)
                 {
+                    Flip(waypoints[currentWaypoint]);
                     canWaypoint = true;
+                    GetComponent<Animator>().SetBool("Idle", false);
                 }
             });
         }
