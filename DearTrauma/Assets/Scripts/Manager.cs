@@ -5,14 +5,18 @@ using UniRx;
 
 public class Manager : MonoBehaviour
 {
-
-    private GameObject analytics;
-
     [Header("References")]
     public GameObject Player;
     public GameObject FinalFragment;
     public GameObject Boss;
+
+    [Header("Modifiers")]
     public float BossSeconds = 0f;
+
+    public IObservable<long> EscInput;
+    public IObservable<long> AnyInput;
+
+    private GameObject analytics;
 
     static private Manager _instance;
 
@@ -44,11 +48,11 @@ public class Manager : MonoBehaviour
                 }
             }
             );
-        var escInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
-        var anyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
-        escInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game))
+        EscInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
+        AnyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
+        EscInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause));
-        anyInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Credits))
+        AnyInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Credits))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.DemoEnd));
     }
 
@@ -61,9 +65,9 @@ public class Manager : MonoBehaviour
     public void EndAnimation()
     {
         Observable.Timer(System.TimeSpan.FromSeconds(BossSeconds)).Subscribe(_ =>
-            {
-                GetComponent<Animator>().SetTrigger("credits");
-            }
+        {
+            GetComponent<Animator>().SetTrigger("credits");
+        }
         );
     }
 

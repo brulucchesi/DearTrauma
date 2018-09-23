@@ -2,29 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UniRx;
 
 public class Fragment : MonoBehaviour
 {
-
-    private GameObject analytics;
-
     [Header("References")]
     [Range(1, 4)]
     public int levelNumber = 0;
     public Door LinkedDoor;
     public GameObject FragmentMemory;
     public GameObject FragmentVisual;
+    public GameObject CanCloseVisual;
 
     [Header("Modifiers")]
     public string SceneName = "";
     public bool Boss = false;
+    public float TimeToClose = 2f;
+
+    private GameObject analytics;
+    private bool canClose;
 
     private void Start()
     {
+        canClose = false;
         analytics = GameObject.Find("Analytics");
 
         FragmentMemory.SetActive(false);
         FragmentVisual.SetActive(true);
+
+        Observable.EveryUpdate().Where(_ => Input.anyKeyDown).Subscribe(_ =>
+        {
+            if (canClose)
+            {
+                CloseMemory();
+                canClose = false;
+            }
+        });
     }
 
     //private void OnTriggerEnter2D(Collider2D collision)
@@ -65,6 +78,14 @@ public class Fragment : MonoBehaviour
         {
            //Time.timeScale = 0f;
             FragmentMemory.SetActive(true);
+            ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Fragment);
+
+            Observable.Timer(System.TimeSpan.FromSeconds(TimeToClose)).Subscribe(_ =>
+            {
+                canClose = true;
+                CanCloseVisual.SetActive(true);
+            }
+            );
         }
         if (!SceneName.Equals(""))
         {
@@ -75,6 +96,12 @@ public class Fragment : MonoBehaviour
 
     public void CloseMemory()
     {
+        Observable.Timer(System.TimeSpan.FromSeconds(0.2f)).Subscribe(_ =>
+        {
+            ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
+        }
+        );
+
         if (levelNumber < 4)
         {
             analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(levelNumber + 1);

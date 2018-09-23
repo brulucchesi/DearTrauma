@@ -70,7 +70,7 @@ public class EnemyMove : MonoBehaviour
                 GetComponent<Animator>().speed = 1;
                 Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
                 {
-                    if (Following.Value == false && !Dead)
+                    if (this && Following.Value == false && !Dead)
                     {
                         Flip(waypoints[currentWaypoint]);
                         canWaypoint = true;
@@ -83,7 +83,7 @@ public class EnemyMove : MonoBehaviour
         Vector3 point = new Vector3(waypoints[currentWaypoint].x, transform.position.y);
         DistToWaypoint.Value = Vector2.Distance(point, transform.position);
 
-        var fixUpdate = Observable.EveryUpdate().Where(_ => !Dead);
+        var fixUpdate = Observable.EveryUpdate().Where(_ => this && !Dead);
         var toWaypoint = fixUpdate.Where(_ => canFollow == false && canWaypoint);
         toWaypoint.Subscribe(_ =>
         {
@@ -99,7 +99,7 @@ public class EnemyMove : MonoBehaviour
                 GetComponent<Animator>().SetBool("Idle", true);
                 Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
                 {
-                    if (Following.Value == false && !Dead)
+                    if (this && Following.Value == false && !Dead)
                     {
                         currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
                         Flip(waypoints[currentWaypoint]);
@@ -145,7 +145,7 @@ public class EnemyMove : MonoBehaviour
             GetComponent<Animator>().SetBool("Idle", true);
             Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
             {
-                if (Following.Value == false && !Dead)
+                if (this && Following.Value == false && !Dead)
                 {
                     Flip(waypoints[currentWaypoint]);
                     canWaypoint = true;
