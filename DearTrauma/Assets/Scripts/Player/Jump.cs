@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Jump : MonoBehaviour {
@@ -16,10 +17,9 @@ public class Jump : MonoBehaviour {
     public LayerMask Mask;
 
     private Rigidbody2D rb;
-    private bool jumpPress;
+    private ReactiveProperty<bool> jumpPress = new ReactiveProperty<bool>(false);
     private bool grounded;
     private bool touching;
-    private bool doubleJump;
 
     private Vector2 playerSize;
     private Vector2 boxSize;
@@ -27,13 +27,25 @@ public class Jump : MonoBehaviour {
 
     private Animator anim;
 
+    private ReactiveProperty<int> jumpCount = new ReactiveProperty<int>(2);
+    private bool canResetJump;
+
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<CapsuleCollider2D>().size;
         boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
-        doubleJump = true;
+
+        canResetJump = false;
+
+        jumpPress.Subscribe(jumpPress =>
+        {
+            if (jumpPress)
+            {
+                CalculateJump();
+            }
+        });
     }
 
     private void OnDrawGizmosSelected()
@@ -46,62 +58,47 @@ public class Jump : MonoBehaviour {
 
     void Update ()
     {
-        if(Input.GetButtonDown("Jump") && (grounded || doubleJump) && GetComponent<Movement>().GetCanMove())
+        if(Input.GetButtonDown("Jump") && (jumpCount.Value > 0) && GetComponent<Movement>().GetCanMove())
         {
-            jumpPress = true;
-            if(!grounded)
-            {
-                doubleJump = false;
-                Vector3 vel = rb.velocity;
-                vel.y = 0;
-                rb.velocity = vel;
-            }
+            jumpPress.Value = true;
         }
+        boxCenter = (Vector2)transform.position + Vector2.down * (playerSize.y + boxSize.y) * 0.5f;
+        grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touching;
 
-        //if (rb.velocity.y < 0)
-        //{
-        //    rb.gravityScale = FallMultiplier;
-        //}
-        //else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-        //{
-        //    rb.gravityScale = LowJumpMultiplier;
-        //}
-        //else
-        //{
-        //    rb.gravityScale = 1f;
-        //}
-	}
-
-    private void FixedUpdate()
-    {
-        if(jumpPress)
+        if (grounded && canResetJump)
         {
-            if(grounded)
-            {
-                rb.AddForce(Vector2.up * JumpVelocity, ForceMode2D.Impulse);
-            }
-            else
-            {
-                rb.AddForce(Vector2.up * DoubleJumpVelocity, ForceMode2D.Impulse);
-            }
+            jumpCount.Value = 2;
+            canResetJump = false;
+        }
+    }
 
-            jumpPress = false;
-            grounded = false;
-            if(anim)
+    private void CalculateJump()
+    {
+        if (jumpCount.Value == 1)
+        {
+            Vector3 vel = rb.velocity;
+            vel.y = 0;
+            rb.velocity = vel;
+
+            rb.AddForce(Vector2.up * DoubleJumpVelocity, ForceMode2D.Impulse);
+        }
+        else if (jumpCount.Value == 2)
+        {
+            rb.AddForce(Vector2.up * JumpVelocity, ForceMode2D.Impulse);
+
+            if (anim)
             {
                 anim.SetTrigger("Jump");
                 anim.SetTrigger("offGround");
             }
         }
-        else
+        jumpCount.Value--;
+        jumpPress.Value = false;
+
+        Observable.Timer(System.TimeSpan.FromMilliseconds(500)).Subscribe(_ =>
         {
-            boxCenter = (Vector2)transform.position + Vector2.down * (playerSize.y + boxSize.y) * 0.5f;
-            grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touching;
-            if(grounded)
-            {
-                doubleJump = true;
-            }
-        }
+            canResetJump = true;
+        });
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
