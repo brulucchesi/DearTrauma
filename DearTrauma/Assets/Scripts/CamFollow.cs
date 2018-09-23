@@ -16,8 +16,11 @@ public class CamFollow : MonoBehaviour {
     public float SizeBig = 7.5f;
 
     private Vector3 velocity = Vector3.zero;
+    private Vector3 camOffset;
     private float camY;
     private float camX;
+    private float camYBig;
+    private float camXBig;
 
     private float minX, maxX, minY, maxY;
 
@@ -34,21 +37,22 @@ public class CamFollow : MonoBehaviour {
     {
         if (!isBig)
         {
-            camY = CamY;
-            camX = CamX;
+            var newOffset = new Vector3(camX, camY, -10);
+            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTime);
         }
         else
         {
-            camY = CamYBig;
-            camX = CamXBig;
+            var newOffset = new Vector3(camXBig, camYBig, -10);
+            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTime);
         }
-        Vector3 targetPosition = Target.TransformPoint(new Vector3(camX, camY, -10));
+
+        Vector3 targetPosition = Target.TransformPoint(camOffset);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SmoothTime);
 
-        Vector3 clampedPos = transform.position;
-        clampedPos.y = Mathf.Clamp(transform.position.y, minY, maxY);
-        clampedPos.x = Mathf.Clamp(transform.position.x, minX, maxX);
-        transform.position = Vector3.Lerp(transform.position, clampedPos, Time.deltaTime);
+        //Vector3 clampedPos = transform.position;
+        //clampedPos.y = Mathf.Clamp(transform.position.y, minY, maxY);
+        //clampedPos.x = Mathf.Clamp(transform.position.x, minX, maxX);
+        //transform.position = clampedPos;
     }
 
     public void Big()
@@ -65,5 +69,21 @@ public class CamFollow : MonoBehaviour {
         maxX = maxx;
         minY = miny;
         maxY = maxy;
+    }
+
+    public void SetOffset(float x, float y, float yBig, float xBig)
+    {
+        camY = y;
+        camX = x;
+        camYBig = yBig;
+        camXBig = xBig;
+    }
+
+    public void ResetOffset()
+    {
+        camY = CamY;
+        camX = CamX;
+        camYBig = CamYBig;
+        camXBig = CamXBig;
     }
 }
