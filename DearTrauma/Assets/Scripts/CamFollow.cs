@@ -48,7 +48,7 @@ public class CamFollow : MonoBehaviour {
         Vector3 clampedPos = transform.position;
         clampedPos.y = Mathf.Clamp(transform.position.y, minY, maxY);
         clampedPos.x = Mathf.Clamp(transform.position.x, minX, maxX);
-        transform.position = clampedPos;
+        transform.position = Vector3.Lerp(transform.position, clampedPos, Time.deltaTime);
     }
 
     public void Big()
