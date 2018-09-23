@@ -80,7 +80,7 @@ public class Movement : MonoBehaviour
         if(collision.CompareTag("EnemyFront") && !Safe)
         {
 
-            int enemyNumber = collision.gameObject.GetComponentInChildren<Range>().SentEnemyNumber();
+            int enemyNumber = collision.gameObject.transform.parent.parent.GetComponent<EnemyMove>().SentEnemyNumber();
 
             analytics.GetComponent<UnityAnalyticsEvents>().EnemyKilledPlayer(enemyNumber);
 
