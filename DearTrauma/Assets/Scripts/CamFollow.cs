@@ -9,6 +9,7 @@ public class CamFollow : MonoBehaviour {
 
     [Header("Modifiers")]
     public float SmoothTime = 0.3f;
+    public float SmoothTimeCamera = 0.3f;
     public float CamYDefault = 1.64f;
     public float CamXDefault = 2.05f;
     public float CamYBigDefault = 0.4f;
@@ -38,12 +39,12 @@ public class CamFollow : MonoBehaviour {
         if (!isBig)
         {
             var newOffset = new Vector3(camX, camY, -10);
-            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTime);
+            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTimeCamera);
         }
         else
         {
             var newOffset = new Vector3(camXBig, camYBig, -10);
-            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTime);
+            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTimeCamera);
         }
 
         Vector3 targetPosition = Target.TransformPoint(camOffset);
