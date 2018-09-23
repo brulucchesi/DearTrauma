@@ -16,7 +16,9 @@ public class CamFollow : MonoBehaviour {
     public float CamXBigDefault = 2.05f;
     public float SizeBig = 7.5f;
 
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 velocity1 = Vector3.zero;
+    private Vector3 velocity2 = Vector3.zero;
+    private Vector3 velocity3 = Vector3.zero;
     private Vector3 camOffset;
     public float camY;
     public float camX;
@@ -39,16 +41,16 @@ public class CamFollow : MonoBehaviour {
         if (!isBig)
         {
             var newOffset = new Vector3(camX, camY, -10);
-            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTimeCamera);
+            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity1, SmoothTimeCamera);
         }
         else
         {
             var newOffset = new Vector3(camXBig, camYBig, -10);
-            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity, SmoothTimeCamera);
+            camOffset = Vector3.SmoothDamp(camOffset, newOffset, ref velocity2, SmoothTimeCamera);
         }
 
         Vector3 targetPosition = Target.TransformPoint(camOffset);
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, SmoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity3, SmoothTime);
 
         //Vector3 clampedPos = transform.position;
         //clampedPos.y = Mathf.Clamp(transform.position.y, minY, maxY);
