@@ -18,6 +18,9 @@ public class Manager : MonoBehaviour
 
     private GameObject analytics;
 
+    private GameObject musicManager;
+
+
     static private Manager _instance;
 
     static public Manager GetInstance()
@@ -32,6 +35,7 @@ public class Manager : MonoBehaviour
 
     private void Start()
     {
+        musicManager = GameObject.Find("MusicManager");
 
         analytics = GameObject.Find("Analytics");
 
@@ -39,12 +43,12 @@ public class Manager : MonoBehaviour
                                             (ScreenManager.GetInstance().CurrentScreen.Value ==
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
-            {
+                {
+                    musicManager.GetComponent<MusicManager>().ChangeGamePlay();
                 ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
                 if (analytics != null)
                 {
                     analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
-
                 }
             }
             );
@@ -73,6 +77,7 @@ public class Manager : MonoBehaviour
 
     public void EndBoss()
     {
+        musicManager.GetComponent<MusicManager>().ChangeCredits();
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Credits);
     }
 }

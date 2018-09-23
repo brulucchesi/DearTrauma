@@ -24,8 +24,11 @@ public class Fragment : MonoBehaviour
     private GameObject analytics;
     private bool canClose;
 
+    private GameObject musicManager;
+
     private void Start()
     {
+        musicManager = GameObject.Find("MusicManager");
         canClose = false;
         analytics = GameObject.Find("Analytics");
 
@@ -119,6 +122,7 @@ public class Fragment : MonoBehaviour
 
         if (Boss)
         {
+            musicManager.GetComponent<MusicManager>().ChangeBoss();
             Manager.GetInstance().GetComponent<Animator>().SetTrigger("end");
         }
         else
