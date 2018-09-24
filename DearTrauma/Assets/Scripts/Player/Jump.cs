@@ -38,6 +38,7 @@ public class Jump : MonoBehaviour {
         boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
 
         canResetJump = false;
+        anim.SetBool("grounded", true);
 
         jumpPress.Subscribe(jumpPress =>
         {
@@ -70,6 +71,13 @@ public class Jump : MonoBehaviour {
         {
             jumpCount.Value = 2;
             canResetJump = false;
+            anim.SetBool("grounded", true);
+            //anim.SetBool("falling", false);
+        }
+
+        if(rb.velocity.y < 0 && !grounded)
+        {
+            //anim.SetBool("falling", true);
         }
     }
 
@@ -86,13 +94,15 @@ public class Jump : MonoBehaviour {
         else if (jumpCount.Value == 2)
         {
             rb.AddForce(Vector2.up * JumpVelocity, ForceMode2D.Impulse);
-
-            if (anim)
-            {
-                anim.SetTrigger("Jump");
-                anim.SetTrigger("offGround");
-            }
         }
+
+        if (anim)
+        {
+            //anim.SetBool("falling", false);
+            anim.SetTrigger("Jump");
+            anim.SetBool("grounded", false);
+        }
+
         jumpCount.Value--;
         jumpPress.Value = false;
 
