@@ -64,6 +64,7 @@ public class Manager : MonoBehaviour
     {
         FinalFragment.SetActive(false);
         Boss.SetActive(true);
+        Player.GetComponent<Movement>().SetCanMove(false);
     }
 
     public void EndAnimation()
