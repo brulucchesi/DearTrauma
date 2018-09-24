@@ -29,7 +29,7 @@ public class Range : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            enemyMove.Following.Value = true;
+            enemyMove.PlayerInRange.Value = true;
         }
     }
 
@@ -37,7 +37,7 @@ public class Range : MonoBehaviour
     {
         if (collision.gameObject.layer == 8)
         {
-            enemyMove.Following.Value = false;
+            enemyMove.PlayerInRange.Value = false;
         }
     }
 }

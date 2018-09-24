@@ -20,10 +20,6 @@ public class StopCheck : MonoBehaviour {
                                                      Vector3.left * BoxSize.x / 2);
         if(Physics2D.OverlapBox(boxCenter, BoxSize, 0f, Mask) == null)
         {
-            if (GetComponentInParent<EnemyMove>().LostWaypoint.Value == false)
-            {
-                GetComponentInParent<EnemyMove>().LostWaypoint.Value = true;
-            }
             if (GetComponentInParent<EnemyMove>().ReachedLimit.Value == false)
             {
                 GetComponentInParent<EnemyMove>().ReachedLimit.Value = true;
@@ -35,10 +31,6 @@ public class StopCheck : MonoBehaviour {
     {
         if(collision.gameObject.layer != 8 && collision.gameObject.layer != 13)
         {
-            if(GetComponentInParent<EnemyMove>().LostWaypoint.Value == false)
-            {
-                GetComponentInParent<EnemyMove>().LostWaypoint.Value = true;
-            }
             if (GetComponentInParent<EnemyMove>().ReachedLimit.Value == false)
             {
                 GetComponentInParent<EnemyMove>().ReachedLimit.Value = true;

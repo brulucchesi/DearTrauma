@@ -6,6 +6,14 @@ using System;
 
 public class EnemyMove : MonoBehaviour
 {
+    public enum MoveState
+    {
+        Waypoint,
+        Follow,
+        LostWaypoint,
+        Waiting
+    }
+
     [Header("References")]
     public int EnemyNumber = -1;
     public GameObject WaypointsParent;
@@ -24,161 +32,105 @@ public class EnemyMove : MonoBehaviour
     public bool Dead;
 
     [HideInInspector]
-    public ReactiveProperty<bool> Following = new ReactiveProperty<bool>();
+    public ReactiveProperty<MoveState> CurrentMoveState = new ReactiveProperty<MoveState>(MoveState.Waypoint);
 
     [HideInInspector]
-    public ReactiveProperty<float> DistToWaypoint = new ReactiveProperty<float>();
-
-    [HideInInspector]
-    public ReactiveProperty<bool> LostWaypoint = new ReactiveProperty<bool>(false);
+    public ReactiveProperty<bool> PlayerInRange = new ReactiveProperty<bool>(false);
 
     [HideInInspector]
     public ReactiveProperty<bool> ReachedLimit = new ReactiveProperty<bool>(false);
 
     private List<Vector3> waypoints;
     private int currentWaypoint;
-    private Coroutine waypointCoroutine;
-    private Coroutine followCoroutine;
-    private bool haveAttacked = false;
+    private bool useWaypoint;
 
-    private bool canFollow;
-    private bool canWaypoint;
-    private bool canLostVel;
-    private IDisposable waypointDisposable;
-    private IDisposable followDisposable;
+    private List<IDisposable> timersDisposables;
 
     public int SentEnemyNumber()
     {
         return EnemyNumber;
     }
 
-    // Use this for initialization
     void Start()
     {
+        timersDisposables = new List<IDisposable>();
         Right = true;
-        canWaypoint = true;
-        canFollow = false;
-        canLostVel = false;
-        Following.Value = false;
+        useWaypoint = true;
         CalculateWaypoints();
-
         currentWaypoint = 0;
+
         Flip(waypoints[currentWaypoint]);
         GetComponent<Animator>().SetBool("Idle", false);
 
+        var fixUpdate = Observable.EveryUpdate().Where(_ => this && !Dead);
+        fixUpdate.Subscribe(_ =>
+        {
+            switch(CurrentMoveState.Value)
+            {
+                case MoveState.Waypoint:
+                    Waypoint();
+                    break;
+                case MoveState.Follow:
+                    Follow();
+                    break;
+                case MoveState.LostWaypoint:
+                    LostWaypoint();
+                    break;
+                case MoveState.Waiting:
+                    Waiting();
+                    break;
+                default:
+                    break;
+            }
+        });
+
         ReachedLimit.Subscribe(limit =>
         {
-            if(limit)
+            if (limit)
             {
-                canFollow = false;
-                canWaypoint = false;
-                canLostVel = false;
+                useWaypoint = false;
+                CurrentMoveState.Value = MoveState.Waiting;
+
                 GetComponent<Animator>().SetBool("Idle", true);
                 Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
                 {
-                    if (this && Following.Value == false && !Dead)
+                    if (this && !Dead)
                     {
+                        CurrentMoveState.Value = MoveState.LostWaypoint;
                         GetComponent<Animator>().SetBool("Idle", false);
                         Flip();
-                        canLostVel = true;
                         ReachedLimit.Value = false;
                     }
                 });
             }
         });
 
-        Following.Skip(1).Subscribe(follow =>
+        CurrentMoveState.Subscribe(_=>DisposeAllTimers());
+
+        PlayerInRange.Subscribe(inRange =>
         {
-            if(follow)
+            if (inRange)
             {
-                canWaypoint = false;
-                canFollow = true;
                 GetComponent<Animator>().SetBool("Idle", false);
                 GetComponent<Animator>().speed *= FollowSpeed / WaypointSpeed;
+                CurrentMoveState.Value = MoveState.Follow;
             }
             else
             {
-                canFollow = false;
                 Vector2 stopvel = GetComponent<Rigidbody2D>().velocity;
                 stopvel.x = 0.0f;
                 GetComponent<Rigidbody2D>().velocity = stopvel;
-                GetComponent<Animator>().SetBool("Idle", true);
                 GetComponent<Animator>().speed = 1;
-                Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
-                {
-                    if (this && Following.Value == false && !Dead && !ReachedLimit.Value)
-                    {
-                        Flip(waypoints[currentWaypoint]);
-                        canWaypoint = true;
-                        GetComponent<Animator>().SetBool("Idle", false);
-                    }
-                });
+
+                PlayerOnExitRange();
             }
-        });
-
-        Vector3 point = new Vector3(waypoints[currentWaypoint].x, transform.position.y);
-        DistToWaypoint.Value = Vector2.Distance(point, transform.position);
-
-        var fixUpdate = Observable.EveryUpdate().Where(_ => this && !Dead);
-        var toWaypoint = fixUpdate.Where(_ => canFollow == false && canWaypoint && !LostWaypoint.Value);
-        toWaypoint.Subscribe(_ =>
-        {
-            CalculateWaypointVel();
-        });
-
-        DistToWaypoint.Where(_ => canFollow == false && canWaypoint && !LostWaypoint.Value).Subscribe(dist =>
-        {
-            if (dist < 1f)
-            {
-                canWaypoint = false;
-
-                GetComponent<Animator>().SetBool("Idle", true);
-                Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
-                {
-                    if (this && Following.Value == false && !Dead && !LostWaypoint.Value)
-                    {
-                        currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
-                        Flip(waypoints[currentWaypoint]);
-                        canWaypoint = true;
-                        GetComponent<Animator>().SetBool("Idle", false);
-                    }
-                });
-            }
-        });
-
-        var toFollow = fixUpdate.Where(_ => Following.Value == true && canFollow);
-        toFollow.Subscribe(_ =>
-        {
-            CalculateFollowVel();
-        });
-
-        var toLost = fixUpdate.Where(_ =>canLostVel);
-        toLost.Subscribe(_ =>
-        {
-            CalculateLostVel();
         });
     }
 
-    private void CalculateLostVel()
-    {
-        if (Right)
-        {
-            Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-            vel.x = WaypointSpeed;
-            GetComponent<Rigidbody2D>().velocity = vel;
-        }
-        else
-        {
-            Vector2 vel = GetComponent<Rigidbody2D>().velocity;
-            vel.x = -WaypointSpeed;
-            GetComponent<Rigidbody2D>().velocity = vel;
-        }
-    }
-
-    private void CalculateWaypointVel()
+    private void Waypoint()
     {
         Vector3 point = new Vector3(waypoints[currentWaypoint].x, transform.position.y);
-        DistToWaypoint.Value = Vector2.Distance(point, transform.position);
+        float dist = Vector2.Distance(point, transform.position);
 
         if (point.x > transform.position.x)
         {
@@ -192,24 +144,32 @@ public class EnemyMove : MonoBehaviour
             vel.x = -WaypointSpeed;
             GetComponent<Rigidbody2D>().velocity = vel;
         }
+
+        if (dist < 1f)
+        {
+            GetComponent<Animator>().SetBool("Idle", true);
+            CurrentMoveState.Value = MoveState.Waiting;
+            IDisposable timer = null;
+            timer = Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
+            {
+                if (this && !Dead)
+                {
+                    currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
+                    Flip(waypoints[currentWaypoint]);
+                    GetComponent<Animator>().SetBool("Idle", false);
+                    CurrentMoveState.Value = MoveState.Waypoint;
+                }
+                timersDisposables.Remove(timer);
+            });
+            timersDisposables.Add(timer);
+        }
     }
 
-    private void CalculateFollowVel()
+    private void Follow()
     {
-        canWaypoint = false;
         if (Manager.GetInstance().Player.GetComponent<Movement>().Safe)
         {
-            canFollow = false;
-            GetComponent<Animator>().SetBool("Idle", true);
-            Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
-            {
-                if (this && Following.Value == false && !Dead && !ReachedLimit.Value)
-                {
-                    Flip(waypoints[currentWaypoint]);
-                    canWaypoint = true;
-                    GetComponent<Animator>().SetBool("Idle", false);
-                }
-            });
+            PlayerOnExitRange();
         }
         else
         {
@@ -229,6 +189,61 @@ public class EnemyMove : MonoBehaviour
                 GetComponent<Rigidbody2D>().velocity = vel;
             }
         }
+    }
+
+    private void LostWaypoint()
+    {
+        if (Right)
+        {
+            Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+            vel.x = WaypointSpeed;
+            GetComponent<Rigidbody2D>().velocity = vel;
+        }
+        else
+        {
+            Vector2 vel = GetComponent<Rigidbody2D>().velocity;
+            vel.x = -WaypointSpeed;
+            GetComponent<Rigidbody2D>().velocity = vel;
+        }
+    }
+
+    private void Waiting()
+    {
+
+    }
+
+    private void DisposeAllTimers()
+    {
+        foreach (var timer in timersDisposables)
+        {
+            timer.Dispose();
+        }
+    }
+    
+    private void PlayerOnExitRange()
+    {
+        CurrentMoveState.Value = MoveState.Waiting;
+
+        GetComponent<Animator>().SetBool("Idle", true);
+        IDisposable timer = null;
+        timer = Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
+        {
+            if (this && !Dead)
+            {
+                if (useWaypoint)
+                {
+                    CurrentMoveState.Value = MoveState.Waypoint;
+                    Flip(waypoints[currentWaypoint]);
+                }
+                else
+                {
+                    CurrentMoveState.Value = MoveState.LostWaypoint;
+                }
+                GetComponent<Animator>().SetBool("Idle", false);
+            }
+            timersDisposables.Remove(timer);
+        });
+        timersDisposables.Add(timer);
     }
 
     private void CalculateWaypoints()
