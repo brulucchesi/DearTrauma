@@ -9,6 +9,10 @@ public class Movement : MonoBehaviour
 
     [Header("References")]
     public Transform[] PartsToFlip;
+    public AudioSource WalkAudio;
+    public AudioSource DeathAudio;
+    public AudioSource DamageAudio;
+    public AudioSource[] HideAudio;
 
     [Header("Modifiers")]
     public float Speed;
@@ -63,13 +67,13 @@ public class Movement : MonoBehaviour
 
             if(Mathf.Abs(vel.x) > 0.01f)
             {
-                GetComponent<Animator>().SetBool("Walking", true);
+                Walk();
             }
             else
             {
                 if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
                 {
-                    GetComponent<Animator>().SetBool("Walking", false);
+                    Stop();
                 }
             }
         }
@@ -86,16 +90,22 @@ public class Movement : MonoBehaviour
 
             SetCanMove(false);
             collision.GetComponentInParent<EnemyMove>().AttackPlayer();
+
+            DamageAudio.Play();
         }
         else if (collision.CompareTag("Trap"))
         {
             SetCanMove(false);
             collision.GetComponent<Trap>().AttackPlayer();
+
+            DamageAudio.Play();
         }
         else if (collision.CompareTag("Hole"))
         {
             canMove = false;
             collision.GetComponent<Hole>().AttackPlayer();
+
+            DamageAudio.Play();
         }
         else if (collision.CompareTag("Checkpoint"))
         {
@@ -122,6 +132,7 @@ public class Movement : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("Dead", true);
         Physics2D.IgnoreLayerCollision(8, 10, true);
+        DeathAudio.Play();
     }
 
     public void SetCheckpoint(Vector2 pos)
@@ -142,6 +153,11 @@ public class Movement : MonoBehaviour
         Safe = hide;
         Speed = (hide) ? Speed / SpeedHideMod : Speed * SpeedHideMod;
         GetComponent<Animator>().SetBool("Hidden", hide);
+
+        if(hide)
+        {
+            HideAudio[Random.Range(0, HideAudio.Length)].Play();
+        }
     }
 
     void Flip()
@@ -153,5 +169,17 @@ public class Movement : MonoBehaviour
             currentScale.x *= -1;
             t.localScale = currentScale;
         }
+    }
+
+    void Walk()
+    {
+        GetComponent<Animator>().SetBool("Walking", true);
+        WalkAudio.Play();
+    }
+
+    void Stop()
+    {
+        GetComponent<Animator>().SetBool("Walking", false);
+        WalkAudio.Stop();
     }
 }

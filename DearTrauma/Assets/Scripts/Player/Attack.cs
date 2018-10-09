@@ -6,6 +6,7 @@ public class Attack : MonoBehaviour {
 
     [Header("References")]
     public GameObject AttackPoint;
+    public AudioSource AttackAudio;
 
     [Header("Modifiers")]
     public LayerMask Mask;
@@ -30,6 +31,7 @@ public class Attack : MonoBehaviour {
 
     private void StartAttack()
     {
+        AttackAudio.Play();
         if (anim)
         {
             anim.SetTrigger("Attack");

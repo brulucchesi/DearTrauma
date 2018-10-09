@@ -13,6 +13,7 @@ public class Evolution : MonoBehaviour
     public Sprite SpriteBig;
     public GameObject Background;
     public List<SpriteMeshInstance> Meshes;
+    public AudioSource TransformAudio;
 
     [Header("Modifiers")]
     public float ScaleMultiplier = 2f;
@@ -59,5 +60,7 @@ public class Evolution : MonoBehaviour
         {
             mesh.color = EvolutionColor;
         }
+
+        TransformAudio.Play();
     }
 }

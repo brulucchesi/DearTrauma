@@ -6,6 +6,10 @@ using UniRx;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Jump : MonoBehaviour {
 
+    [Header("References")]
+    public AudioSource JumpAudio;
+    public AudioSource LandAudio;
+
     [Header("Modifiers")]
     public float JumpVelocity;
     public float DoubleJumpVelocity;
@@ -72,6 +76,7 @@ public class Jump : MonoBehaviour {
             jumpCount.Value = 2;
             canResetJump = false;
             anim.SetBool("grounded", true);
+            LandAudio.Play();
             //anim.SetBool("falling", false);
         }
 
@@ -83,6 +88,7 @@ public class Jump : MonoBehaviour {
 
     private void CalculateJump()
     {
+        JumpAudio.Play();
         if (jumpCount.Value == 1)
         {
             Vector3 vel = rb.velocity;
