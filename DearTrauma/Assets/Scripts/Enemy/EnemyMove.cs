@@ -19,6 +19,10 @@ public class EnemyMove : MonoBehaviour
     public GameObject WaypointsParent;
     public Transform Front;
     public Transform[] PartsToFlip;
+    public AudioSource WalkAudio;
+    public AudioSource AttackAudio;
+    public AudioSource DeathAudio;
+    public AudioSource[] RoarAudios;
 
     [Header("Modifiers")]
     public float FollowSpeed = 20f;
@@ -60,7 +64,7 @@ public class EnemyMove : MonoBehaviour
         currentWaypoint = 0;
 
         Flip(waypoints[currentWaypoint]);
-        GetComponent<Animator>().SetBool("Idle", false);
+        Walk();
 
         var fixUpdate = Observable.EveryUpdate().Where(_ => this && !Dead);
         fixUpdate.Subscribe(_ =>
@@ -91,13 +95,13 @@ public class EnemyMove : MonoBehaviour
                 useWaypoint = false;
                 CurrentMoveState.Value = MoveState.Waiting;
 
-                GetComponent<Animator>().SetBool("Idle", true);
+                Stop();
                 Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
                 {
                     if (this && !Dead)
                     {
                         CurrentMoveState.Value = MoveState.LostWaypoint;
-                        GetComponent<Animator>().SetBool("Idle", false);
+                        Walk();
                         Flip();
                         ReachedLimit.Value = false;
                     }
@@ -111,9 +115,10 @@ public class EnemyMove : MonoBehaviour
         {
             if (inRange)
             {
-                GetComponent<Animator>().SetBool("Idle", false);
+                Walk();
                 GetComponent<Animator>().speed *= FollowSpeed / WaypointSpeed;
                 CurrentMoveState.Value = MoveState.Follow;
+                RoarAudios[UnityEngine.Random.Range(0, RoarAudios.Length)].Play();
             }
             else
             {
@@ -147,7 +152,7 @@ public class EnemyMove : MonoBehaviour
 
         if (dist < 1f)
         {
-            GetComponent<Animator>().SetBool("Idle", true);
+            Stop();
             CurrentMoveState.Value = MoveState.Waiting;
             IDisposable timer = null;
             timer = Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
@@ -156,7 +161,7 @@ public class EnemyMove : MonoBehaviour
                 {
                     currentWaypoint = (currentWaypoint + 1) % waypoints.Count;
                     Flip(waypoints[currentWaypoint]);
-                    GetComponent<Animator>().SetBool("Idle", false);
+                    Walk();
                     CurrentMoveState.Value = MoveState.Waypoint;
                 }
                 timersDisposables.Remove(timer);
@@ -224,7 +229,7 @@ public class EnemyMove : MonoBehaviour
     {
         CurrentMoveState.Value = MoveState.Waiting;
 
-        GetComponent<Animator>().SetBool("Idle", true);
+        Stop();
         IDisposable timer = null;
         timer = Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
         {
@@ -239,7 +244,7 @@ public class EnemyMove : MonoBehaviour
                 {
                     CurrentMoveState.Value = MoveState.LostWaypoint;
                 }
-                GetComponent<Animator>().SetBool("Idle", false);
+                Walk();
             }
             timersDisposables.Remove(timer);
         });
@@ -288,6 +293,7 @@ public class EnemyMove : MonoBehaviour
     public void AttackPlayer()
     {
         GetComponent<Animator>().SetTrigger("Attack");
+        AttackAudio.Play();
     }
 
     public void PlayerDied()
@@ -305,5 +311,18 @@ public class EnemyMove : MonoBehaviour
                 Gizmos.DrawSphere(v, 0.2f);
             }
         }
+    }
+
+    private void Stop()
+    {
+        RoarAudios[UnityEngine.Random.Range(0, RoarAudios.Length)].Play();
+        GetComponent<Animator>().SetBool("Idle", true);
+        WalkAudio.Stop();
+    }
+
+    private void Walk()
+    {
+        GetComponent<Animator>().SetBool("Idle", false);
+        WalkAudio.Play();
     }
 }

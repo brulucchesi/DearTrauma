@@ -22,6 +22,7 @@ public class EnemyBack : MonoBehaviour
 
         GetComponentInParent<Animator>().SetBool("Died", true);
         GetComponentInParent<EnemyMove>().Dead = true;
+        GetComponentInParent<EnemyMove>().DeathAudio.Play();
         GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
     }
 }
