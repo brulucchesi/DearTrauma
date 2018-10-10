@@ -174,7 +174,10 @@ public class Movement : MonoBehaviour
     void Walk()
     {
         GetComponent<Animator>().SetBool("Walking", true);
-        WalkAudio.Play();
+        if(!WalkAudio.isPlaying)
+        {
+            WalkAudio.Play();
+        }
     }
 
     void Stop()
