@@ -25,6 +25,7 @@ public class Fragment : MonoBehaviour
     private bool canClose;
 
     private GameObject musicManager;
+    private GameObject playerGameObject;
 
     private void Start()
     {
@@ -66,7 +67,7 @@ public class Fragment : MonoBehaviour
     //    }
     //}
 
-    public void Collect()
+    public void Collect(GameObject player)
     {
         analytics.GetComponent<UnityAnalyticsEvents>().EndLevel(levelNumber);
 
@@ -83,6 +84,8 @@ public class Fragment : MonoBehaviour
         {
            //Time.timeScale = 0f;
             FragmentMemory.SetActive(true);
+            playerGameObject = player;
+            player.GetComponent<Movement>().SetCanMove(false);
             ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Fragment);
 
             Observable.Timer(System.TimeSpan.FromSeconds(TimeToClose)).Subscribe(_ =>
@@ -127,8 +130,8 @@ public class Fragment : MonoBehaviour
         }
         else
         {
+            playerGameObject.GetComponent<Movement>().SetCanMove(true);
             gameObject.SetActive(false);
         }
-        //Time.timeScale = 1f;
     }
 }

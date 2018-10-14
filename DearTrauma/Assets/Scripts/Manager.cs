@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using UnityEngine.Playables;
 
 public class Manager : MonoBehaviour
 {
     [Header("References")]
     public GameObject Player;
+
+    [Header("Boss References")]
     public GameObject FinalFragment;
     public GameObject Boss;
+    public PlayableDirector BossPlayableDirector;
+    public AudioSource BossTransition;
+    public AudioSource BossRoar;
+    public AudioClip EmptySound;
 
     [Header("Modifiers")]
     public float BossSeconds = 0f;
@@ -45,12 +52,12 @@ public class Manager : MonoBehaviour
             .Subscribe(_ =>
                 {
                     musicManager.GetComponent<MusicManager>().ChangeGamePlay();
-                ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
-                if (analytics != null)
-                {
-                    analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
+                    ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
+                    if (analytics != null)
+                    {
+                        analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
+                    }
                 }
-            }
             );
         EscInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
         AnyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
@@ -62,9 +69,18 @@ public class Manager : MonoBehaviour
 
     public void AnimationMiddle()
     {
+        Player.GetComponent<Movement>().SetCanMove(false);
+
         FinalFragment.SetActive(false);
         Boss.SetActive(true);
-        Player.GetComponent<Movement>().SetCanMove(false);
+
+        BossTransition.clip = EmptySound;
+        BossTransition.Play();
+
+        BossRoar.clip = EmptySound;
+        BossRoar.Play();
+
+        BossPlayableDirector.Play();
     }
 
     public void EndAnimation()

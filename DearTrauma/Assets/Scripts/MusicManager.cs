@@ -7,8 +7,8 @@ public class MusicManager : MonoBehaviour
     public AudioSource BackgroundMusic;
     public AudioClip Title;
     public AudioClip GamePlay;
-    public AudioClip Boss;
     public AudioClip Credits;
+    public AudioClip EmptySound;
 
 	void Awake ()
 	{
@@ -24,9 +24,9 @@ public class MusicManager : MonoBehaviour
     }
     public void ChangeBoss()
     {
-        BackgroundMusic.clip = Boss;
-        BackgroundMusic.Play();
-
+        BackgroundMusic.clip = EmptySound;
+        BackgroundMusic.gameObject.SetActive(false);
+        BackgroundMusic.gameObject.SetActive(true);
     }
     public void ChangeCredits()
     {

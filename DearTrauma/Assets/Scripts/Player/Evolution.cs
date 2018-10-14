@@ -9,20 +9,21 @@ public class Evolution : MonoBehaviour
     [Header("References")]
     public RuntimeAnimatorController BigAnimator;
     public GameObject Fragment;
-    public SpriteRenderer SpriteDefault;
-    public Sprite SpriteBig;
     public GameObject Background;
-    public List<SpriteMeshInstance> Meshes;
+    public GameObject Visual;
+    public GameObject VisualBig;
     public AudioSource TransformAudio;
 
     [Header("Modifiers")]
     public float ScaleMultiplier = 2f;
     public float ScaleMultiplierBackground = 2.5f;
-    public Color EvolutionColor;
     public BoolReactiveProperty EvolutionOn = new BoolReactiveProperty();
 
     private void Start()
     {
+        Visual.SetActive(true);
+        VisualBig.SetActive(false);
+
         EvolutionOn.Subscribe(_ =>
         {
             if (_)
@@ -41,25 +42,22 @@ public class Evolution : MonoBehaviour
                 EvolutionTransition();
             }
 
-            collision.GetComponent<Fragment>().Collect();
+            collision.GetComponent<Fragment>().Collect(this.gameObject);
         }
     }
 
     private void EvolutionTransition()
     {
-        SpriteDefault.sprite = SpriteBig;
+        Visual.SetActive(false);
+        VisualBig.SetActive(true);
         GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
-        transform.localScale *= ScaleMultiplier;
+        //transform.localScale *= ScaleMultiplier;
         Background.transform.localScale *= ScaleMultiplierBackground;
         Camera.main.GetComponent<CamFollow>().Big();
         transform.position = transform.position + Vector3.up * 3;
         GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
         GetComponent<Jump>().JumpVelocity *= ScaleMultiplier;
         GetComponent<Jump>().DoubleJumpVelocity *= ScaleMultiplier;
-        foreach (var mesh in Meshes)
-        {
-            mesh.color = EvolutionColor;
-        }
 
         TransformAudio.Play();
     }
