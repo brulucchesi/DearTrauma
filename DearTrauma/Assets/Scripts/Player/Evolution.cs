@@ -58,6 +58,8 @@ public class Evolution : MonoBehaviour
         GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
         GetComponent<Jump>().JumpVelocity *= ScaleMultiplier;
         GetComponent<Jump>().DoubleJumpVelocity *= ScaleMultiplier;
+        GetComponent<CapsuleCollider2D>().size = new Vector2(1.3f, 3.8f);
+        GetComponent<CapsuleCollider2D>().offset = new Vector2(0.0f, -0.12f);
 
         TransformAudio.Play();
     }
