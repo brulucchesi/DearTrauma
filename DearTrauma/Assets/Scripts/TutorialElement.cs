@@ -96,7 +96,7 @@ public class TutorialElement : MonoBehaviour {
         while(frac < 1.0f)
         {
             frac += 1.0f / 30.0f;
-            print(frac);
+          //  print(frac);
             Color color = TutorialImage.color;
             color.a = Mathf.Lerp(min, max, frac);
             TutorialImage.color = color;
