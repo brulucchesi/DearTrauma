@@ -80,7 +80,7 @@ public class Fragment : MonoBehaviour
         {
             LinkedDoor.Unlock();
         }
-        if (FragmentMemory)
+        if (FragmentMemory && levelNumber != 3)
         {
            //Time.timeScale = 0f;
             FragmentMemory.SetActive(true);
@@ -127,11 +127,16 @@ public class Fragment : MonoBehaviour
         {
             musicManager.GetComponent<MusicManager>().ChangeBoss();
             Manager.GetInstance().GetComponent<Animator>().SetTrigger("end");
+            playerGameObject.GetComponent<Animator>().SetBool("Walking", false);
         }
         else
         {
             playerGameObject.GetComponent<Movement>().SetCanMove(true);
             gameObject.SetActive(false);
+            if (levelNumber == 2)
+            {
+                playerGameObject.GetComponent<Evolution>().InitiateTransform();
+            }
         }
     }
 }

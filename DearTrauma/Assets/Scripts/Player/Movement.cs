@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 lastCheckPoint;
     private bool canMove;
+    private bool isJumping;
 
     void Start()
     {
@@ -41,13 +42,13 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(canMove)
+        if (canMove)
         {
             float hor = Input.GetAxis("Horizontal");
             if (hor > 0)
             {
                 GetComponent<Animator>().SetBool("Mirror", false);
-                if(!Right)
+                if (!Right)
                 {
                     Flip();
                 }
@@ -65,7 +66,7 @@ public class Movement : MonoBehaviour
 
             rb.velocity = vel;
 
-            if(Mathf.Abs(vel.x) > 0.01f)
+            if (Mathf.Abs(vel.x) > 0.01f)
             {
                 Walk();
             }
@@ -77,11 +78,11 @@ public class Movement : MonoBehaviour
                 }
             }
         }
-	}
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("EnemyFront") && !Safe)
+        if (collision.CompareTag("EnemyFront") && !Safe)
         {
 
             int enemyNumber = collision.gameObject.transform.parent.parent.GetComponent<EnemyMove>().SentEnemyNumber();
@@ -110,7 +111,7 @@ public class Movement : MonoBehaviour
         else if (collision.CompareTag("Checkpoint"))
         {
             Vector3? pos = collision.GetComponent<Checkpoint>().GetCheckpoint();
-            if(pos != null)
+            if (pos != null)
             {
                 SetCheckpoint(pos.Value);
             }
@@ -121,6 +122,10 @@ public class Movement : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         canMove = move;
+        if (!canMove)
+        {
+            StopWalkAudio(false);
+        }
     }
 
     public bool GetCanMove()
@@ -154,7 +159,7 @@ public class Movement : MonoBehaviour
         Speed = (hide) ? Speed / SpeedHideMod : Speed * SpeedHideMod;
         GetComponent<Animator>().SetBool("Hidden", hide);
 
-        if(hide)
+        if (hide)
         {
             HideAudio[Random.Range(0, HideAudio.Length)].Play();
         }
@@ -163,7 +168,7 @@ public class Movement : MonoBehaviour
     void Flip()
     {
         Right = !Right;
-        foreach(Transform t in PartsToFlip)
+        foreach (Transform t in PartsToFlip)
         {
             Vector3 currentScale = t.localScale;
             currentScale.x *= -1;
@@ -174,7 +179,7 @@ public class Movement : MonoBehaviour
     void Walk()
     {
         GetComponent<Animator>().SetBool("Walking", true);
-        if(!WalkAudio.isPlaying)
+        if (!WalkAudio.isPlaying && !isJumping)
         {
             WalkAudio.Play();
         }
@@ -183,6 +188,12 @@ public class Movement : MonoBehaviour
     void Stop()
     {
         GetComponent<Animator>().SetBool("Walking", false);
+        StopWalkAudio(false);
+    }
+
+    public void StopWalkAudio(bool isJumpingBool)
+    {
+        isJumping = isJumpingBool;
         WalkAudio.Stop();
     }
 }

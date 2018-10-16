@@ -4,7 +4,8 @@ using UnityEngine;
 using UniRx;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Jump : MonoBehaviour {
+public class Jump : MonoBehaviour
+{
 
     [Header("References")]
     public AudioSource JumpAudio;
@@ -61,9 +62,9 @@ public class Jump : MonoBehaviour {
         }
     }
 
-    void Update ()
+    void Update()
     {
-        if(Input.GetButtonDown("Jump") && (jumpCount.Value > 0) && GetComponent<Movement>().GetCanMove())
+        if (Input.GetButtonDown("Jump") && (jumpCount.Value > 0) && GetComponent<Movement>().GetCanMove())
         {
             jumpPress.Value = true;
         }
@@ -75,19 +76,25 @@ public class Jump : MonoBehaviour {
         {
             jumpCount.Value = 2;
             canResetJump = false;
-            anim.SetBool("grounded", true);
-            LandAudio.Play();
-            //anim.SetBool("falling", false);
-        }
+            //anim.SetBool("grounded", true);
 
-        if(rb.velocity.y < 0 && !grounded)
-        {
-            //anim.SetBool("falling", true);
+            GetComponent<Movement>().StopWalkAudio(false);
+            GetComponent<Movement>().SetCanMove(false);
+            anim.SetBool("falling", true);
+            LandAudio.Play();
         }
+    }
+
+    public void SetFallingFalse()
+    {
+        GetComponent<Movement>().SetCanMove(true);
+        anim.SetBool("grounded", true);
+        anim.SetBool("falling", false);
     }
 
     private void CalculateJump()
     {
+        GetComponent<Movement>().StopWalkAudio(true);
         JumpAudio.Play();
         if (jumpCount.Value == 1)
         {
@@ -122,7 +129,7 @@ public class Jump : MonoBehaviour {
     {
         //if(collision.gameObject.layer == 9)
         //{
-            touching = true;
+        touching = true;
         //}
     }
 
@@ -130,7 +137,7 @@ public class Jump : MonoBehaviour {
     {
         //if (collision.gameObject.layer == 9)
         //{
-            touching = false;
+        touching = false;
         //}
     }
 }
