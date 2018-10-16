@@ -80,7 +80,7 @@ public class Fragment : MonoBehaviour
         {
             LinkedDoor.Unlock();
         }
-        if (FragmentMemory)
+        if (FragmentMemory && levelNumber != 3)
         {
            //Time.timeScale = 0f;
             FragmentMemory.SetActive(true);
