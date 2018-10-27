@@ -42,7 +42,7 @@ public class Jump : MonoBehaviour
         playerSize = GetComponent<CapsuleCollider2D>().size;
         boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
 
-        canResetJump = false;
+        canResetJump = true;
         anim.SetBool("grounded", true);
 
         jumpPress.Subscribe(jumpPress =>
@@ -91,15 +91,15 @@ public class Jump : MonoBehaviour
             {
                 jumpCount.Value = 2;
                 canResetJump = false;
-                anim.SetBool("grounded", true);
 
                 GetComponent<Movement>().StopWalkAudio(false);
                 anim.SetBool("Land", true);
                 LandAudio.Play();
             }
+            anim.SetBool("grounded", true);
         }
 
-        if(jumpCount.Value < 2)
+        if(jumpCount.Value < 2 || rb.velocity.y < -2f)
         {
             anim.SetBool("grounded", false);
         }
