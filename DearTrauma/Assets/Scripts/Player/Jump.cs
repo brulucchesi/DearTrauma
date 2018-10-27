@@ -14,8 +14,8 @@ public class Jump : MonoBehaviour
     [Header("Modifiers")]
     public float JumpVelocity;
     public float DoubleJumpVelocity;
-    //public float FallMultiplier = 2.5f;
-    //public float LowJumpMultiplier = 2f;
+    public float FallMultiplier = 2.5f;
+    public float LowJumpMultiplier = 2f;
 
     public float GroundedSkinX = 0.05f;
     public float GroundedSkinY = 0.05f;
@@ -71,6 +71,19 @@ public class Jump : MonoBehaviour
         boxCenter = (Vector2)transform.position + Vector2.down * (playerSize.y + boxSize.y) * 0.5f;
         boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
         grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touching;
+
+        if (rb.velocity.y < 0)
+        {
+            rb.gravityScale = FallMultiplier;
+        }
+        else if (rb.velocity.y > 0/* && !Input.GetButton("Jump")*/)
+        {
+            rb.gravityScale = LowJumpMultiplier;
+        }
+        else
+        {
+            rb.gravityScale = 1f;
+        }
 
         if (grounded && canResetJump)
         {
