@@ -85,22 +85,24 @@ public class Jump : MonoBehaviour
             rb.gravityScale = 1f;
         }
 
-        if (grounded && canResetJump)
+        if (grounded)
         {
-            jumpCount.Value = 2;
-            canResetJump = false;
-            //anim.SetBool("grounded", true);
+            if (canResetJump)
+            {
+                jumpCount.Value = 2;
+                canResetJump = false;
+                anim.SetBool("grounded", true);
 
-            GetComponent<Movement>().StopWalkAudio(false);
-            anim.SetBool("falling", true);
-            LandAudio.Play();
+                GetComponent<Movement>().StopWalkAudio(false);
+                anim.SetBool("Land", true);
+                LandAudio.Play();
+            }
         }
-    }
 
-    public void SetFallingFalse()
-    {
-        anim.SetBool("grounded", true);
-        anim.SetBool("falling", false);
+        if(jumpCount.Value < 2)
+        {
+            anim.SetBool("grounded", false);
+        }
     }
 
     private void CalculateJump()
@@ -122,8 +124,6 @@ public class Jump : MonoBehaviour
 
         if (anim)
         {
-            //anim.SetBool("falling", false);
-            anim.SetTrigger("Jump");
             anim.SetBool("grounded", false);
         }
 
@@ -134,6 +134,11 @@ public class Jump : MonoBehaviour
         {
             canResetJump = true;
         });
+    }
+
+    public void EndLand()
+    {
+        anim.SetBool("Land", false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
