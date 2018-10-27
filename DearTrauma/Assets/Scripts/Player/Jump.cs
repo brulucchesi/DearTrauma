@@ -85,6 +85,11 @@ public class Jump : MonoBehaviour
             rb.gravityScale = 1f;
         }
 
+        if (jumpCount.Value < 2 || rb.velocity.y < -2f)
+        {
+            anim.SetBool("grounded", false);
+        }
+
         if (grounded)
         {
             if (canResetJump)
@@ -97,11 +102,6 @@ public class Jump : MonoBehaviour
                 LandAudio.Play();
             }
             anim.SetBool("grounded", true);
-        }
-
-        if(jumpCount.Value < 2 || rb.velocity.y < -2f)
-        {
-            anim.SetBool("grounded", false);
         }
     }
 
