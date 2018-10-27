@@ -14,8 +14,8 @@ public class Jump : MonoBehaviour
     [Header("Modifiers")]
     public float JumpVelocity;
     public float DoubleJumpVelocity;
-    public float FallMultiplier = 2.5f;
-    public float LowJumpMultiplier = 2f;
+    public float FallGravity = 2.5f;
+    public float JumpGravity = 2f;
 
     public float GroundedSkinX = 0.05f;
     public float GroundedSkinY = 0.05f;
@@ -74,11 +74,11 @@ public class Jump : MonoBehaviour
 
         if (rb.velocity.y < 0)
         {
-            rb.gravityScale = FallMultiplier;
+            rb.gravityScale = FallGravity;
         }
         else if (rb.velocity.y > 0/* && !Input.GetButton("Jump")*/)
         {
-            rb.gravityScale = LowJumpMultiplier;
+            rb.gravityScale = JumpGravity;
         }
         else
         {
@@ -92,7 +92,6 @@ public class Jump : MonoBehaviour
             //anim.SetBool("grounded", true);
 
             GetComponent<Movement>().StopWalkAudio(false);
-            GetComponent<Movement>().SetCanMove(false);
             anim.SetBool("falling", true);
             LandAudio.Play();
         }
@@ -100,7 +99,6 @@ public class Jump : MonoBehaviour
 
     public void SetFallingFalse()
     {
-        GetComponent<Movement>().SetCanMove(true);
         anim.SetBool("grounded", true);
         anim.SetBool("falling", false);
     }
