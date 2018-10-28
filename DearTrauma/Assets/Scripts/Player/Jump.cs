@@ -72,17 +72,21 @@ public class Jump : MonoBehaviour
         boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
         grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touching;
 
-        if (rb.velocity.y < 0)
+        if (rb.velocity.y < -0.1f && !grounded)
         {
             rb.gravityScale = FallGravity;
+            anim.SetBool("Descendo", true);
         }
-        else if (rb.velocity.y > 0/* && !Input.GetButton("Jump")*/)
+        else if (rb.velocity.y > 2f/* && !Input.GetButton("Jump")*/)
         {
             rb.gravityScale = JumpGravity;
+            anim.SetBool("Subindo", true);
         }
         else
         {
             rb.gravityScale = 1f;
+            anim.SetBool("Subindo", false);
+            anim.SetBool("Descendo", false);
         }
 
         if (jumpCount.Value < 2 || rb.velocity.y < -2f)
@@ -98,8 +102,6 @@ public class Jump : MonoBehaviour
                 canResetJump = false;
 
                 GetComponent<Movement>().StopWalkAudio(false);
-                anim.SetBool("Land", true);
-                LandAudio.Play();
             }
             anim.SetBool("grounded", true);
         }
@@ -125,6 +127,8 @@ public class Jump : MonoBehaviour
         if (anim)
         {
             anim.SetBool("grounded", false);
+            anim.SetBool("Subindo", true);
+            anim.SetBool("Descendo", false);
         }
 
         jumpCount.Value--;
@@ -139,6 +143,12 @@ public class Jump : MonoBehaviour
     public void EndLand()
     {
         anim.SetBool("Land", false);
+    }
+
+    private void Land()
+    {
+        anim.SetBool("Land", true);
+        LandAudio.Play();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
