@@ -43,9 +43,6 @@ public class Push : MonoBehaviour {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 pushable.GetComponent<FixedJoint2D>().enabled = true;
                 pushable.GetComponent<FixedJoint2D>().connectedBody = GetComponent<Rigidbody2D>();
-                //pushable.GetComponent<FixedJoint2D>().connectedBody = GetComponent<Rigidbody2D>();
-                //pushable.GetComponent<FixedJoint2D>().enabled = true;
-                //pushable.GetComponent<Pushable>().beingPushed = true;
 
                 if (anim)
                 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
@@ -23,6 +24,9 @@ public class Movement : MonoBehaviour
 
     [HideInInspector]
     public bool Safe;
+
+    [HideInInspector]
+    public ReactiveProperty<bool> Dead = new ReactiveProperty<bool>(false);
 
     private Rigidbody2D rb;
     private Vector2 lastCheckPoint;
@@ -140,11 +144,19 @@ public class Movement : MonoBehaviour
         GetComponent<Animator>().SetBool("Dead", true);
         Physics2D.IgnoreLayerCollision(8, 10, true);
         DeathAudio.Play();
+
+        Dead.Value = true;
     }
 
     public void SetCheckpoint(Vector2 pos)
     {
         lastCheckPoint = pos;
+    }
+
+    public void FallDead()
+    {
+        Dead.Value = true;
+        Observable.Timer(System.TimeSpan.FromMilliseconds(100)).Subscribe(_ => ReturnToCheckpoint());
     }
 
     public void ReturnToCheckpoint()
@@ -153,6 +165,8 @@ public class Movement : MonoBehaviour
         Physics2D.IgnoreLayerCollision(8, 10, false);
         transform.position = lastCheckPoint;
         SetCanMove(true);
+
+        Dead.Value = false;
     }
 
     public void Hide(bool hide)
