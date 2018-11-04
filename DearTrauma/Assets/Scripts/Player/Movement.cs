@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
     public AudioSource[] HideAudio;
 
     [Header("Modifiers")]
-    public float Speed;
+    public float InitialSpeed;
     public float SpeedHideMod = 2f;
 
     [HideInInspector]
@@ -28,6 +28,7 @@ public class Movement : MonoBehaviour
     private Vector2 lastCheckPoint;
     private bool canMove;
     private bool isJumping;
+    private float speed;
 
     void Start()
     {
@@ -38,6 +39,7 @@ public class Movement : MonoBehaviour
         Safe = false;
         rb = GetComponent<Rigidbody2D>();
         lastCheckPoint = transform.position;
+        speed = InitialSpeed;
     }
 
     void FixedUpdate()
@@ -62,7 +64,7 @@ public class Movement : MonoBehaviour
                 }
             }
 
-            Vector2 vel = new Vector2(((Mathf.Abs(hor) - 1) < 0.1f) ? hor * Speed * 1.5f : hor * Speed, rb.velocity.y);
+            Vector2 vel = new Vector2(((Mathf.Abs(hor) - 1) < 0.1f) ? hor * speed * 1.5f : hor * speed, rb.velocity.y);
 
             rb.velocity = vel;
 
@@ -156,7 +158,7 @@ public class Movement : MonoBehaviour
     public void Hide(bool hide)
     {
         Safe = hide;
-        Speed = (hide) ? Speed / SpeedHideMod : Speed * SpeedHideMod;
+        speed = (hide) ? InitialSpeed / SpeedHideMod : InitialSpeed;
         GetComponent<Animator>().SetBool("Hidden", hide);
 
         if (hide)

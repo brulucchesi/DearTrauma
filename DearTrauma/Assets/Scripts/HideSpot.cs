@@ -4,23 +4,44 @@ using UnityEngine;
 
 public class HideSpot : MonoBehaviour {
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    [Header("Modifiers")]
+    public LayerMask boxMask;
+
+    private Vector2 boxSize;
+    private GameObject Player;
+
+    private void Start()
     {
-        if(collision.CompareTag("Player"))
-        {
-            GetComponent<Animator>().SetBool("Hide", true);
-            collision.GetComponent<Movement>().Hide(true);
-            Physics2D.IgnoreLayerCollision(8, 10, true);
-        }
+        boxSize = GetComponent<BoxCollider2D>().size;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void Update()
     {
-        if (collision.CompareTag("Player"))
+        Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position, boxSize, 0, boxMask);
+
+        if(cols.Length > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            {
+                GetComponent<Animator>().SetBool("Hide", true);
+                cols[0].GetComponent<Movement>().Hide(true);
+                Physics2D.IgnoreLayerCollision(8, 10, true);
+                Player = cols[0].gameObject;
+            }
+            else if ((Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.RightControl)) && Player)
+            {
+                GetComponent<Animator>().SetBool("Hide", false);
+                Player.GetComponent<Movement>().Hide(false);
+                Physics2D.IgnoreLayerCollision(8, 10, false);
+                Player = null;
+            }
+        }
+        else if(Player)
         {
             GetComponent<Animator>().SetBool("Hide", false);
-            collision.GetComponent<Movement>().Hide(false);
+            Player.GetComponent<Movement>().Hide(false);
             Physics2D.IgnoreLayerCollision(8, 10, false);
+            Player = null;
         }
     }
 }
