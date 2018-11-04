@@ -5,7 +5,6 @@ using UnityEngine;
 public class Push : MonoBehaviour {
 
     [Header("Modifiers")]
-    public float distance = 1f;
     public LayerMask boxMask;
     public float Skin = 1f;
 
