@@ -58,6 +58,7 @@ public class Jump : MonoBehaviour
     {
         if (Application.isPlaying)
         {
+            Gizmos.color = new Color(0, 0, 1, 0.5f);
             Gizmos.DrawCube(boxCenter, boxSize);
         }
     }
