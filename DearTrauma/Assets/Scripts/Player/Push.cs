@@ -64,6 +64,10 @@ public class Push : MonoBehaviour {
                 {
                     anim.SetBool("Pushing", false);
                 }
+                if(GetComponent<Jump>().jumpCount.Value < 2)
+                {
+                    pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+                }
             }
         }
         else
