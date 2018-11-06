@@ -57,6 +57,7 @@ public class Attack : MonoBehaviour {
     {
         if (Application.isPlaying)
         {
+            Gizmos.color = new Color(1, 0, 0, 0.5f);
             Gizmos.DrawCube(AttackPoint.transform.position +
                            (GetComponent<Movement>().Right ? Vector3.right * attackSize.x / 2 : Vector3.left * attackSize.x / 2),
                            attackSize);
