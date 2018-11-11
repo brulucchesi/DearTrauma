@@ -51,7 +51,26 @@ public class Push : MonoBehaviour {
 
                 if (anim)
                 {
+                    GetComponent<Movement>().SetCanFlip(false);
                     anim.SetBool("Pushing", true);
+
+                    if(Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) < 0.01f)
+                    {
+                        anim.SetBool("pushing_back", false);
+                        anim.SetBool("pushing_stop", true);
+                    }
+
+                    if(GetComponent<Rigidbody2D>().velocity.x >= 0.01f)
+                    {
+                        anim.SetBool("pushing_stop", false);
+                        anim.SetBool("pushing_back", false);
+                    }
+
+                    if(GetComponent<Rigidbody2D>().velocity.x <= -0.01f)
+                    {
+                        anim.SetBool("pushing_stop", false);
+                        anim.SetBool("pushing_back", true);
+                    }
                 }
             }
             else
@@ -63,6 +82,9 @@ public class Push : MonoBehaviour {
                 if (anim)
                 {
                     anim.SetBool("Pushing", false);
+                    anim.SetBool("pushing_back", false);
+                    anim.SetBool("pushing_stop", false);
+                    GetComponent<Movement>().SetCanFlip(true);
                 }
                 if(GetComponent<Jump>().jumpCount.Value < 2)
                 {

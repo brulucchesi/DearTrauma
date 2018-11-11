@@ -33,6 +33,7 @@ public class Movement : MonoBehaviour
     private bool canMove;
     private bool isJumping;
     private float speed;
+    private bool canFlip = true;
 
     void Start()
     {
@@ -183,12 +184,15 @@ public class Movement : MonoBehaviour
 
     void Flip()
     {
-        Right = !Right;
-        foreach (Transform t in PartsToFlip)
+        if (canFlip)
         {
-            Vector3 currentScale = t.localScale;
-            currentScale.x *= -1;
-            t.localScale = currentScale;
+            Right = !Right;
+            foreach (Transform t in PartsToFlip)
+            {
+                Vector3 currentScale = t.localScale;
+                currentScale.x *= -1;
+                t.localScale = currentScale;
+            }
         }
     }
 
@@ -211,5 +215,10 @@ public class Movement : MonoBehaviour
     {
         isJumping = isJumpingBool;
         WalkAudio.Stop();
+    }
+
+    public void SetCanFlip(bool can)
+    {
+        canFlip = can;
     }
 }
