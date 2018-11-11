@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Push : MonoBehaviour {
+public class Push : MonoBehaviour
+{
 
     [Header("Modifiers")]
     public LayerMask boxMask;
@@ -21,7 +22,7 @@ public class Push : MonoBehaviour {
         anim = GetComponent<Animator>();
         pushable = null;
         playerSize = GetComponent<CapsuleCollider2D>().size;
-        boxSize = new Vector2(playerSize.x + (Skin * 2f), playerSize.y/2f);
+        boxSize = new Vector2(playerSize.x + (Skin * 2f), playerSize.y / 2f);
         boxSizeDown = boxSize * 0.9f;
     }
 
@@ -36,7 +37,7 @@ public class Push : MonoBehaviour {
                                 (GetComponent<Movement>().Right ? Vector3.right * boxSize.x / 2 : Vector3.left * boxSize.x / 2)*/,
                                 boxSize, 0f, boxMask);
 
-        Collider2D colDown = Physics2D.OverlapBox(transform.position + Vector3.down * playerSize.y/2f,
+        Collider2D colDown = Physics2D.OverlapBox(transform.position + Vector3.down * playerSize.y / 2f,
                                 boxSizeDown, 0f, boxMask);
 
         if (col != null && col.gameObject.tag == "Pushable")
@@ -54,22 +55,41 @@ public class Push : MonoBehaviour {
                     GetComponent<Movement>().SetCanFlip(false);
                     anim.SetBool("Pushing", true);
 
-                    if(Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) < 0.01f)
+                    float vel = 0.05f;
+
+                    if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) < vel)
                     {
                         anim.SetBool("pushing_back", false);
                         anim.SetBool("pushing_stop", true);
                     }
 
-                    if(GetComponent<Rigidbody2D>().velocity.x >= 0.01f)
+                    if (GetComponent<Movement>().IsRight())
                     {
-                        anim.SetBool("pushing_stop", false);
-                        anim.SetBool("pushing_back", false);
-                    }
+                        if (GetComponent<Rigidbody2D>().velocity.x >= vel)
+                        {
+                            anim.SetBool("pushing_stop", false);
+                            anim.SetBool("pushing_back", false);
+                        }
 
-                    if(GetComponent<Rigidbody2D>().velocity.x <= -0.01f)
+                        if (GetComponent<Rigidbody2D>().velocity.x <= -vel)
+                        {
+                            anim.SetBool("pushing_stop", false);
+                            anim.SetBool("pushing_back", true);
+                        }
+                    }
+                    else
                     {
-                        anim.SetBool("pushing_stop", false);
-                        anim.SetBool("pushing_back", true);
+                        if (GetComponent<Rigidbody2D>().velocity.x <= -vel)
+                        {
+                            anim.SetBool("pushing_stop", false);
+                            anim.SetBool("pushing_back", false);
+                        }
+
+                        if (GetComponent<Rigidbody2D>().velocity.x >= vel)
+                        {
+                            anim.SetBool("pushing_stop", false);
+                            anim.SetBool("pushing_back", true);
+                        }
                     }
                 }
             }
@@ -86,7 +106,7 @@ public class Push : MonoBehaviour {
                     anim.SetBool("pushing_stop", false);
                     GetComponent<Movement>().SetCanFlip(true);
                 }
-                if(GetComponent<Jump>().jumpCount.Value < 2)
+                if (GetComponent<Jump>().jumpCount.Value < 2)
                 {
                     pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                 }
@@ -106,7 +126,7 @@ public class Push : MonoBehaviour {
                 anim.SetBool("Pushing", false);
             }
 
-            if(colDown)
+            if (colDown)
             {
                 colDown.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
             }
@@ -116,7 +136,7 @@ public class Push : MonoBehaviour {
 
     void OnDrawGizmos()
     {
-        Gizmos.color = new Color(0,1,0,0.5f);
+        Gizmos.color = new Color(0, 1, 0, 0.5f);
         Gizmos.DrawCube(transform.position, boxSize);
         Gizmos.DrawCube(transform.position + Vector3.down * playerSize.y / 2f, boxSizeDown);
     }

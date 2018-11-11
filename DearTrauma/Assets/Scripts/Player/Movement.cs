@@ -221,4 +221,9 @@ public class Movement : MonoBehaviour
     {
         canFlip = can;
     }
+    
+    public bool IsRight()
+    {
+        return Right;
+    }
 }
