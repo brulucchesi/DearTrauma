@@ -67,7 +67,7 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump") && (jumpCount.Value > 0) && GetComponent<Movement>().GetCanMove())
+        if (Input.GetButtonDown("Jump") && (jumpCount.Value > 0) && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing)
         {
             jumpPress.Value = true;
         }
@@ -81,7 +81,7 @@ public class Jump : MonoBehaviour
         }
         if (rb.velocity.y < -0.1f && !grounded)
         {
-            Debug.Log("Fall velocity " + rb.velocity.y);
+          //  Debug.Log("Fall velocity " + rb.velocity.y);
             rb.gravityScale = FallGravity;
         }
         else if (rb.velocity.y > 2f/* && !Input.GetButton("Jump")*/)

@@ -11,6 +11,9 @@ public class Push : MonoBehaviour
     public LayerMask boxMask;
     public float Skin = 1f;
 
+    [HideInInspector]
+    public bool Pushing;
+
     private GameObject pushable;
     private Vector2 playerSize;
     private Vector2 boxSize;
@@ -21,10 +24,11 @@ public class Push : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Pushing = false;
         anim = GetComponent<Animator>();
         pushable = null;
         playerSize = GetComponent<CapsuleCollider2D>().size;
-        boxSize = new Vector2(playerSize.x + (Skin * 2f), playerSize.y / 2f);
+        boxSize = new Vector2(playerSize.x/2 + (Skin * 2f), playerSize.y / 2f);
         boxSizeDown = boxSize * 0.9f;
     }
 
@@ -35,19 +39,22 @@ public class Push : MonoBehaviour
         //RaycastHit2D hit = Physics2D.Raycast(transform.position, (GetComponent<Movement>().Right)?Vector2.right: Vector2.left, distance, boxMask);
 
         //pode ter colLeft e colRight pra push e pull
-        Collider2D col = Physics2D.OverlapBox(transform.position /*+
-                                (GetComponent<Movement>().Right ? Vector3.right * boxSize.x / 2 : Vector3.left * boxSize.x / 2)*/,
+        Collider2D col = Physics2D.OverlapBox(transform.position +
+                                (GetComponent<Movement>().Right ? Vector3.right * boxSize.x / 2 : Vector3.left * boxSize.x / 2),
                                 boxSize, 0f, boxMask);
 
         Collider2D colDown = Physics2D.OverlapBox(transform.position + Vector3.down * playerSize.y / 2f,
                                 boxSizeDown, 0f, boxMask);
 
+        Pushing = false;
         if (col != null && col.gameObject.tag == "Pushable")
         {
             pushable = col.gameObject;
 
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
             {
+                Pushing = true;
+
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 pushable.GetComponent<Joint2D>().enabled = true;
                 pushable.GetComponent<Joint2D>().connectedBody = GetComponent<Rigidbody2D>();
@@ -158,7 +165,8 @@ public class Push : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 1, 0, 0.5f);
-        Gizmos.DrawCube(transform.position, boxSize);
+        Gizmos.DrawCube(transform.position + (GetComponent<Movement>().Right ? 
+                        Vector3.right * boxSize.x / 2 : Vector3.left * boxSize.x / 2), boxSize);
         Gizmos.DrawCube(transform.position + Vector3.down * playerSize.y / 2f, boxSizeDown);
     }
 }
