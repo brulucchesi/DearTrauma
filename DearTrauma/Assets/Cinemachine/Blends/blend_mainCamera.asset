@@ -13,7 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CustomBlends:
   - m_From: '**ANY CAMERA**'
-    m_To: CAM2
+    m_To: cam_00
+    m_Blend:
+      m_Style: 1
+      m_Time: 4
+  - m_From: '**ANY CAMERA**'
+    m_To: cam_01
+    m_Blend:
+      m_Style: 1
+      m_Time: 2
+  - m_From: '**ANY CAMERA**'
+    m_To: CM StateDrivenCamera1
     m_Blend:
       m_Style: 1
       m_Time: 3
