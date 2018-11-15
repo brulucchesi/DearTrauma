@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 95145800659605288}
   - component: {fileID: 114764269433132486}
   - component: {fileID: 60725622262713432}
-  - component: {fileID: 255400155240118102}
+  - component: {fileID: 232901577958331514}
   m_Layer: 12
   m_Name: Pushable mini
   m_TagString: Pushable
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1504415509002306}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af351bebd9759b240a005733aa3ac180, type: 3}
   m_Name: 
@@ -231,8 +231,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!255 &255400155240118102
-FixedJoint2D:
+--- !u!232 &232901577958331514
+DistanceJoint2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -243,8 +243,9 @@ FixedJoint2D:
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
+  m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_DampingRatio: 0
-  m_Frequency: 0
+  m_AutoConfigureDistance: 1
+  m_Distance: 1
+  m_MaxDistanceOnly: 0

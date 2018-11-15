@@ -49,8 +49,8 @@ public class Push : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                pushable.GetComponent<FixedJoint2D>().enabled = true;
-                pushable.GetComponent<FixedJoint2D>().connectedBody = GetComponent<Rigidbody2D>();
+                pushable.GetComponent<Joint2D>().enabled = true;
+                pushable.GetComponent<Joint2D>().connectedBody = GetComponent<Rigidbody2D>();
 
                 if (anim)
                 {
@@ -115,8 +115,8 @@ public class Push : MonoBehaviour
             else
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-                pushable.GetComponent<FixedJoint2D>().enabled = false;
-                pushable.GetComponent<FixedJoint2D>().connectedBody = null;
+                pushable.GetComponent<Joint2D>().enabled = false;
+                pushable.GetComponent<Joint2D>().connectedBody = null;
                 Audio.Stop();
 
                 if (anim)
@@ -137,8 +137,8 @@ public class Push : MonoBehaviour
             if (pushable)
             {
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                pushable.GetComponent<FixedJoint2D>().enabled = false;
-                pushable.GetComponent<FixedJoint2D>().connectedBody = null;
+                pushable.GetComponent<Joint2D>().enabled = false;
+                pushable.GetComponent<Joint2D>().connectedBody = null;
                 Audio.Stop();
             }
 

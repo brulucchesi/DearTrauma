@@ -23,7 +23,7 @@ public class Attack : MonoBehaviour {
     
     void Update ()
     {
-	    if(Input.GetButtonDown("Attack"))
+	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove())
         {
             StartAttack();
         }

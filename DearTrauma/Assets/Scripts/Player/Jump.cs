@@ -77,8 +77,12 @@ public class Jump : MonoBehaviour
 
         if (rb.velocity.y < -fall && !grounded)
         {
-            rb.gravityScale = FallGravity;
             anim.SetBool("Descendo", true);
+        }
+        if (rb.velocity.y < -0.1f && !grounded)
+        {
+            Debug.Log("Fall velocity " + rb.velocity.y);
+            rb.gravityScale = FallGravity;
         }
         else if (rb.velocity.y > 2f/* && !Input.GetButton("Jump")*/)
         {
