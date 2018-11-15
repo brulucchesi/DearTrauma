@@ -15,6 +15,7 @@ public class Fragment : MonoBehaviour
     public GameObject FragmentVisual;
     public GameObject CanCloseVisual;
     public Text TextCanClose;
+    public AudioSource Audio;
 
     [Header("Modifiers")]
     public string SceneName = "";
@@ -70,6 +71,8 @@ public class Fragment : MonoBehaviour
     public void Collect(GameObject player)
     {
         analytics.GetComponent<UnityAnalyticsEvents>().EndLevel(levelNumber);
+
+        Audio.Play();
 
         if (levelNumber == 3)
         {
