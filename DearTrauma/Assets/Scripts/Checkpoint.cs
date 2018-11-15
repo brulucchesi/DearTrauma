@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour {
 
+    [Header("References")]
+    public AudioSource Audio;
+
     private bool active;
 
     private void Start()
@@ -17,6 +20,7 @@ public class Checkpoint : MonoBehaviour {
         {
             GetComponent<Animator>().SetTrigger("Checkpoint");
             active = false;
+            Audio.Play();
 
             return transform.position;
         }

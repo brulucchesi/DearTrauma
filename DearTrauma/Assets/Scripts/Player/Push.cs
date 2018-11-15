@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Push : MonoBehaviour
 {
+    [Header("References")]
+    public AudioSource Audio;
 
     [Header("Modifiers")]
     public LayerMask boxMask;
@@ -61,6 +63,7 @@ public class Push : MonoBehaviour
                     {
                         anim.SetBool("pushing_back", false);
                         anim.SetBool("pushing_stop", true);
+                        Audio.Stop();
                     }
 
                     if (GetComponent<Movement>().IsRight())
@@ -69,12 +72,20 @@ public class Push : MonoBehaviour
                         {
                             anim.SetBool("pushing_stop", false);
                             anim.SetBool("pushing_back", false);
+                            if (!Audio.isPlaying)
+                            {
+                                Audio.Play();
+                            }
                         }
 
                         if (GetComponent<Rigidbody2D>().velocity.x <= -vel)
                         {
                             anim.SetBool("pushing_stop", false);
                             anim.SetBool("pushing_back", true);
+                            if (!Audio.isPlaying)
+                            {
+                                Audio.Play();
+                            }
                         }
                     }
                     else
@@ -83,12 +94,20 @@ public class Push : MonoBehaviour
                         {
                             anim.SetBool("pushing_stop", false);
                             anim.SetBool("pushing_back", false);
+                            if (!Audio.isPlaying)
+                            {
+                                Audio.Play();
+                            }
                         }
 
                         if (GetComponent<Rigidbody2D>().velocity.x >= vel)
                         {
                             anim.SetBool("pushing_stop", false);
                             anim.SetBool("pushing_back", true);
+                            if (!Audio.isPlaying)
+                            {
+                                Audio.Play();
+                            }
                         }
                     }
                 }
@@ -98,6 +117,7 @@ public class Push : MonoBehaviour
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
                 pushable.GetComponent<FixedJoint2D>().enabled = false;
                 pushable.GetComponent<FixedJoint2D>().connectedBody = null;
+                Audio.Stop();
 
                 if (anim)
                 {
@@ -119,6 +139,7 @@ public class Push : MonoBehaviour
                 pushable.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                 pushable.GetComponent<FixedJoint2D>().enabled = false;
                 pushable.GetComponent<FixedJoint2D>().connectedBody = null;
+                Audio.Stop();
             }
 
             if (anim)
