@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 95929628024186134}
   - component: {fileID: 114657539434369424}
   - component: {fileID: 60456111712299646}
-  - component: {fileID: 255071313698378242}
+  - component: {fileID: 232112687956327744}
   m_Layer: 12
   m_Name: Pushable
   m_TagString: Pushable
@@ -231,8 +231,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!255 &255071313698378242
-FixedJoint2D:
+--- !u!232 &232112687956327744
+DistanceJoint2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -243,8 +243,9 @@ FixedJoint2D:
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
+  m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_DampingRatio: 0
-  m_Frequency: 0
+  m_AutoConfigureDistance: 1
+  m_Distance: 1
+  m_MaxDistanceOnly: 0
