@@ -8,7 +8,7 @@ public class ChangePhysicsMat : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 9 && GetComponent<Jump>().jumpCount.Value < 2)
+        if ((collision.gameObject.layer == 9 || collision.gameObject.layer == 12) && GetComponent<Jump>().jumpCount.Value < 2)
         {
             collision.gameObject.GetComponent<Collider2D>().sharedMaterial = ZeroFriction;
         }
@@ -20,7 +20,7 @@ public class ChangePhysicsMat : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 12)
         {
             collision.gameObject.GetComponent<Collider2D>().sharedMaterial = null;
         }
