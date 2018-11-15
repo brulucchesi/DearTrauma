@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: GameObject Profile
+  m_Name: background_back
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 114920972457358540}
@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 114519986570479524}
   - {fileID: 114265519836260688}
   - {fileID: 114892189290767536}
+  - {fileID: 114902693239420444}
 --- !u!114 &114057124347104042
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -72,19 +73,19 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 21
+    value: 12
   tint:
     overrideState: 1
-    value: -9
+    value: -21
   colorFilter:
     overrideState: 0
     value: {r: 0.90873563, g: 0.6933962, b: 1, a: 1}
   hueShift:
-    overrideState: 0
-    value: 54
+    overrideState: 1
+    value: 27
   saturation:
     overrideState: 1
-    value: 15
+    value: -11
   brightness:
     overrideState: 0
     value: 0
@@ -108,10 +109,10 @@ MonoBehaviour:
     value: 0
   mixerGreenOutGreenIn:
     overrideState: 0
-    value: 100
+    value: 83
   mixerGreenOutBlueIn:
     overrideState: 0
-    value: 0
+    value: 17
   mixerBlueOutRedIn:
     overrideState: 0
     value: 0
@@ -1350,13 +1351,13 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.28
+    value: 0.42
   size:
     overrideState: 1
-    value: 0.62
+    value: 0.59
   lumContrib:
     overrideState: 1
-    value: 0.48
+    value: 1
 --- !u!114 &114265519836260688
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1378,7 +1379,7 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.19
+    value: 0.28
   fastMode:
     overrideState: 0
     value: 0
@@ -1399,10 +1400,10 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 270
+    value: 298
   sampleCount:
     overrideState: 1
-    value: 10
+    value: 15
 --- !u!114 &114519986570479524
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1493,18 +1494,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   intensity:
-    overrideState: 0
-    value: -57
+    overrideState: 1
+    value: -48
   intensityX:
     overrideState: 0
     value: 1
   intensityY:
-    overrideState: 0
+    overrideState: 1
     value: 1
   centerX:
     overrideState: 0
@@ -1513,6 +1514,42 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   scale:
+    overrideState: 1
+    value: 1.03
+--- !u!114 &114902693239420444
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
+  m_Name: AutoExposure
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  filtering:
+    overrideState: 1
+    value: {x: 13.726032, y: 58.72603}
+  minLuminance:
+    overrideState: 1
+    value: 0.7
+  maxLuminance:
+    overrideState: 1
+    value: 2
+  keyValue:
+    overrideState: 0
+    value: 1
+  eyeAdaptation:
+    overrideState: 0
+    value: 0
+  speedUp:
+    overrideState: 0
+    value: 2
+  speedDown:
     overrideState: 0
     value: 1
 --- !u!114 &114920972457358540
@@ -1532,25 +1569,25 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 3.9
+    value: 5.96
   threshold:
     overrideState: 0
     value: 1
   softKnee:
     overrideState: 1
-    value: 0.11
+    value: 0.61
   clamp:
     overrideState: 0
     value: 65472
   diffusion:
     overrideState: 1
-    value: 5.55
+    value: 8.35
   anamorphicRatio:
     overrideState: 0
     value: 0
   color:
     overrideState: 1
-    value: {r: 1, g: 1, b: 1, a: 1}
+    value: {r: 0.51757014, g: 1, b: 0.504717, a: 1}
   fastMode:
     overrideState: 0
     value: 0
