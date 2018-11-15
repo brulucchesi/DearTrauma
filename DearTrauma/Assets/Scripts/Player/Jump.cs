@@ -16,6 +16,7 @@ public class Jump : MonoBehaviour
     public float DoubleJumpVelocity;
     public float FallGravity = 2.5f;
     public float JumpGravity = 2f;
+    public float fall = 0.7f;
 
     public float GroundedSkinX = 0.05f;
     public float GroundedSkinY = 0.05f;
@@ -74,7 +75,7 @@ public class Jump : MonoBehaviour
         boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
         grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touching;
 
-        if (rb.velocity.y < -0.1f && !grounded)
+        if (rb.velocity.y < -fall && !grounded)
         {
             rb.gravityScale = FallGravity;
             anim.SetBool("Descendo", true);
