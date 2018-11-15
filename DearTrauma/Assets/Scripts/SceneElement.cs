@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Breakable : MonoBehaviour
+public class SceneElement : MonoBehaviour
 {
     [Header("References")]
     public AudioSource Audio;
 
-    public void ReceiveAttack()
+    public void PlaySound()
     {
-        GetComponent<Animator>().SetTrigger("Break");
         Audio.Play();
     }
 }

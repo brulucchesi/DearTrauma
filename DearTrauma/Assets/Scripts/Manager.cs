@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UnityEngine.Playables;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
     [Header("References")]
     public GameObject Player;
+    public AudioSource ButtonClick;
+    public AudioSource NormalClick;
 
     [Header("Boss References")]
     public GameObject FinalFragment;
@@ -59,12 +63,28 @@ public class Manager : MonoBehaviour
                     }
                 }
             );
+
         EscInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
         AnyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
         EscInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause));
         AnyInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Credits))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.DemoEnd));
+    }
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            if(EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
+            {
+                ButtonClick.Play();
+            }
+            else
+            {
+                NormalClick.Play();
+            }
+        }
     }
 
     public void AnimationMiddle()
