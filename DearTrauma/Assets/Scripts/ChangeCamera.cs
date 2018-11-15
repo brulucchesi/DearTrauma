@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class ChangeCamera : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class ChangeCamera : MonoBehaviour
 
     public GameObject Main;
 
-    public Animator ThisAnimator;
+    public PlayableDirector ThisTimeline;
+
+    private bool timelineHasPlayed = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,10 +22,19 @@ public class ChangeCamera : MonoBehaviour
             ThisCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().enabled = true;
             ThisCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().MoveToTopOfPrioritySubqueue();
 
-            if (ThisAnimator != null)
+            if (ThisTimeline != null)
             {
-                Debug.Log("play animation from camera");
-                ThisAnimator.SetTrigger("play");
+                if (!timelineHasPlayed)
+                {
+                    timelineHasPlayed = true;
+                    Debug.Log("play animation from camera");
+                    ThisTimeline.Play();
+                } else
+                {
+                    Debug.Log("animation da camera já deu play");
+
+                }
+
             }
         }
     }
