@@ -18,6 +18,8 @@ public class Movement : MonoBehaviour
     [Header("Modifiers")]
     public float InitialSpeed;
     public float SpeedHideMod = 2f;
+    public float MinBlink = 1.5f;
+    public float MaxBlink = 3.5f;
 
     [HideInInspector]
     public bool Right;
@@ -45,6 +47,17 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         lastCheckPoint = transform.position;
         speed = InitialSpeed;
+
+        StartCoroutine(Blink());
+    }
+
+    IEnumerator Blink()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(Random.Range(MinBlink, MaxBlink));
+            GetComponent<Animator>().SetTrigger("Blink");
+        }
     }
 
     void FixedUpdate()
