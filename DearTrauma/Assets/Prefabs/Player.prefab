@@ -973,7 +973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1509571848266196
 GameObject:
   m_ObjectHideFlags: 1
@@ -1640,7 +1640,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1888903481547782
 GameObject:
   m_ObjectHideFlags: 1
@@ -5115,7 +5115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.2200004
+  m_Length: 0.21999899
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4325748273733898}
   m_AttachedIK: {fileID: 114815139589414332}
@@ -5685,7 +5685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.40000066
+  m_Length: 0.39999807
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4631818010037852}
   m_AttachedIK: {fileID: 114815139589414332}
@@ -5835,7 +5835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.22000222
+  m_Length: 0.2200014
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4568463394968326}
   m_AttachedIK: {fileID: 114997245623241038}
@@ -6081,7 +6081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.39999878
+  m_Length: 0.40000328
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4524242997820762}
   m_AttachedIK: {fileID: 114329279593010710}
@@ -6151,7 +6151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.6000003
+  m_Length: 0.6
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4435392234894262}
   m_AttachedIK: {fileID: 114104322989812368}
@@ -6203,8 +6203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackPoint: {fileID: 1084259237396514}
   AttackAudio: {fileID: 82156893419026830}
-  AttackLeft: {fileID: 1883642166340156}
-  AttackRight: {fileID: 1504745256206056}
+  AttackLeft: {fileID: 198568154816070690}
+  AttackRight: {fileID: 198547125818514420}
   Mask:
     serializedVersion: 2
     m_Bits: 3072
@@ -6461,7 +6461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.6000018
+  m_Length: 0.6
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4253166099954636}
   m_AttachedIK: {fileID: 114329279593010710}
@@ -6541,7 +6541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.320001
+  m_Length: 0.31999946
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4178366212559436}
   m_AttachedIK: {fileID: 114104322989812368}
@@ -6775,7 +6775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 0.4}
-  m_Length: 0.40000066
+  m_Length: 0.40000087
   m_Child: {fileID: 0}
   m_ChildTransform: {fileID: 4514357661123880}
   m_AttachedIK: {fileID: 114997245623241038}
@@ -26209,9 +26209,9 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
-  prewarm: 1
-  playOnAwake: 1
+  looping: 0
+  prewarm: 0
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -26970,7 +26970,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -30740,9 +30740,9 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
-  prewarm: 1
-  playOnAwake: 1
+  looping: 0
+  prewarm: 0
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -31501,7 +31501,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
