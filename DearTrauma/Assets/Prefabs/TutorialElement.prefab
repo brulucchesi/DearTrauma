@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 223638982431666956}
   - component: {fileID: 114741048209668654}
   - component: {fileID: 114634592023930106}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4365458529518336}
   - component: {fileID: 61187975492736026}
   - component: {fileID: 114702910967003092}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: TutorialElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 224809511267735344}
   - component: {fileID: 222448375212210928}
   - component: {fileID: 114081056591895286}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,8 +69,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1780438123642086}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.73, y: 2.16, z: 0.17413147}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -98.63, y: -12.58, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224509490021544944}
@@ -100,7 +100,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30, y: 30}
+  m_Size: {x: 25, y: 25}
   m_EdgeRadius: 0
 --- !u!114 &114081056591895286
 MonoBehaviour:
@@ -121,9 +121,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: a551bcbfd2574314988f84817778e3b6, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -157,10 +157,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TutorialImage: {fileID: 114081056591895286}
-  ByDistance: 1
+  ByDistance: 0
   MinDist: 0
   MaxDist: 10
-  MaxAlpha: 0.9
+  MaxAlpha: 1
 --- !u!114 &114741048209668654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -205,7 +205,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1149957563
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &224509490021544944
@@ -242,6 +242,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 5, y: 5}
+  m_AnchoredPosition: {x: 0, y: -3.13}
+  m_SizeDelta: {x: 5, y: 2.63}
   m_Pivot: {x: 0.5, y: 0.5}
