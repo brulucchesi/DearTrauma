@@ -62,9 +62,8 @@ public class Evolution : MonoBehaviour
     {
         GetComponent<Movement>().SetCanMove(false);
         GetComponent<Animator>().SetBool("Walking", false);
-        Visual.SetActive(false);
-        VisualBig.SetActive(true);
-        GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
+        // Visual.SetActive(false);
+        // VisualBig.SetActive(true);
         //transform.localScale *= ScaleMultiplier;
         Camera.main.GetComponent<CamFollow>().Big();
         transform.position = transform.position + Vector3.up * 3;
@@ -84,6 +83,7 @@ public class Evolution : MonoBehaviour
 
     private void EndTransformation()
     {
+        GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
         GetComponent<Movement>().SetCanMove(true);
     }
 }
