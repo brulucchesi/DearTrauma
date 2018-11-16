@@ -66,8 +66,17 @@ public class Manager : MonoBehaviour
 
         EscInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
         AnyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
-        EscInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game))
-                           .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause));
+        EscInput.Subscribe(_ =>
+        {
+            if (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game)
+            {
+                ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause);
+            }
+            else if (GetComponent<PauseManager>().Paused)
+            {
+                ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
+            }
+        });
         AnyInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Credits))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.DemoEnd));
     }
