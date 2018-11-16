@@ -7,8 +7,8 @@ public class Attack : MonoBehaviour {
     [Header("References")]
     public GameObject AttackPoint;
     public AudioSource AttackAudio;
-    public GameObject AttackLeft;
-    public GameObject AttackRight;
+    public ParticleSystem AttackLeft;
+    public ParticleSystem AttackRight;
 
     [Header("Modifiers")]
     public LayerMask Mask;
@@ -25,7 +25,7 @@ public class Attack : MonoBehaviour {
     
     void Update ()
     {
-	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing)
+	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing && !Manager.GetInstance().Paused)
         {
             StartAttack();
         }
@@ -75,19 +75,21 @@ public class Attack : MonoBehaviour {
     {
         if(GetComponent<Movement>().Right)
         {
-            AttackRight.SetActive(true);
-            AttackLeft.SetActive(false);
+            AttackRight.Stop();
+            AttackRight.Play();
+            AttackLeft.Stop();
         }
         else
         {
-            AttackLeft.SetActive(true);
-            AttackRight.SetActive(false);
+            AttackLeft.Stop();
+            AttackLeft.Play();
+            AttackRight.Stop();
         }
     }
 
     public void AttackParticleEnd()
     {
-        AttackLeft.SetActive(false);
-        AttackRight.SetActive(false);
+        AttackRight.Stop();
+        AttackLeft.Stop();
     }
 }

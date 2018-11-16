@@ -67,7 +67,7 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump") && (jumpCount.Value > 0) && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing)
+        if (Input.GetButtonDown("Jump") && (jumpCount.Value > 0) && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing && !Manager.GetInstance().Paused)
         {
             jumpPress.Value = true;
         }
