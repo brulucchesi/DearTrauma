@@ -30,7 +30,6 @@ public class ActivateScreenElement : MonoBehaviour {
 
             if(active)
             {
-                //print(gameObject.name);
                 EventSystem.current.SetSelectedGameObject(null);
                 StartCoroutine(SelectButton());
             }
@@ -43,12 +42,6 @@ public class ActivateScreenElement : MonoBehaviour {
         if (FirstButton)
         {
             EventSystem.current.SetSelectedGameObject(FirstButton.gameObject);
-            print("select");
-            //FirstButton.Select();
-        }
-        else
-        {
-            //print("unselect");
         }
     }
 }
