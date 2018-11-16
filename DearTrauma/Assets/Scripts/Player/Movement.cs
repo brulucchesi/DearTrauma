@@ -177,7 +177,9 @@ public class Movement : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("Dead", false);
         Physics2D.IgnoreLayerCollision(8, 10, false);
-        transform.position = lastCheckPoint;
+        Vector3 pos = lastCheckPoint;
+        pos.z = -1f;
+        transform.position = pos;
         SetCanMove(true);
 
         Dead.Value = false;
