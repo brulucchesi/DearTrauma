@@ -2723,6 +2723,11 @@ Prefab:
       propertyPath: BossRoar
       value: 
       objectReference: {fileID: 1327895075}
+    - target: {fileID: 114171402583606564, guid: 090680c5547fb004d9082a17e4d8657f,
+        type: 2}
+      propertyPath: UnpauseButton
+      value: 
+      objectReference: {fileID: 958224505}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 090680c5547fb004d9082a17e4d8657f, type: 2}
   m_IsPrefabParent: 0
@@ -5367,6 +5372,11 @@ Prefab:
       propertyPath: Fragment
       value: 
       objectReference: {fileID: 504275261}
+    - target: {fileID: 114847743338953934, guid: 9cc292fa51b270841bd11f03881c6883,
+        type: 2}
+      propertyPath: EvolutionOn.value
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9cc292fa51b270841bd11f03881c6883, type: 2}
   m_IsPrefabParent: 0
@@ -5954,6 +5964,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &958224505 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114172413130608500, guid: 2ed56dad7a1277243a3ff917b7914ec2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1424398263}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1004671594
 GameObject:
   m_ObjectHideFlags: 0
