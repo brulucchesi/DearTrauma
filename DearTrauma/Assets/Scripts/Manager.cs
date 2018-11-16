@@ -24,7 +24,6 @@ public class Manager : MonoBehaviour
     [Header("Modifiers")]
     public float BossSeconds = 0f;
 
-    public IObservable<long> EscInput;
     public IObservable<long> AnyInput;
 
     private GameObject analytics;
@@ -55,7 +54,10 @@ public class Manager : MonoBehaviour
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
                 {
-                    musicManager.GetComponent<MusicManager>().ChangeGamePlay();
+                    if(musicManager)
+                    {
+                        musicManager.GetComponent<MusicManager>().ChangeGamePlay();
+                    }
                     ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
                     if (analytics != null)
                     {
@@ -64,19 +66,7 @@ public class Manager : MonoBehaviour
                 }
             );
 
-        EscInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
         AnyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
-        EscInput.Subscribe(_ =>
-        {
-            if (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game)
-            {
-                ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause);
-            }
-            else if (GetComponent<PauseManager>().Paused)
-            {
-                ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
-            }
-        });
         AnyInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Credits))
                            .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.DemoEnd));
     }
