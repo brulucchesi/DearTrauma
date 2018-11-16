@@ -9,7 +9,6 @@ public class Evolution : MonoBehaviour
     [Header("References")]
     public RuntimeAnimatorController BigAnimator;
     public GameObject Fragment;
-    public GameObject Background;
     public GameObject Visual;
     public GameObject VisualBig;
     public AudioSource TransformAudio;
@@ -67,7 +66,6 @@ public class Evolution : MonoBehaviour
         VisualBig.SetActive(true);
         GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
         //transform.localScale *= ScaleMultiplier;
-        Background.transform.localScale *= ScaleMultiplierBackground;
         Camera.main.GetComponent<CamFollow>().Big();
         transform.position = transform.position + Vector3.up * 3;
         GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
