@@ -10,12 +10,9 @@ public class PauseManager : MonoBehaviour {
     public Button[] PauseButtons;
     public Button UnpauseButton;
 
-    [HideInInspector]
-    public bool Paused;
-
     private void Awake()
     {
-        Paused = false;
+        Manager.GetInstance().Paused = false;
         Time.timeScale = 1;
     }
 
@@ -26,11 +23,11 @@ public class PauseManager : MonoBehaviour {
         var EscInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
         EscInput.Subscribe(_ =>
         {
-            if (!Paused)
+            if (!Manager.GetInstance().Paused)
             {
                 PauseGame();
             }
-            else if (Paused)
+            else if (Manager.GetInstance().Paused)
             {
                 UnpauseGame();
             }
@@ -40,14 +37,14 @@ public class PauseManager : MonoBehaviour {
     private void PauseGame()
     {
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause);
-        Paused = true;
+        Manager.GetInstance().Paused = true;
         Time.timeScale = 0;
     }
 
     private void UnpauseGame()
     {
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
-        Paused = false;
+        Manager.GetInstance().Paused = false;
         Time.timeScale = 1;
     }
 }

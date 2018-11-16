@@ -25,7 +25,7 @@ public class Attack : MonoBehaviour {
     
     void Update ()
     {
-	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing)
+	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing && !Manager.GetInstance().Paused)
         {
             StartAttack();
         }
