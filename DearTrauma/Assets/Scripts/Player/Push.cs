@@ -47,7 +47,7 @@ public class Push : MonoBehaviour
                                 boxSizeDown, 0f, boxMask);
 
         Pushing = false;
-        if (col != null && col.gameObject.tag == "Pushable")
+        if (col != null && col.gameObject.tag == "Pushable" && !Manager.GetInstance().Paused)
         {
             pushable = col.gameObject;
 

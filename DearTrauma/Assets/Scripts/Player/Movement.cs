@@ -62,7 +62,7 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (canMove)
+        if (canMove && !Manager.GetInstance().Paused)
         {
             float hor = Input.GetAxis("Horizontal");
             if (hor > 0)

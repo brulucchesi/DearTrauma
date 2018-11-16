@@ -24,6 +24,9 @@ public class Manager : MonoBehaviour
     [Header("Modifiers")]
     public float BossSeconds = 0f;
 
+    [HideInInspector]
+    public bool Paused;
+
     public IObservable<long> AnyInput;
 
     private GameObject analytics;
