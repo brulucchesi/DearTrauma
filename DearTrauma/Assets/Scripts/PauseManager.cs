@@ -9,15 +9,12 @@ public class PauseManager : MonoBehaviour {
     [Header("References")]
     public Button[] PauseButtons;
     public Button UnpauseButton;
-
-    private void Awake()
+    
+    void Start ()
     {
         Manager.GetInstance().Paused = false;
         Time.timeScale = 1;
-    }
 
-    void Start ()
-    {
         UnpauseButton.OnClickAsObservable().Subscribe(_ => UnpauseGame());
 
         var EscInput = Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Escape));
