@@ -62,8 +62,9 @@ public class Evolution : MonoBehaviour
     {
         GetComponent<Movement>().SetCanMove(false);
         GetComponent<Animator>().SetBool("Walking", false);
-        // Visual.SetActive(false);
-        // VisualBig.SetActive(true);
+        Visual.SetActive(false);
+        VisualBig.SetActive(true);
+        GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
         //transform.localScale *= ScaleMultiplier;
         Camera.main.GetComponent<CamFollow>().Big();
         transform.position = transform.position + Vector3.up * 3;
@@ -77,13 +78,27 @@ public class Evolution : MonoBehaviour
     public void InitiateTransform()
     {
         GetComponent<Movement>().SetCanMove(false);
-        GetComponent<Animator>().SetTrigger("transform");
+        GetComponent<Animator>().SetBool("Walking", false);
+        Visual.SetActive(false);
+        VisualBig.SetActive(true);
+        GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
+        //transform.localScale *= ScaleMultiplier;
+        Camera.main.GetComponent<CamFollow>().Big();
+        transform.position = transform.position + Vector3.up * 3;
+        GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
+        GetComponent<Jump>().JumpVelocity *= ScaleMultiplier;
+        GetComponent<Jump>().DoubleJumpVelocity *= ScaleMultiplier;
+        GetComponent<CapsuleCollider2D>().size = new Vector2(1.3f, 3.6f);
+        GetComponent<CapsuleCollider2D>().offset = new Vector2(0.0f, 0.1f);
+
+        GetComponent<Movement>().SetCanMove(false);
+        GetComponent<Animator>().SetBool("Transforming", true);
         TransformAudio.Play();
     }
 
     private void EndTransformation()
     {
-        GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
+        GetComponent<Animator>().SetBool("Transforming", false);
         GetComponent<Movement>().SetCanMove(true);
     }
 }
