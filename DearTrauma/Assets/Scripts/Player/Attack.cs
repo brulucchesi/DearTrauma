@@ -9,6 +9,8 @@ public class Attack : MonoBehaviour {
     public AudioSource AttackAudio;
     public ParticleSystem AttackLeft;
     public ParticleSystem AttackRight;
+    public ParticleSystem AttackLeftBig;
+    public ParticleSystem AttackRightBig;
 
     [Header("Modifiers")]
     public LayerMask Mask;
@@ -78,12 +80,20 @@ public class Attack : MonoBehaviour {
             AttackRight.Stop();
             AttackRight.Play();
             AttackLeft.Stop();
+
+            AttackRightBig.Stop();
+            AttackRightBig.Play();
+            AttackLeftBig.Stop();
         }
         else
         {
             AttackLeft.Stop();
             AttackLeft.Play();
             AttackRight.Stop();
+
+            AttackLeftBig.Stop();
+            AttackLeftBig.Play();
+            AttackRightBig.Stop();
         }
     }
 
@@ -91,5 +101,8 @@ public class Attack : MonoBehaviour {
     {
         AttackRight.Stop();
         AttackLeft.Stop();
+
+        AttackRightBig.Stop();
+        AttackLeftBig.Stop();
     }
 }
