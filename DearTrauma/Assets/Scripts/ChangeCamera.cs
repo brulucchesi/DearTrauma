@@ -32,6 +32,7 @@ public class ChangeCamera : MonoBehaviour
                     timelineHasPlayed = true;
                     Debug.Log("play animation from camera");
                     ThisTimeline.Play();
+                    Manager.GetInstance().Player.GetComponent<Movement>().SetCanMove(false);
                 }
                 else
                 {
@@ -64,6 +65,7 @@ public class ChangeCamera : MonoBehaviour
                 timelineIsReseted = true;
                 ThisCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().enabled = false;
                 Main.GetComponent<Cinemachine.CinemachineVirtualCamera>().MoveToTopOfPrioritySubqueue();
+                Manager.GetInstance().Player.GetComponent<Movement>().SetCanMove(true);
             }
         }
     }
