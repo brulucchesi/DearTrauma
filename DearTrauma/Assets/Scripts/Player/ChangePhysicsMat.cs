@@ -20,7 +20,7 @@ public class ChangePhysicsMat : MonoBehaviour {
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 12)
+        if (collision.gameObject.layer == 9 || collision.gameObject.layer == 12 || collision.gameObject.layer == 17)
         {
             collision.gameObject.GetComponent<Collider2D>().sharedMaterial = null;
         }
