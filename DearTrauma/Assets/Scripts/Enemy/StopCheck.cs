@@ -9,7 +9,8 @@ public class StopCheck : MonoBehaviour {
 
     [Header("Modifiers")]
     public Vector2 BoxSize;
-    public LayerMask Mask;
+    public LayerMask GroundMask;
+    public LayerMask StopMask;
 
     private Vector2 boxCenter;
 
@@ -18,7 +19,7 @@ public class StopCheck : MonoBehaviour {
         boxCenter = EnemyBottomRightLimit.position + (GetComponentInParent<EnemyMove>().Right ?
                                                      Vector3.right * BoxSize.x/2:
                                                      Vector3.left * BoxSize.x / 2);
-        if(Physics2D.OverlapBox(boxCenter, BoxSize, 0f, Mask) == null)
+        if(Physics2D.OverlapBox(boxCenter, BoxSize, 0f, GroundMask) == null)
         {
             if (GetComponentInParent<EnemyMove>().ReachedLimit.Value == false)
             {
@@ -29,7 +30,7 @@ public class StopCheck : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer != 8 && collision.gameObject.layer != 13)
+        if (StopMask == (StopMask | (1 << collision.gameObject.layer)))
         {
             if (GetComponentInParent<EnemyMove>().ReachedLimit.Value == false)
             {
