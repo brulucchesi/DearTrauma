@@ -110,6 +110,11 @@ public class Jump : MonoBehaviour
                 canResetJump = false;
 
                 GetComponent<Movement>().StopWalkAudio(false);
+                Land();
+            }
+            if (!anim.GetBool("grounded"))
+            {
+                Land();
             }
             anim.SetBool("grounded", true);
         }
