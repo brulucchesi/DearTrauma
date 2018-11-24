@@ -153,14 +153,8 @@ public class Jump : MonoBehaviour
         });
     }
 
-    public void EndLand()
-    {
-        anim.SetBool("Land", false);
-    }
-
     private void Land()
     {
-        anim.SetBool("Land", true);
         LandAudio.Play();
     }
 
