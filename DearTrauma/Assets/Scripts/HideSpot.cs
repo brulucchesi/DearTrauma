@@ -21,7 +21,8 @@ public class HideSpot : MonoBehaviour {
 
         if(cols.Length > 0)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+            if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl)) ||
+                (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) && !Player))
             {
                 GetComponent<Animator>().SetBool("Hide", true);
                 cols[0].GetComponent<Movement>().Hide(true);
