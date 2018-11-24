@@ -11,7 +11,10 @@ public class Pushable : MonoBehaviour {
     {
         initialPos = transform.position;
 
-        Manager.GetInstance().Player.GetComponent<Movement>().Dead.Where(dead => dead == true).Subscribe(dead => ResetPos());
+        Manager.GetInstance().Player.GetComponent<Movement>().Dead.Where(dead => dead == true).Subscribe(dead =>
+        {
+            Observable.Timer(System.TimeSpan.FromMilliseconds(100)).Subscribe(_=>ResetPos());
+        });
     }
 
     private void ResetPos()

@@ -144,7 +144,7 @@ public class Movement : MonoBehaviour
         canMove = move;
         if (!canMove)
         {
-            StopWalkAudio(false);
+            Stop();
         }
     }
 
