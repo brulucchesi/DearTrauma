@@ -116,7 +116,8 @@ public class EnemyMove : MonoBehaviour
             if (inRange)
             {
                 Walk();
-                GetComponent<Animator>().speed *= FollowSpeed / WaypointSpeed;
+                //GetComponent<Animator>().speed *= FollowSpeed / WaypointSpeed;
+                GetComponent<Animator>().SetBool("Run", true);
                 CurrentMoveState.Value = MoveState.Follow;
                 RoarAudios[UnityEngine.Random.Range(0, RoarAudios.Length)].Play();
             }
@@ -125,7 +126,8 @@ public class EnemyMove : MonoBehaviour
                 Vector2 stopvel = GetComponent<Rigidbody2D>().velocity;
                 stopvel.x = 0.0f;
                 GetComponent<Rigidbody2D>().velocity = stopvel;
-                GetComponent<Animator>().speed = 1;
+                //GetComponent<Animator>().speed = 1;
+                GetComponent<Animator>().SetBool("Run", false);
 
                 PlayerOnExitRange();
             }
