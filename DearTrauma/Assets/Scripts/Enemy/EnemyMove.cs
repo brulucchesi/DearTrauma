@@ -373,4 +373,12 @@ public class EnemyMove : MonoBehaviour
         GetComponent<Animator>().SetBool("Idle", false);
         WalkAudio.Play();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Hole"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
