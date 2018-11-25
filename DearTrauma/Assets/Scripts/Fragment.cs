@@ -70,9 +70,23 @@ public class Fragment : MonoBehaviour
 
     public void Collect(GameObject player)
     {
+        Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
+
         analytics.GetComponent<UnityAnalyticsEvents>().EndLevel(levelNumber);
 
         Audio.Play();
+
+        if (FragmentMemory && levelNumber != 3)
+        {
+            player.GetComponent<Movement>().SetCanMove(false);
+        }
+
+        StartCoroutine(WaitFadeFragmentIn(player));
+    }
+
+    IEnumerator WaitFadeFragmentIn(GameObject player)
+    {
+        yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
 
         if (levelNumber == 3)
         {
@@ -83,9 +97,10 @@ public class Fragment : MonoBehaviour
         {
             LinkedDoor.Unlock();
         }
+
         if (FragmentMemory && levelNumber != 3)
         {
-           //Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             FragmentMemory.SetActive(true);
             playerGameObject = player;
             player.GetComponent<Movement>().SetCanMove(false);
@@ -134,12 +149,21 @@ public class Fragment : MonoBehaviour
         }
         else
         {
-            playerGameObject.GetComponent<Movement>().SetCanMove(true);
-            gameObject.SetActive(false);
-            if (levelNumber == 2)
-            {
-                playerGameObject.GetComponent<Evolution>().InitiateTransform();
-            }
+            Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
+
+            StartCoroutine(WaitFadeFragmentOut());
+        }
+    }
+
+    IEnumerator WaitFadeFragmentOut()
+    {
+        yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
+
+        playerGameObject.GetComponent<Movement>().SetCanMove(true);
+        gameObject.SetActive(false);
+        if (levelNumber == 2)
+        {
+            playerGameObject.GetComponent<Evolution>().InitiateTransform();
         }
     }
 }

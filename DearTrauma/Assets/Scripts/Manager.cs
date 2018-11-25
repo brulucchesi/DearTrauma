@@ -27,6 +27,9 @@ public class Manager : MonoBehaviour
     [HideInInspector]
     public bool Paused;
 
+    [HideInInspector]
+    public bool FadeMiddle = false;
+
     public IObservable<long> AnyInput;
 
     private GameObject analytics;
@@ -118,5 +121,15 @@ public class Manager : MonoBehaviour
     {
         musicManager.GetComponent<MusicManager>().ChangeCredits();
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Credits);
+    }
+
+    public void MiddleFade()
+    {
+        FadeMiddle = true;
+    }
+
+    public void EndFade()
+    {
+        FadeMiddle = false;
     }
 }
