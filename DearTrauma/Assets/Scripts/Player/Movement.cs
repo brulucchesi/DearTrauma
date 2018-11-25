@@ -159,6 +159,9 @@ public class Movement : MonoBehaviour
         DeathAudio.Play();
 
         Dead.Value = true;
+
+        Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
+        ReturnToCheckpoint();
     }
 
     public void SetCheckpoint(Vector2 pos)
@@ -168,12 +171,22 @@ public class Movement : MonoBehaviour
 
     public void FallDead()
     {
+        Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
+
         Dead.Value = true;
-        Observable.Timer(System.TimeSpan.FromMilliseconds(100)).Subscribe(_ => ReturnToCheckpoint());
+
+        ReturnToCheckpoint();
     }
 
     public void ReturnToCheckpoint()
     {
+        StartCoroutine(WaitFadeCheckpoint());
+    }
+
+    IEnumerator WaitFadeCheckpoint()
+    {
+        yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
+
         GetComponent<Animator>().SetBool("Dead", false);
         Physics2D.IgnoreLayerCollision(8, 10, false);
         Vector3 pos = lastCheckPoint;

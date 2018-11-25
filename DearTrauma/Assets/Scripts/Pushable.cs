@@ -13,8 +13,15 @@ public class Pushable : MonoBehaviour {
 
         Manager.GetInstance().Player.GetComponent<Movement>().Dead.Where(dead => dead == true).Subscribe(dead =>
         {
-            Observable.Timer(System.TimeSpan.FromMilliseconds(100)).Subscribe(_=>ResetPos());
+            StartCoroutine(WaitFadeFall());
         });
+    }
+
+    IEnumerator WaitFadeFall()
+    {
+        yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
+
+        ResetPos();
     }
 
     private void ResetPos()
