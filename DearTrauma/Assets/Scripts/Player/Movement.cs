@@ -10,7 +10,6 @@ public class Movement : MonoBehaviour
 
     [Header("References")]
     public Transform[] PartsToFlip;
-    public AudioSource[] WalkAudios;
     public AudioSource DeathAudio;
     public AudioSource DamageAudio;
     public AudioSource[] HideAudio;
@@ -240,22 +239,5 @@ public class Movement : MonoBehaviour
     public bool IsRight()
     {
         return Right;
-    }
-
-    public void PlayWalkOnce()
-    {
-        int rand = Random.Range(0, WalkAudios.Length);
-
-        for (int i = 0; i < WalkAudios.Length; i++)
-        {
-            if(i == rand)
-            {
-                WalkAudios[i].Play();
-            }
-            else
-            {
-                WalkAudios[i].Stop();
-            }
-        }
     }
 }
