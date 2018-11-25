@@ -152,6 +152,7 @@ public class Push : MonoBehaviour
             if (anim)
             {
                 anim.SetBool("Pushing", false);
+                GetComponent<Movement>().SetCanFlip(true);
             }
 
             if (colDown)
