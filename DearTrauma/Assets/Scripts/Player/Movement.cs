@@ -159,7 +159,10 @@ public class Movement : MonoBehaviour
         DeathAudio.Play();
 
         Dead.Value = true;
+    }
 
+    public void EndDeath()
+    {
         Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
         ReturnToCheckpoint();
     }
