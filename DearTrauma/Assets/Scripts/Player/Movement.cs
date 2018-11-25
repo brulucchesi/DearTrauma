@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
 
     [Header("References")]
     public Transform[] PartsToFlip;
-    public AudioSource WalkAudio;
+    public AudioSource[] WalkAudios;
     public AudioSource DeathAudio;
     public AudioSource DamageAudio;
     public AudioSource[] HideAudio;
@@ -214,10 +214,10 @@ public class Movement : MonoBehaviour
     void Walk()
     {
         GetComponent<Animator>().SetBool("Walking", true);
-        if (!WalkAudio.isPlaying && !isJumping)
-        {
-            WalkAudio.Play();
-        }
+        //if (!WalkAudio.isPlaying && !isJumping)
+        //{
+        //    WalkAudio.Play();
+        //}
     }
 
     void Stop()
@@ -229,7 +229,7 @@ public class Movement : MonoBehaviour
     public void StopWalkAudio(bool isJumpingBool)
     {
         isJumping = isJumpingBool;
-        WalkAudio.Stop();
+        //WalkAudio.Stop();
     }
 
     public void SetCanFlip(bool can)
@@ -240,5 +240,22 @@ public class Movement : MonoBehaviour
     public bool IsRight()
     {
         return Right;
+    }
+
+    public void PlayWalkOnce()
+    {
+        int rand = Random.Range(0, WalkAudios.Length);
+
+        for (int i = 0; i < WalkAudios.Length; i++)
+        {
+            if(i == rand)
+            {
+                WalkAudios[i].Play();
+            }
+            else
+            {
+                WalkAudios[i].Stop();
+            }
+        }
     }
 }
