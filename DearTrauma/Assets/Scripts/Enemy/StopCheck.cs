@@ -21,9 +21,9 @@ public class StopCheck : MonoBehaviour {
                                                      Vector3.left * BoxSize.x / 2);
         if(Physics2D.OverlapBox(boxCenter, BoxSize, 0f, GroundMask) == null)
         {
-            if (GetComponentInParent<EnemyMove>().ReachedLimit.Value == false)
+            if (GetComponentInParent<EnemyMove>().ReachedGroundLimit.Value == false)
             {
-                GetComponentInParent<EnemyMove>().ReachedLimit.Value = true;
+                GetComponentInParent<EnemyMove>().ReachedGroundLimit.Value = true;
             }
         }
     }
@@ -32,9 +32,20 @@ public class StopCheck : MonoBehaviour {
     {
         if (StopMask == (StopMask | (1 << collision.gameObject.layer)))
         {
-            if (GetComponentInParent<EnemyMove>().ReachedLimit.Value == false)
+            if (GetComponentInParent<EnemyMove>().ReachedWallLimit.Value == false)
             {
-                GetComponentInParent<EnemyMove>().ReachedLimit.Value = true;
+                GetComponentInParent<EnemyMove>().ReachedWallLimit.Value = true;
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (StopMask == (StopMask | (1 << collision.gameObject.layer)))
+        {
+            if (GetComponentInParent<EnemyMove>().ReachedWallLimit.Value == false)
+            {
+                GetComponentInParent<EnemyMove>().ReachedWallLimit.Value = true;
             }
         }
     }

@@ -42,7 +42,10 @@ public class EnemyMove : MonoBehaviour
     public ReactiveProperty<bool> PlayerInRange = new ReactiveProperty<bool>(false);
 
     [HideInInspector]
-    public ReactiveProperty<bool> ReachedLimit = new ReactiveProperty<bool>(false);
+    public ReactiveProperty<bool> ReachedGroundLimit = new ReactiveProperty<bool>(false);
+
+    [HideInInspector]
+    public ReactiveProperty<bool> ReachedWallLimit = new ReactiveProperty<bool>(false);
 
     private List<Vector3> waypoints;
     private int currentWaypoint;
@@ -88,24 +91,63 @@ public class EnemyMove : MonoBehaviour
             }
         });
 
-        ReachedLimit.Subscribe(limit =>
+        ReachedGroundLimit.Subscribe(limit =>
         {
             if (limit)
             {
-                useWaypoint = false;
-                CurrentMoveState.Value = MoveState.Waiting;
-
-                Stop();
-                Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
+                if(CurrentMoveState.Value != MoveState.Follow)
                 {
-                    if (this && !Dead)
+                    useWaypoint = false;
+                    CurrentMoveState.Value = MoveState.Waiting;
+
+                    Stop();
+                    Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
                     {
-                        CurrentMoveState.Value = MoveState.LostWaypoint;
-                        Walk();
-                        Flip();
-                        ReachedLimit.Value = false;
-                    }
-                });
+                        if (this && !Dead)
+                        {
+                            CurrentMoveState.Value = MoveState.LostWaypoint;
+                            Walk();
+                            Flip();
+                            ReachedGroundLimit.Value = false;
+                        }
+                    });
+                }
+            }
+        });
+
+        ReachedWallLimit.Subscribe(limit =>
+        {
+            if (limit)
+            {
+                if (CurrentMoveState.Value != MoveState.Follow)
+                {
+                    useWaypoint = false;
+                    CurrentMoveState.Value = MoveState.Waiting;
+
+                    Stop();
+                    Observable.Timer(TimeSpan.FromSeconds(TimeToWait)).Subscribe(_ =>
+                    {
+                        if (this && !Dead)
+                        {
+                            CurrentMoveState.Value = MoveState.LostWaypoint;
+                            Walk();
+                            Flip();
+                            ReachedWallLimit.Value = false;
+                        }
+                    });
+                }
+                else
+                {
+                    Stop();
+
+                    Vector2 stopvel = GetComponent<Rigidbody2D>().velocity;
+                    stopvel.x = 0.0f;
+                    GetComponent<Rigidbody2D>().velocity = stopvel;
+                    //GetComponent<Animator>().speed = 1;
+                    GetComponent<Animator>().SetBool("Run", false);
+
+                    ReachedWallLimit.Value = false;
+                }
             }
         });
 
@@ -129,6 +171,10 @@ public class EnemyMove : MonoBehaviour
                 //GetComponent<Animator>().speed = 1;
                 GetComponent<Animator>().SetBool("Run", false);
 
+                if(CurrentMoveState.Value == MoveState.Follow)
+                {
+                    useWaypoint = true;
+                }
                 PlayerOnExitRange();
             }
         });
