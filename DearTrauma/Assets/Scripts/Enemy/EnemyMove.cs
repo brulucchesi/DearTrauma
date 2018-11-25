@@ -378,7 +378,7 @@ public class EnemyMove : MonoBehaviour
     {
         if(collision.CompareTag("Hole"))
         {
-            Destroy(gameObject);
+            GetComponentInChildren<EnemyBack>().ReceiveAttack();
         }
     }
 }
