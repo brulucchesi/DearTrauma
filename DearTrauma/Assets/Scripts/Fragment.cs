@@ -149,9 +149,17 @@ public class Fragment : MonoBehaviour
         }
         else
         {
-            Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
+            if(levelNumber != 3)
+            {
+                Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
 
-            StartCoroutine(WaitFadeFragmentOut());
+                StartCoroutine(WaitFadeFragmentOut());
+            }
+            else
+            {
+                playerGameObject.GetComponent<Movement>().SetCanMove(true);
+                gameObject.SetActive(false);
+            }
         }
     }
 
