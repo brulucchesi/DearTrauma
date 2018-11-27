@@ -72,6 +72,11 @@ public class Fragment : MonoBehaviour
     {
         analytics.GetComponent<UnityAnalyticsEvents>().EndLevel(levelNumber);
 
+        if (levelNumber == 3)
+        {
+            gameObject.SetActive(false);
+        }
+
         if (FragmentMemory && levelNumber != 3)
         {
             Audio.Play();
@@ -79,19 +84,14 @@ public class Fragment : MonoBehaviour
             Manager.GetInstance().GetComponent<Animator>().SetTrigger("fade");
 
             player.GetComponent<Movement>().SetCanMove(false);
-        }
 
-        StartCoroutine(WaitFadeFragmentIn(player));
+            StartCoroutine(WaitFadeFragmentIn(player));
+        }
     }
 
     IEnumerator WaitFadeFragmentIn(GameObject player)
     {
         yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
-
-        if (levelNumber == 3)
-        {
-            gameObject.SetActive(false);
-        }
 
         if (LinkedDoor)
         {
