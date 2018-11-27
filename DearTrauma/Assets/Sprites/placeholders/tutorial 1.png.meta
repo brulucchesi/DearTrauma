@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 139bd5a5f2106a54cbab4cfa8acfd963
+guid: 3b5555ec2e816164aa483786481633d5
 TextureImporter:
   fileIDToRecycleName:
-    21300000: tutorial_ctrl
-    21300002: tutorial_ctrl
-    21300004: tutorial_shift
-    21300006: tutorial_wasd
-    21300008: tutorial_space
+    21300000: tutorial 1_0
+    21300002: tutorial 1_1
+    21300004: tutorial 1_2
+    21300006: tutorial 1_3
+    21300008: tutorial 1_4
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -120,81 +120,101 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tutorial_ctrl
+      name: tutorial 1_0
       rect:
         serializedVersion: 2
-        x: 446
-        y: 420
-        width: 306
+        x: 96
+        y: 652
+        width: 520
         height: 233
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c95ac2316e1ddd043a9709beee7f7500
+      spriteID: 126078bf19309984dafde88e07c2f85f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial_shift
+      name: tutorial 1_1
       rect:
         serializedVersion: 2
-        x: 8
+        x: 542
+        y: 420
+        width: 307
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2acc19fcf12a906469f3a54b4484ef91
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial 1_2
+      rect:
+        serializedVersion: 2
+        x: 104
         y: 343
         width: 306
         height: 233
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6fdddf781d2a18e4ea3c3f11a21d7837
+      spriteID: 80f9e911bed7ea442acb7af939a4049e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tutorial_wasd
+      name: tutorial 1_3
       rect:
         serializedVersion: 2
-        x: 134
+        x: 0
+        y: 0
+        width: 410
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86a8f826fe02d4c4eb34404781b712ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tutorial 1_4
+      rect:
+        serializedVersion: 2
+        x: 449
         y: 0
         width: 411
         height: 302
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8cf27a196d2dead47a36a4ff0a5492aa
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tutorial_space
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 649
-        width: 525
-        height: 236
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b3083274cef81c14bb5956c1f8915041
+      spriteID: f9ff0046150717b4189bdebe86057b1e
       vertices: []
       indices: 
       edges: []
@@ -202,7 +222,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0eff2aebc48c66a4cbfd6d4f03e28124
+    spriteID: db13a8bf28762524e9d93470ac584620
     vertices: []
     indices: 
     edges: []
