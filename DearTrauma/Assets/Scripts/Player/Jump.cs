@@ -36,6 +36,7 @@ public class Jump : MonoBehaviour
     [HideInInspector]
     public ReactiveProperty<int> jumpCount = new ReactiveProperty<int>(2);
     private bool canResetJump;
+    private bool canLand;
 
     void Start()
     {
@@ -79,6 +80,7 @@ public class Jump : MonoBehaviour
         {
             Debug.Log("Fall velocity " + rb.velocity.y);
             anim.SetBool("Descendo", true);
+            canLand = true;
         }
         if (rb.velocity.y < -0.1f && !grounded)
         {
@@ -112,8 +114,9 @@ public class Jump : MonoBehaviour
                 GetComponent<Movement>().StopWalkAudio(false);
                 Land();
             }
-            if (!anim.GetBool("grounded"))
+            if (!anim.GetBool("grounded") && canLand)
             {
+                canLand = false;
                 Land();
             }
             anim.SetBool("grounded", true);
