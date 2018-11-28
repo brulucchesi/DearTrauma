@@ -21,7 +21,8 @@ public class ScreenManager : MonoBehaviour
         DemoEnd,
         Quit,
         None,
-        Fragment
+        Fragment,
+        Intro
     }
 
     public ReactiveProperty<ScreenType> CurrentScreen = new ReactiveProperty<ScreenType>();
