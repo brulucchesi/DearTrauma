@@ -67,10 +67,6 @@ public class Manager : MonoBehaviour
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
                 {
-                    if (musicManager)
-                    {
-                        musicManager.GetComponent<MusicManager>().ChangeGamePlay();
-                    }
                     ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Intro);
                 }
             );
@@ -108,6 +104,11 @@ public class Manager : MonoBehaviour
     {
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
         Player.GetComponent<Movement>().SetCanMove(true);
+
+        if (musicManager)
+        {
+            musicManager.GetComponent<MusicManager>().ChangeGamePlay();
+        }
 
         if (analytics != null)
         {
