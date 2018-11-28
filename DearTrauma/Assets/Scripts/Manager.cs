@@ -36,6 +36,7 @@ public class Manager : MonoBehaviour
 
     private GameObject musicManager;
 
+    private GameObject lastselect;
 
     static private Manager _instance;
 
@@ -46,11 +47,15 @@ public class Manager : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         _instance = this;
     }
 
     private void Start()
     {
+        lastselect = new GameObject();
+
         musicManager = GameObject.Find("MusicManager");
 
         analytics = GameObject.Find("Analytics");
@@ -79,7 +84,16 @@ public class Manager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            EventSystem.current.SetSelectedGameObject(lastselect);
+        }
+        else
+        {
+            lastselect = EventSystem.current.currentSelectedGameObject;
+        }
+
+        if (Input.GetMouseButtonDown(0))
         {
             if(EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
             {
