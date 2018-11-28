@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour
         analytics = GameObject.Find("Analytics");
 
         Right = true;
-        canMove = true;
+        canMove = false;
         Safe = false;
         rb = GetComponent<Rigidbody2D>();
         lastCheckPoint = transform.position;

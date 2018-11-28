@@ -20,8 +20,6 @@ public class Hole : MonoBehaviour
 
     public void PlayerDied()
     {
-
-        Debug.Log("Buraco");
         analytics.GetComponent<UnityAnalyticsEvents>().FellIntoHole(holeNumber);
 
         Manager.GetInstance().Player.GetComponent<Movement>().FallDead();

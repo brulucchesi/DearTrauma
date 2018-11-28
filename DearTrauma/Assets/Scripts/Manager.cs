@@ -54,8 +54,6 @@ public class Manager : MonoBehaviour
 
     private void Start()
     {
-        Player.GetComponent<Movement>().SetCanMove(false);
-
         lastselect = new GameObject();
 
         musicManager = GameObject.Find("MusicManager");
