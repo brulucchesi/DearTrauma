@@ -37,7 +37,6 @@ public class Evolution : MonoBehaviour
     private IEnumerator Wait()
     {
         yield return new WaitForEndOfFrame();
-        EvolutionTransition();
         InitiateTransform();
     }
 
@@ -50,29 +49,11 @@ public class Evolution : MonoBehaviour
                 if (!evolution)
                 {
                     evolution = true;
-                    EvolutionTransition();
                 }
             }
 
             collision.GetComponent<Fragment>().Collect(this.gameObject);
         }
-    }
-
-    private void EvolutionTransition()
-    {
-        GetComponent<Movement>().SetCanMove(false);
-        GetComponent<Animator>().SetBool("Walking", false);
-        Visual.SetActive(false);
-        VisualBig.SetActive(true);
-        GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
-        //transform.localScale *= ScaleMultiplier;
-        Camera.main.GetComponent<CamFollow>().Big();
-        transform.position = transform.position + Vector3.up * 3;
-        GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
-        GetComponent<Jump>().JumpVelocity *= ScaleMultiplier;
-        GetComponent<Jump>().DoubleJumpVelocity *= ScaleMultiplier;
-        GetComponent<CapsuleCollider2D>().size = new Vector2(1.3f, 3.6f);
-        GetComponent<CapsuleCollider2D>().offset = new Vector2(0.0f, 0.1f);
     }
 
     public void InitiateTransform()
@@ -83,7 +64,6 @@ public class Evolution : MonoBehaviour
         VisualBig.SetActive(true);
         GetComponent<Animator>().runtimeAnimatorController = BigAnimator;
         //transform.localScale *= ScaleMultiplier;
-        Camera.main.GetComponent<CamFollow>().Big();
         transform.position = transform.position + Vector3.up * 3;
         GetComponent<Jump>().GroundedSkinY *= ScaleMultiplier;
         GetComponent<Jump>().JumpVelocity *= ScaleMultiplier;
@@ -91,7 +71,6 @@ public class Evolution : MonoBehaviour
         GetComponent<CapsuleCollider2D>().size = new Vector2(1.3f, 3.6f);
         GetComponent<CapsuleCollider2D>().offset = new Vector2(0.0f, 0.1f);
 
-        GetComponent<Movement>().SetCanMove(false);
         GetComponent<Animator>().SetBool("Transforming", true);
         TransformAudio.Play();
     }
