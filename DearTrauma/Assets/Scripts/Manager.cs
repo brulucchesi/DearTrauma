@@ -54,6 +54,8 @@ public class Manager : MonoBehaviour
 
     private void Start()
     {
+        Player.GetComponent<Movement>().SetCanMove(false);
+
         lastselect = new GameObject();
 
         musicManager = GameObject.Find("MusicManager");
@@ -65,15 +67,11 @@ public class Manager : MonoBehaviour
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
                 {
-                    if(musicManager)
+                    if (musicManager)
                     {
                         musicManager.GetComponent<MusicManager>().ChangeGamePlay();
                     }
-                    ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
-                    if (analytics != null)
-                    {
-                        analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
-                    }
+                    ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Intro);
                 }
             );
 
@@ -95,7 +93,7 @@ public class Manager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if(EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
+            if (EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
             {
                 ButtonClick.Play();
             }
@@ -103,6 +101,17 @@ public class Manager : MonoBehaviour
             {
                 NormalClick.Play();
             }
+        }
+    }
+
+    public void EndIntro()
+    {
+        ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
+        Player.GetComponent<Movement>().SetCanMove(true);
+
+        if (analytics != null)
+        {
+            analytics.GetComponent<UnityAnalyticsEvents>().StartLevel(1);
         }
     }
 
