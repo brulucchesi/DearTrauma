@@ -78,7 +78,7 @@ public class Jump : MonoBehaviour
 
         if (rb.velocity.y < -fall && !grounded)
         {
-            Debug.Log("Fall velocity " + rb.velocity.y);
+            //Debug.Log("Fall velocity " + rb.velocity.y);
             anim.SetBool("Descendo", true);
             canLand = true;
         }
