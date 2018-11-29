@@ -76,6 +76,7 @@ public class Fragment : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        FragmentVisual.SetActive(false);
 
         if (FragmentMemory && levelNumber != 3)
         {
@@ -117,7 +118,6 @@ public class Fragment : MonoBehaviour
         {
             SceneManager.LoadScene(SceneName);
         }
-        FragmentVisual.SetActive(false);
     }
 
     private void Update()
