@@ -52,7 +52,7 @@ public class Movement : MonoBehaviour
 
     IEnumerator Blink()
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(Random.Range(MinBlink, MaxBlink));
             GetComponent<Animator>().SetTrigger("Blink");
@@ -139,6 +139,7 @@ public class Movement : MonoBehaviour
 
     public void SetCanMove(bool move)
     {
+        Debug.Log(move);
         rb.velocity = Vector2.zero;
         canMove = move;
         if (!canMove)
@@ -251,7 +252,7 @@ public class Movement : MonoBehaviour
     {
         canFlip = can;
     }
-    
+
     public bool IsRight()
     {
         return Right;

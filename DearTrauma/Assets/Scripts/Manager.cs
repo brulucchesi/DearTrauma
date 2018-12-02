@@ -52,6 +52,12 @@ public class Manager : MonoBehaviour
         _instance = this;
     }
 
+    public void VoltaPlayer()
+    {
+        Debug.Log("voltaaaa");
+        Player.GetComponent<Movement>().SetCanMove(true);
+    }
+
     private void Start()
     {
         lastselect = new GameObject();
@@ -101,7 +107,7 @@ public class Manager : MonoBehaviour
     public void EndIntro()
     {
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
-        Player.GetComponent<Movement>().SetCanMove(true);
+        // Player.GetComponent<Movement>().SetCanMove(false);
 
         if (musicManager)
         {

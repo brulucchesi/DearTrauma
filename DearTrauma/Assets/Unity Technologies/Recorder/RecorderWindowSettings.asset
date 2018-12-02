@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0205cb8957891b44b142689caa23987, type: 3}
   m_Name: RecorderWindowSettings
   m_EditorClassIdentifier: 
-  m_Settings: {fileID: 114100904246283224}
---- !u!114 &114100904246283224
+  m_Settings: {fileID: 114068879789091544}
+--- !u!114 &114068879789091544
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -35,19 +35,19 @@ MonoBehaviour:
   m_DurationMode: 0
   m_SynchFrameRate: 1
   m_BaseFileName:
-    m_Pattern: image_<0000>.<ext>
+    m_Pattern: controls_<0000>.<ext>
   m_DestinationPath:
     m_root: 0
     m_leaf: D:/Usuarios/Bruna Lucchesi/Documentos/Trabalhos/PUC/Projeto Final/Projeto
-      8/G1/apresentacao/gifs animacao/frames/2 version
+      8/G2/controls
   m_InputsSettings:
     m_InputsSettingsAssets:
-    - {fileID: 114917727137518630}
+    - {fileID: 114792931245778828}
     ownerRecorderSettingsAssetId: 2f8dda60410e8ee4980ebaa98eb593b6
   m_RecorderTypeName: UnityEngine.Recorder.ImageRecorder, Assembly-CSharp, Version=0.0.0.0,
     Culture=neutral, PublicKeyToken=null
   m_OutputFormat: 0
---- !u!114 &114917727137518630
+--- !u!114 &114792931245778828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -56,15 +56,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d935bf7a4fcf66488738bda5536c1cb, type: 3}
-  m_Name: accd1c1c-2e2c-426d-a222-3f275f139a93
+  m_Name: 80ad4012-ca56-4e54-b9e1-40862e8ee59d
   m_EditorClassIdentifier: 
   m_DisplayName: Pixels
-  m_Id: 75682ab9-afba-4e92-8a0f-7f75af2afbef
-  m_OutputSize: 0
+  m_Id: b8cce8f1-1885-45c2-875b-4d4741e8c8c9
+  m_OutputSize: 720
   m_AspectRatio: 0
   m_ForceEvenSize: 0
-  source: 4
+  source: 1
   m_CameraTag: 
   m_FlipFinalOutput: 0
-  m_AllowTransparency: 1
+  m_AllowTransparency: 0
   m_CaptureUI: 0
