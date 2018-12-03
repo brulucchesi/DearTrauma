@@ -44,11 +44,27 @@ public class ScreenManager : MonoBehaviour
 
     private void Start()
     {
-        analytics = GameObject.Find("Analytics"); 
+        analytics = GameObject.Find("Analytics");
     }
 
     public void SetCurrentScreen(ScreenType screen)
     {
+        if (screen != ScreenType.Fragment && screen != ScreenType.None)
+        {
+            GetComponent<Animator>().SetTrigger("fade");
+            StartCoroutine(WaitFade(screen));
+        }
+        else
+        {
+            PreviousScreen.Value = CurrentScreen.Value;
+            CurrentScreen.Value = screen;
+        }
+    }
+
+    IEnumerator WaitFade(ScreenType screen)
+    {
+        yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
+
         if (screen == ScreenType.Controls)
         {
             helpCount++;

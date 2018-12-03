@@ -37,7 +37,7 @@ public class Fragment : MonoBehaviour
         FragmentMemory.SetActive(false);
         FragmentVisual.SetActive(true);
 
-        Observable.EveryUpdate().Where(_ => Input.anyKeyDown).Subscribe(_ =>
+        Observable.EveryUpdate().Where(_ => this && Input.anyKeyDown).Subscribe(_ =>
         {
             if (canClose)
             {

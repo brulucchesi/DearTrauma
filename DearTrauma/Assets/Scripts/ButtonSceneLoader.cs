@@ -16,7 +16,7 @@ public class ButtonSceneLoader : MonoBehaviour {
         {
             if (Scene.Equals("restart"))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                Manager.GetInstance().Restart();
             }
             else
             {

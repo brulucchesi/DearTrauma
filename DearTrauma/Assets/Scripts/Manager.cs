@@ -5,6 +5,7 @@ using UniRx;
 using UnityEngine.Playables;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class Manager : MonoBehaviour
 
     [HideInInspector]
     public bool Paused;
+
+    [HideInInspector]
+    public BoolReactiveProperty Restarted;
 
     [HideInInspector]
     public bool FadeMiddle = false;
@@ -65,17 +69,21 @@ public class Manager : MonoBehaviour
 
     private void Start()
     {
+        Restarted.Value = false;
+        bool started = false;
+
         lastselect = new GameObject();
 
         musicManager = GameObject.Find("MusicManager");
 
         analytics = GameObject.Find("Analytics");
 
-        Observable.EveryUpdate().Where(_ => Input.anyKey &&
+        Observable.EveryUpdate().Where(_ => this && Input.anyKey && !started &&
                                             (ScreenManager.GetInstance().CurrentScreen.Value ==
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
                 {
+                    started = true;
                     ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Intro);
                 }
             );
@@ -162,5 +170,11 @@ public class Manager : MonoBehaviour
     public void EndFade()
     {
         FadeMiddle = false;
+    }
+
+    public void Restart()
+    {
+        Restarted.Value = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -5,8 +5,9 @@ using UnityEngine.UI;
 using UniRx;
 using UnityEngine.EventSystems;
 
-public class ActivateScreenElement : MonoBehaviour {
-    
+public class ActivateScreenElement : MonoBehaviour
+{
+
     [Header("References")]
     public List<GameObject> ScreenElements;
     public Button FirstButton;
@@ -28,7 +29,7 @@ public class ActivateScreenElement : MonoBehaviour {
                 }
             }
 
-            if(active)
+            if (active)
             {
                 EventSystem.current.SetSelectedGameObject(null);
                 StartCoroutine(SelectButton());
