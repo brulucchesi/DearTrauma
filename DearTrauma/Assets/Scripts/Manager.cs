@@ -58,6 +58,11 @@ public class Manager : MonoBehaviour
         Player.GetComponent<Movement>().SetCanMove(true);
     }
 
+    public void TerminaCreditos()
+    {
+        ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.DemoEnd);
+    }
+
     private void Start()
     {
         lastselect = new GameObject();
@@ -76,8 +81,6 @@ public class Manager : MonoBehaviour
             );
 
         AnyInput = Observable.EveryUpdate().Where(_ => Input.anyKeyDown);
-        AnyInput.Where(_ => (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Credits))
-                           .Subscribe(_ => ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.DemoEnd));
     }
 
     private void Update()
