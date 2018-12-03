@@ -33,9 +33,12 @@ public class PauseManager : MonoBehaviour {
 
     private void PauseGame()
     {
-        ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause);
-        Manager.GetInstance().Paused = true;
-        Time.timeScale = 0;
+        if(ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game)
+        {
+            ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause);
+            Manager.GetInstance().Paused = true;
+            Time.timeScale = 0;
+        }
     }
 
     private void UnpauseGame()
