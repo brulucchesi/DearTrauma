@@ -50,7 +50,8 @@ public class ScreenManager : MonoBehaviour
     public void SetCurrentScreen(ScreenType screen)
     {
         if (screen != ScreenType.Fragment && screen != ScreenType.None && screen != ScreenType.Credits
-            && ScreenManager.GetInstance().CurrentScreen.Value != ScreenType.Fragment)
+            && ScreenManager.GetInstance().CurrentScreen.Value != ScreenType.Fragment
+            && ScreenManager.GetInstance().CurrentScreen.Value != ScreenType.Credits)
         {
             GetComponent<Animator>().SetTrigger("fade");
             StartCoroutine(WaitFade(screen));
