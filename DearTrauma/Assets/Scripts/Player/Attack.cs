@@ -43,7 +43,7 @@ public class Attack : MonoBehaviour {
         AttackAudio.Play();
         if (anim)
         {
-            anim.SetTrigger("Attack");
+            anim.SetBool("Attack", true);
         }
         else
         {
@@ -104,5 +104,11 @@ public class Attack : MonoBehaviour {
 
         AttackRightBig.Stop();
         AttackLeftBig.Stop();
+    }
+
+    public void EndAttack()
+    {
+        print("enda");
+        anim.SetBool("Attack", false);
     }
 }

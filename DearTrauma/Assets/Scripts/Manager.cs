@@ -58,7 +58,7 @@ public class Manager : MonoBehaviour
 
     public void VoltaPlayer()
     {
-        Debug.Log("voltaaaa");
+        //Debug.Log("voltaaaa");
         Player.GetComponent<Movement>().SetCanMove(true);
     }
 

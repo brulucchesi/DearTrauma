@@ -22,7 +22,7 @@ public class PauseManager : MonoBehaviour
         var EscInput = Observable.EveryUpdate().Where(_ => this && Input.GetKeyDown(KeyCode.Escape));
         var disp = EscInput.Subscribe(_ =>
         {
-            Debug.Log("esc");
+            //Debug.Log("esc");
             if (!Manager.GetInstance().Paused)
             {
                 PauseGame();
@@ -43,7 +43,7 @@ public class PauseManager : MonoBehaviour
     {
         if (ScreenManager.GetInstance().CurrentScreen.Value == ScreenManager.ScreenType.Game)
         {
-            print("pause");
+            //print("pause");
             ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Pause);
             Manager.GetInstance().Paused = true;
             Time.timeScale = 0;
@@ -52,7 +52,7 @@ public class PauseManager : MonoBehaviour
 
     private void UnpauseGame()
     {
-        print("unpause");
+        //print("unpause");
         ScreenManager.GetInstance().SetCurrentScreen(ScreenManager.ScreenType.Game);
         Manager.GetInstance().Paused = false;
         Time.timeScale = 1;

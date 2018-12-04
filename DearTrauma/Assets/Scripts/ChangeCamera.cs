@@ -20,7 +20,7 @@ public class ChangeCamera : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("Selected");
+            //Debug.Log("Selected");
             ThisCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().enabled = true;
             ThisCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().MoveToTopOfPrioritySubqueue();
 

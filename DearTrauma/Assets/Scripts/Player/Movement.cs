@@ -104,6 +104,7 @@ public class Movement : MonoBehaviour
         if (collision.CompareTag("EnemyFront") && !Safe)
         {
 
+            print("coll");
             int enemyNumber = collision.gameObject.transform.parent.parent.GetComponent<EnemyMove>().SentEnemyNumber();
 
             analytics.GetComponent<UnityAnalyticsEvents>().EnemyKilledPlayer(enemyNumber);
@@ -139,7 +140,7 @@ public class Movement : MonoBehaviour
 
     public void SetCanMove(bool move)
     {
-        Debug.Log(move);
+        //Debug.Log(move);
         rb.velocity = Vector2.zero;
         canMove = move;
         if (!canMove)
