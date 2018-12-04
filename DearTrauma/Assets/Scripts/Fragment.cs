@@ -94,11 +94,6 @@ public class Fragment : MonoBehaviour
     {
         yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
 
-        if (LinkedDoor)
-        {
-            LinkedDoor.Unlock();
-        }
-
         if (FragmentMemory && levelNumber != 3)
         {
             //Time.timeScale = 0f;
@@ -166,6 +161,11 @@ public class Fragment : MonoBehaviour
     IEnumerator WaitFadeFragmentOut()
     {
         yield return new WaitUntil(() => Manager.GetInstance().FadeMiddle);
+
+        if (LinkedDoor)
+        {
+            LinkedDoor.Unlock();
+        }
 
         playerGameObject.GetComponent<Movement>().SetCanMove(true);
         gameObject.SetActive(false);
