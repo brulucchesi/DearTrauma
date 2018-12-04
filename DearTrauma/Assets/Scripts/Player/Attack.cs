@@ -27,7 +27,9 @@ public class Attack : MonoBehaviour {
     
     void Update ()
     {
-	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing && !Manager.GetInstance().Paused)
+	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing
+            && !Manager.GetInstance().Paused && !anim.GetBool("Attack") 
+            && !GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             StartAttack();
         }
@@ -108,7 +110,7 @@ public class Attack : MonoBehaviour {
 
     public void EndAttack()
     {
-        print("enda");
+        //print("enda");
         anim.SetBool("Attack", false);
     }
 }
