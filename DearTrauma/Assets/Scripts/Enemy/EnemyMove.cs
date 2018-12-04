@@ -363,9 +363,12 @@ public class EnemyMove : MonoBehaviour
 
     private void Stop()
     {
-        RoarAudios[UnityEngine.Random.Range(0, RoarAudios.Length)].Play();
-        GetComponent<Animator>().SetBool("Idle", true);
-        WalkAudio.Stop();
+        if(!GetComponent<Animator>().GetBool("Idle"))
+        {
+            RoarAudios[UnityEngine.Random.Range(0, RoarAudios.Length)].Play();
+            GetComponent<Animator>().SetBool("Idle", true);
+            WalkAudio.Stop();
+        }
     }
 
     private void Walk()

@@ -27,7 +27,9 @@ public class Attack : MonoBehaviour {
     
     void Update ()
     {
-	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing && !Manager.GetInstance().Paused)
+	    if(Input.GetButtonDown("Attack") && GetComponent<Movement>().GetCanMove() && !GetComponent<Push>().Pushing
+            && !Manager.GetInstance().Paused && !anim.GetBool("Attack") 
+            && !GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             StartAttack();
         }
@@ -43,7 +45,7 @@ public class Attack : MonoBehaviour {
         AttackAudio.Play();
         if (anim)
         {
-            anim.SetTrigger("Attack");
+            anim.SetBool("Attack", true);
         }
         else
         {
@@ -104,5 +106,11 @@ public class Attack : MonoBehaviour {
 
         AttackRightBig.Stop();
         AttackLeftBig.Stop();
+    }
+
+    public void EndAttack()
+    {
+        //print("enda");
+        anim.SetBool("Attack", false);
     }
 }

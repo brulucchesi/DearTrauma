@@ -16,13 +16,17 @@ public class EnemyBack : MonoBehaviour
 
 	public void ReceiveAttack()
     {
-        int enemyNumber = enemyMove.SentEnemyNumber();
+        print("receive");
+        if(Manager.GetInstance().Player.GetComponent<Movement>().GetCanMove())
+        {
+            int enemyNumber = enemyMove.SentEnemyNumber();
 
-        analytics.GetComponent<UnityAnalyticsEvents>().PlayerKilledEnemy(enemyNumber);
+            analytics.GetComponent<UnityAnalyticsEvents>().PlayerKilledEnemy(enemyNumber);
 
-        GetComponentInParent<Animator>().SetBool("Died", true);
-        GetComponentInParent<EnemyMove>().Dead = true;
-        GetComponentInParent<EnemyMove>().DeathAudio.Play();
-        GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            GetComponentInParent<Animator>().SetBool("Died", true);
+            GetComponentInParent<EnemyMove>().Dead = true;
+            GetComponentInParent<EnemyMove>().DeathAudio.Play();
+            GetComponentInParent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
 }
