@@ -17,7 +17,8 @@ public class EnemyBack : MonoBehaviour
 	public void ReceiveAttack()
     {
         print("receive");
-        if(Manager.GetInstance().Player.GetComponent<Movement>().GetCanMove())
+        if (Manager.GetInstance().Player.GetComponent<Movement>().GetCanMove() &&
+           (Manager.GetInstance().Player.GetComponent<Movement>().Right == GetComponentInParent<EnemyMove>().Right))
         {
             int enemyNumber = enemyMove.SentEnemyNumber();
 
