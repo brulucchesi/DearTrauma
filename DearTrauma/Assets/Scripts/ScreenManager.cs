@@ -49,7 +49,7 @@ public class ScreenManager : MonoBehaviour
 
     public void SetCurrentScreen(ScreenType screen)
     {
-        if (screen != ScreenType.Fragment && screen != ScreenType.None)
+        if (screen != ScreenType.Fragment && screen != ScreenType.None && ScreenManager.GetInstance().CurrentScreen.Value != ScreenType.Fragment)
         {
             GetComponent<Animator>().SetTrigger("fade");
             StartCoroutine(WaitFade(screen));
