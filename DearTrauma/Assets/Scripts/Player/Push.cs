@@ -28,7 +28,7 @@ public class Push : MonoBehaviour
         anim = GetComponent<Animator>();
         pushable = null;
         playerSize = GetComponent<CapsuleCollider2D>().size;
-        boxSize = new Vector2(playerSize.x/2 + (Skin * 2f), playerSize.y / 2f);
+        boxSize = new Vector2(playerSize.x/2 + (Skin * 2f), playerSize.y);
         boxSizeDown = boxSize * 0.9f;
     }
 
@@ -63,6 +63,7 @@ public class Push : MonoBehaviour
                 {
                     GetComponent<Movement>().SetCanFlip(false);
                     anim.SetBool("Pushing", true);
+                    anim.SetBool("Attack", false);
 
                     float vel = 0.05f;
 
@@ -147,6 +148,8 @@ public class Push : MonoBehaviour
                 pushable.GetComponent<Joint2D>().enabled = false;
                 pushable.GetComponent<Joint2D>().connectedBody = null;
                 Audio.Stop();
+
+                pushable = null;
             }
 
             if (anim)
