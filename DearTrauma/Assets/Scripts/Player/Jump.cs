@@ -43,7 +43,7 @@ public class Jump : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         playerSize = GetComponent<CapsuleCollider2D>().size;
-        boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
+        boxSize = new Vector2(/*playerSize.x - */(GroundedSkinX * 2), GroundedSkinY);
 
         canResetJump = true;
         anim.SetBool("grounded", true);
@@ -73,7 +73,7 @@ public class Jump : MonoBehaviour
             jumpPress.Value = true;
         }
         boxCenter = (Vector2)transform.position + Vector2.down * (playerSize.y + boxSize.y) * 0.5f;
-        boxSize = new Vector2(playerSize.x - (GroundedSkinX * 2), GroundedSkinY);
+        boxSize = new Vector2(/*playerSize.x - */(GroundedSkinX * 2), GroundedSkinY);
         grounded = (Physics2D.OverlapBox(boxCenter, boxSize, 0f, Mask) != null) && touching;
 
         if (rb.velocity.y < -fall && !grounded)
