@@ -28,7 +28,7 @@ public class Push : MonoBehaviour
         anim = GetComponent<Animator>();
         pushable = null;
         playerSize = GetComponent<CapsuleCollider2D>().size;
-        boxSize = new Vector2(playerSize.x/2 + (Skin * 2f), playerSize.y);
+        boxSize = new Vector2(playerSize.x/2 + (Skin * 2f), playerSize.y - (Skin * 2f));
         boxSizeDown = boxSize * 0.9f;
     }
 
@@ -51,7 +51,10 @@ public class Push : MonoBehaviour
         {
             pushable = col.gameObject;
 
-            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) 
+                && GetComponent<Jump>().jumpCount.Value == 2 && !GetComponent<Animator>().GetBool("Descendo")
+                && !GetComponent<Animator>().GetBool("Subindo"))
+                /*&& GetComponent<Animator>().GetBool("Grounded")*/)
             {
                 Pushing = true;
 
