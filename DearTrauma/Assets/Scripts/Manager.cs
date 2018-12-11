@@ -106,17 +106,17 @@ public class Manager : MonoBehaviour
             lastselect = EventSystem.current.currentSelectedGameObject;
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
-            {
-                ButtonClick.Play();
-            }
-            else
-            {
-                NormalClick.Play();
-            }
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if (EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
+        //    {
+        //        ButtonClick.Play();
+        //    }
+        //    else
+        //    {
+        //        NormalClick.Play();
+        //    }
+        //}
     }
 
     public void EndIntro()
@@ -180,5 +180,15 @@ public class Manager : MonoBehaviour
     {
         Restarted.Value = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PlayButtonClick()
+    {
+        ButtonClick.Play();
+    }
+
+    public void PlayNormalClick()
+    {
+        NormalClick.Play();
     }
 }
