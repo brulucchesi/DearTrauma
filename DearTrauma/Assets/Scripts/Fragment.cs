@@ -141,6 +141,7 @@ public class Fragment : MonoBehaviour
             musicManager.GetComponent<MusicManager>().ChangeBoss();
             Manager.GetInstance().GetComponent<Animator>().SetTrigger("end");
             playerGameObject.GetComponent<Animator>().SetBool("Walking", false);
+            Manager.GetInstance().BossActive = true;
         }
         else
         {

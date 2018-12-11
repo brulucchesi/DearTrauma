@@ -29,6 +29,9 @@ public class Manager : MonoBehaviour
     public bool Paused;
 
     [HideInInspector]
+    public bool BossActive;
+
+    [HideInInspector]
     public BoolReactiveProperty Restarted;
 
     [HideInInspector]
@@ -70,6 +73,7 @@ public class Manager : MonoBehaviour
     private void Start()
     {
         Restarted.Value = false;
+        BossActive = false;
         bool started = false;
 
         lastselect = new GameObject();
