@@ -82,7 +82,7 @@ public class Manager : MonoBehaviour
 
         analytics = GameObject.Find("Analytics");
 
-        Observable.EveryUpdate().Where(_ => this && Input.anyKey && !started &&
+        Observable.EveryUpdate().Where(_ => this && Input.anyKeyDown && !Input.GetMouseButtonDown(0) && !started &&
                                             (ScreenManager.GetInstance().CurrentScreen.Value ==
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
