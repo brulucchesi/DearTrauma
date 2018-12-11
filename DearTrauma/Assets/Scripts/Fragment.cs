@@ -37,7 +37,7 @@ public class Fragment : MonoBehaviour
         FragmentMemory.SetActive(false);
         FragmentVisual.SetActive(true);
 
-        Observable.EveryUpdate().Where(_ => this && Input.anyKeyDown).Subscribe(_ =>
+        Observable.EveryUpdate().Where(_ => this && Input.anyKeyDown && !Input.GetMouseButtonDown(0)).Subscribe(_ =>
         {
             if (canClose)
             {
@@ -141,6 +141,7 @@ public class Fragment : MonoBehaviour
             musicManager.GetComponent<MusicManager>().ChangeBoss();
             Manager.GetInstance().GetComponent<Animator>().SetTrigger("end");
             playerGameObject.GetComponent<Animator>().SetBool("Walking", false);
+            Manager.GetInstance().BossActive = true;
         }
         else
         {

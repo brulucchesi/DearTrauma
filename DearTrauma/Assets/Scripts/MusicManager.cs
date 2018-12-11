@@ -5,6 +5,7 @@ using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
     public AudioSource BackgroundMusic;
+    public AudioSource BackgroundMusicAux;
     public AudioClip Title;
     public AudioClip GamePlay;
     public AudioClip Credits;
@@ -18,21 +19,22 @@ public class MusicManager : MonoBehaviour
 
     public void ChangeGamePlay()
     {
-        BackgroundMusic.clip = GamePlay;
-        BackgroundMusic.Play();
-
+        BackgroundMusicAux.clip = GamePlay;
+        BackgroundMusicAux.Play();
     }
+
     public void ChangeBoss()
     {
+        BackgroundMusicAux.clip = EmptySound;
+        BackgroundMusicAux.Stop();
         BackgroundMusic.clip = EmptySound;
         BackgroundMusic.gameObject.SetActive(false);
         BackgroundMusic.gameObject.SetActive(true);
     }
+
     public void ChangeCredits()
     {
         BackgroundMusic.clip = Credits;
         BackgroundMusic.Play();
-
     }
-
 }

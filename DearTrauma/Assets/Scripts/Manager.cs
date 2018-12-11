@@ -29,6 +29,9 @@ public class Manager : MonoBehaviour
     public bool Paused;
 
     [HideInInspector]
+    public bool BossActive;
+
+    [HideInInspector]
     public BoolReactiveProperty Restarted;
 
     [HideInInspector]
@@ -70,6 +73,7 @@ public class Manager : MonoBehaviour
     private void Start()
     {
         Restarted.Value = false;
+        BossActive = false;
         bool started = false;
 
         lastselect = new GameObject();
@@ -78,7 +82,7 @@ public class Manager : MonoBehaviour
 
         analytics = GameObject.Find("Analytics");
 
-        Observable.EveryUpdate().Where(_ => this && Input.anyKey && !started &&
+        Observable.EveryUpdate().Where(_ => this && Input.anyKeyDown && !Input.GetMouseButtonDown(0) && !started &&
                                             (ScreenManager.GetInstance().CurrentScreen.Value ==
                                              ScreenManager.ScreenType.Start))
             .Subscribe(_ =>
@@ -102,17 +106,17 @@ public class Manager : MonoBehaviour
             lastselect = EventSystem.current.currentSelectedGameObject;
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
-            {
-                ButtonClick.Play();
-            }
-            else
-            {
-                NormalClick.Play();
-            }
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if (EventSystem.current.IsPointerOverGameObject() && EventSystem.current.currentSelectedGameObject && EventSystem.current.currentSelectedGameObject.GetComponentsInChildren<Button>() != null)
+        //    {
+        //        ButtonClick.Play();
+        //    }
+        //    else
+        //    {
+        //        NormalClick.Play();
+        //    }
+        //}
     }
 
     public void EndIntro()
@@ -176,5 +180,15 @@ public class Manager : MonoBehaviour
     {
         Restarted.Value = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void PlayButtonClick()
+    {
+        ButtonClick.Play();
+    }
+
+    public void PlayNormalClick()
+    {
+        NormalClick.Play();
     }
 }

@@ -55,7 +55,10 @@ public class Movement : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(MinBlink, MaxBlink));
-            GetComponent<Animator>().SetTrigger("Blink");
+            if (!Dead.Value && GetComponent<Jump>().jumpCount.Value == 2)
+            {
+                GetComponent<Animator>().SetTrigger("Blink");
+            }
         }
     }
 
