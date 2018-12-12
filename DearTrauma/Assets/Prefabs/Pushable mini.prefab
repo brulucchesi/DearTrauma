@@ -53,8 +53,8 @@ GameObject:
   - component: {fileID: 50513917071147152}
   - component: {fileID: 95145800659605288}
   - component: {fileID: 114764269433132486}
-  - component: {fileID: 60725622262713432}
-  - component: {fileID: 232901577958331514}
+  - component: {fileID: 61139142147580766}
+  - component: {fileID: 231040909279674548}
   m_Layer: 12
   m_Name: Pushable mini
   m_TagString: Pushable
@@ -82,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1504415509002306}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.73, y: -20.800001, z: 0.2}
+  m_LocalPosition: {x: -199.87, y: -34.14, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4826219164175586}
@@ -123,8 +123,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!60 &60725622262713432
-PolygonCollider2D:
+--- !u!61 &61139142147580766
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -135,7 +135,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.029245377, y: -0.026475906}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -145,17 +145,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.2247467, y: 1.0580521}
-      - {x: -0.66737366, y: 0.90973663}
-      - {x: -1.2276917, y: -0.071811676}
-      - {x: -1.2168427, y: -0.3872261}
-      - {x: -1.2038879, y: -0.7814903}
-      - {x: -0.12309265, y: -1.039505}
-      - {x: 0.5575409, y: -0.9290199}
-      - {x: 1.303772, y: -0.5967941}
-      - {x: 1.4064484, y: 0.20455551}
+  serializedVersion: 2
+  m_Size: {x: 2.124813, y: 1.511879}
+  m_EdgeRadius: 0
 --- !u!95 &95145800659605288
 Animator:
   serializedVersion: 3
@@ -230,8 +222,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!232 &232901577958331514
-DistanceJoint2D:
+--- !u!231 &231040909279674548
+SpringJoint2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -242,9 +234,10 @@ DistanceJoint2D:
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
+  m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 0
-  m_Distance: 2
-  m_MaxDistanceOnly: 0
+  m_AutoConfigureDistance: 1
+  m_Distance: 56.20173
+  m_DampingRatio: 0
+  m_Frequency: 0
